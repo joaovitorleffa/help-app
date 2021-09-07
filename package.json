@@ -11,6 +11,7 @@
     "@expo-google-fonts/noto-sans-jp": "^0.2.0",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.1.2",
+    "expo-linear-gradient": "~9.1.0",
     "expo-splash-screen": "~0.10.2",
     "expo-updates": "~0.5.4",
     "react": "16.13.1",
@@ -18,9 +19,11 @@
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.1.0",
+    "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
+    "responsive-native": "^1.0.0",
     "styled-components": "^5.3.1"
   },
   "devDependencies": {
@@ -33,6 +36,7 @@
     "@types/styled-components-react-native": "^5.1.1",
     "@typescript-eslint/eslint-plugin": "^4.31.0",
     "@typescript-eslint/parser": "^4.31.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "babel-preset-expo": "~8.3.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",

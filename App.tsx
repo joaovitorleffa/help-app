@@ -1,6 +1,7 @@
 import React from 'react';
+import { ScreenProvider } from 'responsive-native';
 import { StyleSheet, Text, View } from 'react-native';
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
   NotoSansJP_400Regular,
@@ -8,6 +9,11 @@ import {
   NotoSansJP_700Bold,
 } from '@expo-google-fonts/noto-sans-jp';
 import AppLoading from 'expo-app-loading';
+
+import { SignIn } from './src/screens/Organization/SignIn';
+import { ThemeProvider } from './src/styles/ThemeProvider';
+import { Initial } from './src/screens/Organization/Initial';
+import { FirstStep } from './src/screens/Organization/SignUp/FirstStep';
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -21,9 +27,13 @@ function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <SafeAreaProvider>
+      <ScreenProvider baseFontSize={18}>
+        <ThemeProvider>
+          <FirstStep />
+        </ThemeProvider>
+      </ScreenProvider>
+    </SafeAreaProvider>
   );
 }
 
