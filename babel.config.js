@@ -6,6 +6,18 @@ module.exports = function (api) {
       [
         'module-resolver',
         {
+          extensions: [
+            '.js',
+            '.jsx',
+            '.ts',
+            '.tsx',
+            '.android.js',
+            '.android.tsx',
+            '.ios.js',
+            '.ios.tsx',
+            '.json',
+          ],
+          root: ['./src'],
           alias: {
             '@atoms': './src/components/atoms',
             '@molecules': './src/components/molecules',
@@ -13,6 +25,7 @@ module.exports = function (api) {
             '@templates': './src/components/templates',
             '@screens': './src/screens',
             '@styles': './src/styles',
+            '@utils': './src/utils',
           },
         },
       ],

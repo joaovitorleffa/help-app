@@ -1,12 +1,13 @@
+import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
 type ContainerProps = {
   color?: string;
 };
 
-export const Container = styled.View<ContainerProps>`
+export const Container = styled(RectButton)<ContainerProps>`
   width: 100%;
-  height: ${({ theme }) => theme.screen.rem(2.8)};
+  height: ${({ theme }) => theme.screen.rem(2.8)}px;
   background-color: ${({ theme, color }) => color ?? theme.colors.background};
   align-items: center;
   justify-content: center;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SectionHeader } from '../../molecules/SectionHeader';
-import { InitialScreenFooter } from '../../organisms/InitialScreenFooter';
+import { SectionHeader } from '@molecules/SectionHeader';
+import { InitialScreenFooter } from '@organisms/InitialScreenFooter';
 
 import { Container, Content } from './styles';
 

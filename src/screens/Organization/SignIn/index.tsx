@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SignInTemplate } from '../../../components/templates/SignInTemplate';
+import { SignInTemplate } from '@templates/SignInTemplate';
 
 import { Container } from './styles';
 

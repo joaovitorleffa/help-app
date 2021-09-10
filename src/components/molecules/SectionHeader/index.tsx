@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components/native';
-import { Text } from '../../atoms/Text';
+import { Text } from '@atoms/Text';
 
 import { Container } from './styles';
 
@@ -25,7 +25,7 @@ export function SectionHeader({ title, subtitle, isDark = false }: SectionHeader
       <Text
         color={theme.colors[isDark ? 'title' : 'title_secondary']}
         fontSize={rem(1)}
-        fontFamily="medium">
+        fontFamily="regular">
         {subtitle}
       </Text>
     </Container>

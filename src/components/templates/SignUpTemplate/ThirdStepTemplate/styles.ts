@@ -8,7 +8,7 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  margin-bottom: ${({ theme }) => theme.screen.rem(2)}px;
+  margin-bottom: ${({ theme }) => theme.screen.rem(5)}px;
 `;
 
 export const Wrapper = styled.View`

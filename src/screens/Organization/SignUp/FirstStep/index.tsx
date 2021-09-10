@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FirstStepTemplate } from '../../../../components/templates/SignUpTemplate/FirstStepTemplate';
+import { FirstStepTemplate } from '@templates/SignUpTemplate/FirstStepTemplate';
 
 import { Container } from './styles';
 

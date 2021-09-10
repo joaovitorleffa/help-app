@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from 'styled-components';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { InitialScreen } from '../../../components/templates/InitialScreen';
+import { InitialScreen } from '@templates/InitialScreen';
 
 import { Container } from './styles';
 

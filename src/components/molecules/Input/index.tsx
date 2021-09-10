@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextInputProps } from 'react-native';
 import { useTheme } from 'styled-components';
 
 import { Content } from './styles';
 
-interface InputProps extends TextInputProps {}
+interface InputProps extends TextInputProps {
+  width?: string | number;
+}
 
 export function Input({ ...rest }: InputProps) {
   const theme = useTheme();
+
+  const [isFocused, setIsFocused] = useState(false);
+
+  const onFocus = () => {
+    setIsFocused(true);
+  };
+
+  const onBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <Content
-      onChangeText={rest.onChangeText}
-      value={rest.value}
-      placeholderTextColor={theme.colors.placeholder}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      isFocused={isFocused}
+      placeholderTextColor={isFocused ? theme.colors.title_secondary : theme.colors.placeholder}
       {...rest}
     />
   );

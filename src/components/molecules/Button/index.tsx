@@ -1,12 +1,13 @@
 import React from 'react';
-import { TouchableOpacityProps } from 'react-native';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
-import { Text } from '../../atoms/Text';
+import { RectButtonProps } from 'react-native-gesture-handler';
+
+import { Text } from '@atoms/Text';
 
 import { Container } from './styles';
 
-interface ButtonProps extends TouchableOpacityProps {
+interface ButtonProps extends RectButtonProps {
   title: string;
   color?: string;
   textColor?: string;
@@ -17,7 +18,7 @@ export function Button({ title, textColor, color, ...rest }: ButtonProps) {
   const rem = useRem();
 
   return (
-    <Container {...rest} color={color}>
+    <Container {...rest} activeOpacity={0.75} color={color} underlayColor={theme.colors.primary_50}>
       <Text color={textColor ?? theme.colors.title} fontSize={rem(1)} fontFamily="medium">
         {title}
       </Text>

@@ -1,8 +1,9 @@
 import React from 'react';
+import { BorderlessButton } from 'react-native-gesture-handler';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 
-import { Text } from '../../atoms/Text';
+import { Text } from '@atoms/Text';
 
 import { Container } from './styles';
 
@@ -19,14 +20,12 @@ export function FooterText({ text, touchable, onTouch }: FooterTextProps) {
     <Container>
       <Text color={theme.colors.title} fontSize={rem(0.8)}>
         {text}{' '}
-        <Text
-          color={theme.colors.primary}
-          fontSize={rem(0.8)}
-          fontFamily="medium"
-          onPress={onTouch}>
+      </Text>
+      <BorderlessButton onPress={onTouch}>
+        <Text color={theme.colors.primary} fontSize={rem(0.8)} fontFamily="medium">
           {touchable}
         </Text>
-      </Text>
+      </BorderlessButton>
     </Container>
   );
 }
