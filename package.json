@@ -9,9 +9,12 @@
   },
   "dependencies": {
     "@expo-google-fonts/noto-sans-jp": "^0.2.0",
+    "@gorhom/bottom-sheet": "^4",
+    "@hookform/resolvers": "^2.8.0",
     "@react-native-masked-view/masked-view": "^0.2.6",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/stack": "^6.0.7",
+    "axios": "^0.21.4",
     "expo": "~41.0.1",
     "expo-app-loading": "^1.1.2",
     "expo-linear-gradient": "~9.1.0",
@@ -20,6 +23,7 @@
     "lottie-react-native": "3.5.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-hook-form": "^7.15.2",
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-reanimated": "~2.1.0",
@@ -28,7 +32,8 @@
     "react-native-unimodules": "~0.13.3",
     "react-native-web": "~0.13.12",
     "responsive-native": "^1.0.0",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

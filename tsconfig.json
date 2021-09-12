@@ -15,7 +15,11 @@
       "@routes/*": ["./src/routes/*"],
       "@routes": ["./src/routes"],
       "@utils/*": ["./src/utils/*"],
-      "@utils": ["./src/utils"]
+      "@utils": ["./src/utils"],
+      "@dto/*": ["./src/dto/*"],
+      "@dto": ["./src/dto"],
+      "@services/*": ["./src/services/*"],
+      "@services": ["./src/services"]
     }
   },
   "allowSyntheticDefaultImports": true,

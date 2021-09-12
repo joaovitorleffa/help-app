@@ -4,10 +4,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import { FirstStepData } from 'src/dto/sign-up-dto';
 import { OrganizationAuthNavigatorParamsList } from '@routes/types';
 
 import { FooterText } from '@molecules/FooterText';
-import { FormSteps } from '@molecules/FormSteps';
+import { FormSteps } from '@molecules/Form/FormSteps';
 import { SectionHeader } from '@molecules/SectionHeader';
 import { SignUpFirstStep } from '@organisms/Forms/Organization/SignUpFirstStep';
 
@@ -21,8 +22,8 @@ type FirstStepNavigationScreenProp = StackNavigationProp<
 export function FirstStepTemplate() {
   const navigation = useNavigation<FirstStepNavigationScreenProp>();
 
-  const handleNextStep = () => {
-    navigation.navigate('SignUpSecondStep');
+  const handleNextStep = (data: FirstStepData) => {
+    navigation.navigate('SignUpSecondStep', data);
   };
 
   const goToSignIn = () => {
@@ -30,25 +31,23 @@ export function FirstStepTemplate() {
   };
 
   return (
-    <>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-          <Container>
-            <Header>
-              <FormSteps steps={3} currentStep={1} />
-              <Wrapper>
-                <SectionHeader
-                  title="Crie uma conta!"
-                  subtitle="Preencha os dados para continuar!"
-                  isDark
-                />
-              </Wrapper>
-            </Header>
-            <SignUpFirstStep handleNextStep={handleNextStep} />
-            <FooterText text="Eu já tenho uma conta," touchable="Entrar" onTouch={goToSignIn} />
-          </Container>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </>
+    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <Container>
+          <Header>
+            <FormSteps steps={3} currentStep={1} />
+            <Wrapper>
+              <SectionHeader
+                title="Crie uma conta!"
+                subtitle="Preencha os dados para continuar!"
+                isDark
+              />
+            </Wrapper>
+          </Header>
+          <SignUpFirstStep handleNextStep={handleNextStep} />
+          <FooterText text="Eu já tenho uma conta," touchable="Entrar" onTouch={goToSignIn} />
+        </Container>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }

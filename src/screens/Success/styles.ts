@@ -1,17 +1,16 @@
 import styled from 'styled-components/native';
-import { AntDesign } from '@expo/vector-icons';
 
 export const Container = styled.View`
+  flex: 1;
   padding-top: 56px;
   padding-bottom: 38px;
   padding-left: ${({ theme }) => theme.spacing.grid}px;
   padding-right: ${({ theme }) => theme.spacing.grid}px;
+  background-color: ${({ theme }) => theme.colors.background};
+
+  justify-content: space-between;
 `;
 
-export const Header = styled.View`
-  margin-bottom: ${({ theme }) => theme.screen.rem(5)}px;
-`;
-
-export const Wrapper = styled.View`
-  margin-top: ${({ theme }) => theme.screen.rem(1.2)}px;
+export const TextWrapper = styled.View`
+  margin-top: ${({ theme }) => theme.screen.rem(0.6)}px;
 `;

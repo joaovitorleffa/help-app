@@ -26,9 +26,12 @@ module.exports = function (api) {
             '@screens': './src/screens',
             '@styles': './src/styles',
             '@utils': './src/utils',
+            '@dto': './src/dto',
+            '@services': './src/services',
           },
         },
       ],
+      'react-native-reanimated/plugin',
     ],
   };
 };

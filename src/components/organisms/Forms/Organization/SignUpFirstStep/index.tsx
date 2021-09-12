@@ -1,45 +1,80 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
-import { Input } from '@molecules/Input';
-import { Button } from '@molecules/Button';
+import { ButtonIcon } from '@molecules/ButtonIcon';
+import { InputForm } from '@molecules/Form/InputForm';
 
-import { Container, Wrapper, ButtonWrapper } from './styles';
+import { FirstStepData } from 'src/dto/sign-up-dto';
+
 import { phoneNumberMask } from '../../../../../utils/mask';
 
+import { Container, Wrapper, ButtonWrapper } from './styles';
+
 interface SignUpFirstStepProps {
-  handleNextStep: () => void;
+  handleNextStep: (data: FirstStepData) => void;
 }
+
+const schema = Yup.object().shape({
+  name: Yup.string().required('O nome é obrigatório!'),
+  email: Yup.string().required('O e-mail é obrigatório!').email('E-mail inválido!'),
+  phoneNumber: Yup.string()
+    .required('O Nº de WhatsApp é obrigatório!')
+    .min(11, 'Número inválido!')
+    .max(11, 'Número inválido!'),
+});
 
 export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
   const theme = useTheme();
 
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
+
+  const onSubmit = (data: FirstStepData) => {
+    handleNextStep(data);
+  };
 
   return (
     <Container>
-      <Input placeholder="Nome" autoCapitalize="words" />
+      <InputForm
+        name="name"
+        control={control}
+        error={errors.name && errors.name.message}
+        placeholder="Nome"
+        autoCapitalize="words"
+      />
+
       <Wrapper>
-        <Input
+        <InputForm
+          name="email"
+          control={control}
+          error={errors.email && errors.email.message}
           placeholder="E-mail"
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="email-address"
         />
       </Wrapper>
-      <Input
+      <InputForm
+        name="phoneNumber"
+        maxLength={16}
+        control={control}
+        error={errors.phoneNumber && errors.phoneNumber.message}
+        mask={phoneNumberMask}
         placeholder="Nº de WhatsApp"
-        value={phoneNumberMask(phoneNumber)}
-        maxLength={11}
         keyboardType="phone-pad"
-        onChangeText={setPhoneNumber}
       />
       <ButtonWrapper>
-        <Button
+        <ButtonIcon
           title="Próximo"
           color={theme.colors.primary}
           textColor={theme.colors.title_secondary}
-          onPress={handleNextStep}
+          onPress={handleSubmit(onSubmit)}
         />
       </ButtonWrapper>
     </Container>

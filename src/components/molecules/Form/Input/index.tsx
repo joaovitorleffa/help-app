@@ -6,9 +6,10 @@ import { Content } from './styles';
 
 interface InputProps extends TextInputProps {
   width?: string | number;
+  error?: boolean;
 }
 
-export function Input({ ...rest }: InputProps) {
+export function Input({ error, ...rest }: InputProps) {
   const theme = useTheme();
 
   const [isFocused, setIsFocused] = useState(false);
@@ -23,10 +24,17 @@ export function Input({ ...rest }: InputProps) {
 
   return (
     <Content
+      error={error}
       onFocus={onFocus}
       onBlur={onBlur}
       isFocused={isFocused}
-      placeholderTextColor={isFocused ? theme.colors.title_secondary : theme.colors.placeholder}
+      placeholderTextColor={
+        isFocused
+          ? theme.colors.title_secondary
+          : error
+          ? theme.colors.error
+          : theme.colors.placeholder
+      }
       {...rest}
     />
   );

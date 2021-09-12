@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components/native';
 
 type ContentProps = {
   isFocused: boolean;
+  error?: boolean;
   width?: string | number;
 };
 
@@ -15,6 +16,13 @@ export const Content = styled(TextInput)<ContentProps>`
   border-width: 1px;
 
   border-color: ${({ theme }) => theme.colors.gray_50};
+
+  ${({ theme, error }) =>
+    error &&
+    css`
+      border-color: ${theme.colors.error};
+      background-color: ${theme.colors.error_50};
+    `}
 
   ${({ theme, isFocused }) =>
     isFocused &&

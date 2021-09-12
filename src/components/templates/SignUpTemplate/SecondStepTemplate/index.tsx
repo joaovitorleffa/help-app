@@ -1,26 +1,32 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/core';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 
 import { OrganizationAuthNavigatorParamsList } from '@routes/types';
 
-import { FormSteps } from '@molecules/FormSteps';
+import { FormSteps } from '@molecules/Form/FormSteps';
 import { SectionHeader } from '@molecules/SectionHeader';
 import { SignUpSecondStep } from '@organisms/Forms/Organization/SignUpSecondStep';
 
 import { Container, Header, Wrapper } from './styles';
+import { SecondStepData } from '@dto/sign-up-dto';
 
 type SecondStepNavigationScreenProp = StackNavigationProp<
   OrganizationAuthNavigatorParamsList,
   'SignUpSecondStep'
 >;
 
+type SecondStepRouteProp = RouteProp<OrganizationAuthNavigatorParamsList, 'SignUpSecondStep'>;
+
 export function SecondStepTemplate() {
   const navigation = useNavigation<SecondStepNavigationScreenProp>();
+  const route = useRoute<SecondStepRouteProp>();
 
-  const handleNextStep = () => {
-    navigation.navigate('SignUpThirdStep');
+  const { params } = route;
+
+  const handleNextStep = (data: SecondStepData) => {
+    navigation.navigate('SignUpThirdStep', { ...data, ...params });
   };
 
   return (

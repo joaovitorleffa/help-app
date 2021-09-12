@@ -31,11 +31,7 @@ export function Greetings() {
 
   return (
     <Container>
-      <SectionHeader
-        isDark
-        title="Help."
-        subtitle={`Seja bem-vindo (a),\nAjude a transformar vidas!`}
-      />
+      <SectionHeader isDark title="Help." subtitle="Ajude a transformar vidas!" />
       <LottieView
         source={GreetingAnimation}
         style={{ height: 300, alignSelf: 'center' }}
