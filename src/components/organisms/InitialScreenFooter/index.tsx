@@ -1,9 +1,11 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
-import { OrganizationAuthNavigatorParamsList } from '../../../routes/types';
 
-import { Button } from '../../molecules/Button';
+import { OrganizationAuthNavigatorParamsList } from '@routes/types';
+
+import { Button } from '@molecules/Button';
 
 import { Container, Wrapper } from './styles';
 
@@ -13,6 +15,7 @@ type InitialScreenNavigationProp = StackNavigationProp<
 >;
 
 export function InitialScreenFooter() {
+  const { t } = useTranslation();
   const navigation = useNavigation<InitialScreenNavigationProp>();
 
   const handleSignIn = () => {
@@ -26,9 +29,9 @@ export function InitialScreenFooter() {
   return (
     <Container>
       <Wrapper>
-        <Button title="Entrar" onPress={handleSignIn} />
+        <Button title={t('common.entry')} onPress={handleSignIn} />
       </Wrapper>
-      <Button title="Cadastrar" onPress={handleSignUp} />
+      <Button title={t('common.register')} onPress={handleSignUp} />
     </Container>
   );
 }

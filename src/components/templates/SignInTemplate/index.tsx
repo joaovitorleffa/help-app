@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -20,6 +21,7 @@ interface Data {
 }
 
 export function SignInTemplate() {
+  const { t } = useTranslation();
   const navigation = useNavigation<SignInScreenNavigationProp>();
 
   const handleLogin = async (data: Data) => {
@@ -36,18 +38,25 @@ export function SignInTemplate() {
   };
 
   const goToSignUp = () => {
-    navigation.navigate('SignUpFirstStep');
+    navigation.navigate('OrganizationStack', {
+      screen: 'AuthStack',
+      params: { screen: 'SignUpFirstStep' },
+    });
   };
 
   return (
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       <Container>
         <Header>
-          <SectionHeader title="Bem-vindo," subtitle="Entre para continuar!" isDark />
+          <SectionHeader title={t('sign_in.welcome')} subtitle={t('sign_in.subtitle')} isDark />
         </Header>
         <FormSignIn onSignIn={onSubmit} />
 
-        <FooterText text="Eu não tenho uma conta," touchable="Cadastrar" onTouch={goToSignUp} />
+        <FooterText
+          text={t('sign_in.no_have_account')}
+          touchable={t('common.register')}
+          onTouch={goToSignUp}
+        />
       </Container>
     </KeyboardAvoidingView>
   );

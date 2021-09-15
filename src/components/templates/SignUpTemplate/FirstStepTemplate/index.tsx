@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Keyboard, KeyboardAvoidingView } from 'react-native';
@@ -20,6 +21,7 @@ type FirstStepNavigationScreenProp = StackNavigationProp<
 >;
 
 export function FirstStepTemplate() {
+  const { t } = useTranslation();
   const navigation = useNavigation<FirstStepNavigationScreenProp>();
 
   const handleNextStep = (data: FirstStepData) => {
@@ -38,8 +40,8 @@ export function FirstStepTemplate() {
             <FormSteps steps={3} currentStep={1} />
             <Wrapper>
               <SectionHeader
-                title="Crie uma conta!"
-                subtitle="Preencha os dados para continuar!"
+                title={t('sign_up.create_title')}
+                subtitle={t('sign_up.create_message')}
                 isDark
               />
             </Wrapper>

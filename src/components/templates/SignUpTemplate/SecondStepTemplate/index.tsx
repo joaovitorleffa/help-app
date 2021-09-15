@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
@@ -20,6 +21,7 @@ type SecondStepNavigationScreenProp = StackNavigationProp<
 type SecondStepRouteProp = RouteProp<OrganizationAuthNavigatorParamsList, 'SignUpSecondStep'>;
 
 export function SecondStepTemplate() {
+  const { t } = useTranslation();
   const navigation = useNavigation<SecondStepNavigationScreenProp>();
   const route = useRoute<SecondStepRouteProp>();
 
@@ -38,8 +40,8 @@ export function SecondStepTemplate() {
 
             <Wrapper>
               <SectionHeader
-                title="Crie uma conta!"
-                subtitle="Preencha os dados para continuar!"
+                title={t('sign_up.create_title')}
+                subtitle={t('sign_up.create_message')}
                 isDark
               />
             </Wrapper>

@@ -1,32 +1,36 @@
 import React, { useEffect } from 'react';
-import { useRem } from 'responsive-native';
-import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { useTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { cepMask } from '@utils/mask';
+import i18n from '@assets/locales/i18n';
+import { brasilApi } from '@services/api';
+import { SecondStepData } from '@dto/sign-up-dto';
+import { useSignUpSteps } from '@hooks/useSignUpSteps';
 
 import { ButtonIcon } from '@molecules/ButtonIcon';
+import { InputForm } from '@molecules/Form/InputForm';
 
 import { Container, Wrapper, Row, ButtonWrapper } from './styles';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { InputForm } from '@molecules/Form/InputForm';
-import { SecondStepData } from '@dto/sign-up-dto';
-import { brasilApi } from '../../../../../services/api';
-import { cepMask } from '@utils/mask';
 
 interface SignUpSecondStepProps {
   handleNextStep: (data: SecondStepData) => void;
 }
 
 const schema = Yup.object().shape({
-  cep: Yup.string().required('O CEP é obrigatório!').length(8, 'CEP inválido 1!'),
-  number: Yup.string().required('O número é obrigatório'),
-  city: Yup.string().required('A cidade é obrigatória!'),
-  district: Yup.string().required('O bairro é obrigatório!'),
+  cep: Yup.string().required(i18n.t('errors.fill_cep')).length(8, i18n.t('errors.invalid_cep')),
+  number: Yup.string().required(i18n.t('errors.fill_number')),
+  city: Yup.string().required(i18n.t('errors.fill_city')),
+  district: Yup.string().required(i18n.t('errors.fill_district')),
 });
 
 export function SignUpSecondStep({ handleNextStep }: SignUpSecondStepProps) {
-  const rem = useRem();
   const theme = useTheme();
+  const { t } = useTranslation();
+  const { formData, serializeFormData } = useSignUpSteps();
 
   const {
     control,
@@ -40,6 +44,7 @@ export function SignUpSecondStep({ handleNextStep }: SignUpSecondStepProps) {
   const cep = watch('cep');
 
   const onSubmit = (data: SecondStepData) => {
+    serializeFormData(data);
     handleNextStep(data);
   };
 
@@ -74,16 +79,18 @@ export function SignUpSecondStep({ handleNextStep }: SignUpSecondStepProps) {
           name="cep"
           mask={cepMask}
           error={errors.cep && errors.cep.message}
-          placeholder="CEP"
+          placeholder={t('common.cep')}
           maxLength={9}
           width="48%"
+          defaultValue={formData?.cep}
         />
         <InputForm
           control={control}
           name="number"
           error={errors.number && errors.number.message}
-          placeholder="Número"
+          placeholder={t('common.number')}
           width="48%"
+          defaultValue={formData?.number}
         />
       </Row>
       <Wrapper>
@@ -91,8 +98,9 @@ export function SignUpSecondStep({ handleNextStep }: SignUpSecondStepProps) {
           control={control}
           name="city"
           error={errors.city && errors.city.message}
-          placeholder="Cidade"
+          placeholder={t('common.city')}
           autoCapitalize="words"
+          defaultValue={formData?.city}
         />
       </Wrapper>
       <Wrapper>
@@ -100,8 +108,9 @@ export function SignUpSecondStep({ handleNextStep }: SignUpSecondStepProps) {
           control={control}
           name="district"
           error={errors.district && errors.district.message}
-          placeholder="Bairro"
+          placeholder={t('common.district')}
           autoCapitalize="words"
+          defaultValue={formData?.district}
         />
       </Wrapper>
 

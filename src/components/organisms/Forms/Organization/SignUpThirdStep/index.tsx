@@ -1,30 +1,32 @@
 import React, { useEffect } from 'react';
-import { useTheme } from 'styled-components';
 import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { useTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import i18n from '@assets/locales/i18n';
+import { ThirdStepData } from '@dto/sign-up-dto';
+import { useSignUpSteps } from '@hooks/useSignUpSteps';
 
 import { Button } from '@molecules/Button';
-import { Input } from '@molecules/Form/Input';
+import { InputForm } from '@molecules/Form/InputForm';
 
 import { ButtonWrapper, Container, Wrapper } from './styles';
-import { InputForm } from '@molecules/Form/InputForm';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { ThirdStepData } from '@dto/sign-up-dto';
 
 interface SignUpThirdStepProps {
   handleNextStep: (data: ThirdStepData) => void;
 }
 
 const schema = Yup.object().shape({
-  password: Yup.string()
-    .required('A senha é obrigatória!')
-    .min(6, 'A senha deve ter ao menos 6 caracteres!'),
-  passwordConfirm: Yup.string().required('Confirme a senha!'),
+  password: Yup.string().required(i18n.t('errors.fill_password')).min(6, 'errors.min_password'),
+  passwordConfirm: Yup.string().required(i18n.t('errors.fill_confirm_password')),
 });
 
 export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps) {
   const theme = useTheme();
-
+  const { t } = useTranslation();
+  const { formData, serializeFormData } = useSignUpSteps();
   const {
     control,
     handleSubmit,
@@ -38,12 +40,16 @@ export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps) {
   const passwordConfirm = watch('passwordConfirm');
 
   const onSubmit = (data: ThirdStepData) => {
+    serializeFormData(data);
     handleNextStep(data);
   };
 
   useEffect(() => {
     if (password !== passwordConfirm) {
-      setError('passwordConfirm', { type: 'manual', message: 'As senhas não coincidem!' });
+      setError('passwordConfirm', {
+        type: 'manual',
+        message: i18n.t('errors.different_passwords'),
+      });
     } else {
       clearErrors();
     }
@@ -55,10 +61,11 @@ export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps) {
         control={control}
         name="password"
         error={errors.password && errors.password.message}
-        placeholder="Senha"
+        placeholder={t('common.password')}
         autoCapitalize="none"
         autoCorrect={false}
         secureTextEntry={true}
+        defaultValue={formData?.password}
       />
 
       <Wrapper>
@@ -66,10 +73,11 @@ export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps) {
           control={control}
           name="passwordConfirm"
           error={errors.passwordConfirm && errors.passwordConfirm.message}
-          placeholder="Confirmar senha"
+          placeholder={t('common.confirm_password')}
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry={true}
+          defaultValue={formData?.confirmPassword}
         />
       </Wrapper>
       <ButtonWrapper>

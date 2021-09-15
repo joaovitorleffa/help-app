@@ -28,6 +28,8 @@ module.exports = function (api) {
             '@utils': './src/utils',
             '@dto': './src/dto',
             '@services': './src/services',
+            '@assets': './src/assets',
+            '@hooks': './src/hooks',
           },
         },
       ],

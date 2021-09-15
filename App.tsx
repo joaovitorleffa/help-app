@@ -1,7 +1,6 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import { ScreenProvider } from 'responsive-native';
-import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
@@ -10,9 +9,11 @@ import {
   NotoSansJP_700Bold,
 } from '@expo-google-fonts/noto-sans-jp';
 import AppLoading from 'expo-app-loading';
+import './src/assets/locales/i18n';
 
 import { ThemeProvider } from './src/styles/ThemeProvider';
 import { Routes } from './src/routes/index.routes';
+import { SignUpStepsProvider } from '@hooks/useSignUpSteps';
 
 function App() {
   const [fontsLoaded] = useFonts({
@@ -29,20 +30,13 @@ function App() {
     <SafeAreaProvider>
       <ScreenProvider baseFontSize={18}>
         <ThemeProvider>
-          <Routes />
+          <SignUpStepsProvider>
+            <Routes />
+          </SignUpStepsProvider>
         </ThemeProvider>
       </ScreenProvider>
     </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;

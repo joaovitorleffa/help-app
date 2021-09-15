@@ -1,10 +1,11 @@
-import { Text } from '@atoms/Text';
 import React from 'react';
-import { Control, Controller } from 'react-hook-form';
-import { TextInputProps } from 'react-native';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
+import { TextInputProps } from 'react-native';
+import { Control, Controller } from 'react-hook-form';
+
 import { Input } from '../Input';
+import { Text } from '@atoms/Text';
 
 import { Container } from './styles';
 
@@ -14,9 +15,18 @@ interface InputFormProps extends TextInputProps {
   error?: string;
   width?: string | number;
   mask?: (text: string) => string;
+  defaultValue?: string;
 }
 
-export function InputForm({ control, name, error, width, mask, ...rest }: InputFormProps) {
+export function InputForm({
+  control,
+  name,
+  error,
+  width,
+  mask,
+  defaultValue = '',
+  ...rest
+}: InputFormProps) {
   const rem = useRem();
   const theme = useTheme();
   return (
@@ -24,6 +34,7 @@ export function InputForm({ control, name, error, width, mask, ...rest }: InputF
       <Controller
         control={control}
         name={name}
+        defaultValue={defaultValue}
         render={({ field: { onChange, value } }) => (
           <Input
             {...rest}

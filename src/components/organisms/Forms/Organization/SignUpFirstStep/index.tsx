@@ -1,15 +1,17 @@
 import React from 'react';
+import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { useTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
+
+import i18n from '@assets/locales/i18n';
+import { phoneNumberMask } from '@utils/mask';
+import { FirstStepData } from '@dto/sign-up-dto';
+import { useSignUpSteps } from '@hooks/useSignUpSteps';
 
 import { ButtonIcon } from '@molecules/ButtonIcon';
 import { InputForm } from '@molecules/Form/InputForm';
-
-import { FirstStepData } from 'src/dto/sign-up-dto';
-
-import { phoneNumberMask } from '../../../../../utils/mask';
 
 import { Container, Wrapper, ButtonWrapper } from './styles';
 
@@ -18,16 +20,18 @@ interface SignUpFirstStepProps {
 }
 
 const schema = Yup.object().shape({
-  name: Yup.string().required('O nome é obrigatório!'),
-  email: Yup.string().required('O e-mail é obrigatório!').email('E-mail inválido!'),
+  name: Yup.string().required(i18n.t('errors.fill_name')),
+  email: Yup.string().required(i18n.t('errors.fill_email')).email(i18n.t('errors.invalid_email')),
   phoneNumber: Yup.string()
-    .required('O Nº de WhatsApp é obrigatório!')
-    .min(11, 'Número inválido!')
-    .max(11, 'Número inválido!'),
+    .required(i18n.t('errors.fill_phone_number'))
+    .min(11, i18n.t('errors.invalid_phone_number'))
+    .max(11, i18n.t('errors.invalid_phone_number')),
 });
 
 export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
   const theme = useTheme();
+  const { t } = useTranslation();
+  const { formData, serializeFormData } = useSignUpSteps();
 
   const {
     control,
@@ -36,6 +40,7 @@ export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: FirstStepData) => {
+    serializeFormData(data);
     handleNextStep(data);
   };
 
@@ -45,8 +50,9 @@ export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
         name="name"
         control={control}
         error={errors.name && errors.name.message}
-        placeholder="Nome"
+        placeholder={t('common.name')}
         autoCapitalize="words"
+        defaultValue={formData?.name}
       />
 
       <Wrapper>
@@ -54,10 +60,11 @@ export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
           name="email"
           control={control}
           error={errors.email && errors.email.message}
-          placeholder="E-mail"
+          placeholder={t('common.email')}
           autoCapitalize="none"
           autoCorrect={false}
           keyboardType="email-address"
+          defaultValue={formData?.email}
         />
       </Wrapper>
       <InputForm
@@ -66,8 +73,9 @@ export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
         control={control}
         error={errors.phoneNumber && errors.phoneNumber.message}
         mask={phoneNumberMask}
-        placeholder="Nº de WhatsApp"
+        placeholder={t('common.whatsapp_number')}
         keyboardType="phone-pad"
+        defaultValue={formData?.phoneNumber}
       />
       <ButtonWrapper>
         <ButtonIcon

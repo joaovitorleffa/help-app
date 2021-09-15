@@ -15,3 +15,7 @@ export const Header = styled.View`
 export const Wrapper = styled.View`
   margin-top: ${({ theme }) => theme.screen.rem(1.2)}px;
 `;
+
+export const ErrorsWrapper = styled.View`
+  padding-top: ${({ theme }) => theme.screen.rem(1)}px;
+`;

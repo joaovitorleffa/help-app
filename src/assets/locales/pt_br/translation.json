@@ -1,0 +1,59 @@
+{
+  "common": {
+    "entry": "Entrar",
+    "register": "Cadastrar",
+
+    "password": "Senha",
+    "confirm_password": "Confirmar senha",
+    "name": "Nome",
+    "email": "E-mail",
+    "whatsapp_number": "Nº de WhatsApp",
+    "cep": "CEP",
+    "number": "Número",
+    "city": "Cidade",
+    "district": "Bairro"
+  },
+
+  "greetings": {
+    "subtitle": "Ajude a transformar vidas!",
+    "register_a_ong": "Cadastrar uma ONG",
+    "help_a_ong": "Ajudar uma ONG"
+  },
+
+  "sign_up": {
+    "create_title": "Crie uma conta,",
+    "create_message": "Preencha os dados para continuar!",
+    "sign_up_successfully_title": "Cadastro realizado com sucesso",
+    "sign_up_successfully_message": "Você já pode aproveitar todos os benefícios do Help. Comece agora mesmo!"
+  },
+
+  "sign_in": {
+    "welcome": "Bem-vindo (a),",
+    "subtitle": "Entre para continuar!",
+    "no_have_account": "Eu não tenho uma conta,"
+  },
+
+  "ong": {
+    "initial": {
+      "subtitle": "Cadastre causas para\nque as pessoas ajudem!"
+    }
+  },
+
+  "errors": {
+    "unique_email": "Já existe uma conta cadastrada com esse e-mail",
+    "fill_name": "O nome é obrigatório!",
+    "fill_email": "O e-mail é obrigatório!",
+    "invalid_email": "E-mail inválido",
+    "fill_password": "A senha é obrigatória!",
+    "min_password": "A senha deve ter ao menos 6 caracteres!",
+    "fill_confirm_password": "Confirme a senha!",
+    "different_passwords": "As senhas não coincidem!",
+    "fill_phone_number": "O Nº de WhatsApp é obrigatório",
+    "invalid_phone_number": "Nº de WhatsApp inválido!",
+    "fill_cep": "O CEP é obrigatório!",
+    "invalid_cep": "CEP inválido!",
+    "fill_city": "A cidade é obrigatória!",
+    "fill_district": "O bairro é obrigatório!",
+    "fill_number": "O número é obrigatório!"
+  }
+}
