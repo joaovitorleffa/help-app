@@ -1,15 +1,12 @@
-import React, { useEffect } from 'react';
 import { Text } from '@atoms/Text';
+import React from 'react';
 
 import { Container } from './styles';
-import { useAuth } from '@hooks/useAuth';
 
 export function Home() {
-  const { clearAuthData } = useAuth();
-
   return (
     <Container>
-      <Text>teste</Text>
+      <Text>Home person</Text>
     </Container>
   );
 }

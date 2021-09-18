@@ -5,6 +5,7 @@ import { OrganizationNavigatorParamsList } from '../types';
 
 import { OrganizationAppStack } from './app.routes';
 import { OrganizationAuthStack } from './auth.routes';
+import { useAuth } from '@hooks/useAuth';
 
 const Stack = createStackNavigator<OrganizationNavigatorParamsList>();
 

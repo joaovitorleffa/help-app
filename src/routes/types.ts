@@ -26,10 +26,11 @@ export type OrganizationAuthNavigatorParamsList = {
 
 export type OrganizationAppNavigatorParamsList = {
   Home: undefined;
+  Profile: undefined;
 };
 
 export type PersonNavigatorParamsList = {
-  Initial: undefined;
+  Home: undefined;
   SignIn: undefined;
   SignUp: undefined;
 };

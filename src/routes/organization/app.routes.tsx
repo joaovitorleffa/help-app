@@ -1,16 +1,40 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { Entypo, Ionicons } from '@expo/vector-icons';
 
 import { OrganizationAppNavigatorParamsList } from '../types';
 
-import { Home } from '@screens/Organization/Home';
+import { Home, Profile } from '@screens/Organization';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTheme } from 'styled-components';
+import { TabBar } from '@templates/TabBar';
 
-const Stack = createStackNavigator<OrganizationAppNavigatorParamsList>();
+const Stack = createBottomTabNavigator<OrganizationAppNavigatorParamsList>();
 
 export function OrganizationAppStack() {
+  const theme = useTheme();
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
+    <Stack.Navigator
+      tabBar={(props) => <TabBar {...props} />}
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: theme.colors.title_secondary,
+      }}>
+      <Stack.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ color, size }) => <Entypo name="home" size={size} color={color} />,
+        }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => <Ionicons name="person" size={size} color={color} />,
+        }}
+      />
     </Stack.Navigator>
   );
 }

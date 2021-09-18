@@ -18,10 +18,9 @@ interface FormSignInProps {
 export function FormSignIn({ onSignIn }: FormSignInProps) {
   const theme = useTheme();
 
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit, setError } = useForm();
 
   const onSubmit = (data: Data) => {
-    console.log('aaa');
     onSignIn(data);
   };
 

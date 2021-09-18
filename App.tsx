@@ -9,10 +9,11 @@ import {
   NotoSansJP_700Bold,
 } from '@expo-google-fonts/noto-sans-jp';
 import AppLoading from 'expo-app-loading';
-import './src/assets/locales/i18n';
 
-import { ThemeProvider } from './src/styles/ThemeProvider';
+import './src/assets/locales/i18n';
+import { AuthProvider } from '@hooks/useAuth';
 import { Routes } from './src/routes/index.routes';
+import { ThemeProvider } from './src/styles/ThemeProvider';
 import { SignUpStepsProvider } from '@hooks/useSignUpSteps';
 
 function App() {
@@ -31,7 +32,9 @@ function App() {
       <ScreenProvider baseFontSize={18}>
         <ThemeProvider>
           <SignUpStepsProvider>
-            <Routes />
+            <AuthProvider>
+              <Routes />
+            </AuthProvider>
           </SignUpStepsProvider>
         </ThemeProvider>
       </ScreenProvider>

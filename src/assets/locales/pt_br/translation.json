@@ -30,7 +30,8 @@
   "sign_in": {
     "welcome": "Bem-vindo (a),",
     "subtitle": "Entre para continuar!",
-    "no_have_account": "Eu não tenho uma conta,"
+    "no_have_account": "Eu não tenho uma conta,",
+    "invalid_login": "Ops, login inválido!"
   },
 
   "ong": {
