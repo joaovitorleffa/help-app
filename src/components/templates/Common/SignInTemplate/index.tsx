@@ -42,7 +42,7 @@ export function SignInTemplate() {
         userData: response.data.user,
         accessToken: response.data.accessToken,
       });
-      navigation.navigate('OrganizationStack', { screen: 'AppStack', params: { screen: 'Home' } });
+      navigation.replace('OrganizationStack', { screen: 'AppStack', params: { screen: 'Home' } });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status) {

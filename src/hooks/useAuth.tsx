@@ -64,8 +64,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  console.log({ user });
-
   useEffect(() => {
     (async () => {
       const authData = await AsyncStorage.getItem(STORAGE_KEY);

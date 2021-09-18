@@ -1,12 +1,19 @@
-import { AccountInfo } from '@molecules/AccountInfo';
 import React from 'react';
+
+import { AccountInfo } from '@molecules/AccountInfo';
 
 import { Container } from './styles';
 
-export function ProfileDescription() {
+interface ProfileDescriptionProps {
+  name: string;
+  email: string;
+  onLogout: () => void;
+}
+
+export function ProfileDescription({ name, email, onLogout }: ProfileDescriptionProps) {
   return (
     <Container>
-      <AccountInfo name="Ong 01" email="ong01@gmail.com" onLogout={() => {}} />
+      <AccountInfo name={name} email={email} onLogout={onLogout} />
     </Container>
   );
 }

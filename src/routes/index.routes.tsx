@@ -19,8 +19,6 @@ export function Routes() {
   const { user, isLoading } = useAuth();
   const theme = useTheme();
 
-  console.log(isLoading);
-
   if (isLoading) return <ActivityIndicator color={theme.colors.primary} />;
 
   return (

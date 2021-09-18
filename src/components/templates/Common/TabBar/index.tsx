@@ -46,6 +46,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 
         return (
           <Button
+            key={index}
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
