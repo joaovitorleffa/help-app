@@ -6,7 +6,7 @@ import { OrganizationAppNavigatorParamsList } from '../types';
 import { Home, Profile } from '@screens/Organization';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTheme } from 'styled-components';
-import { TabBar } from '@templates/TabBar';
+import { TabBar } from '@templates/Common/TabBar';
 
 const Stack = createBottomTabNavigator<OrganizationAppNavigatorParamsList>();
 

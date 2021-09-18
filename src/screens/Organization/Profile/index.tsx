@@ -1,12 +1,13 @@
-import { Text } from '@atoms/Text';
 import React from 'react';
+
+import { ProfileInfo } from '@templates/Organization/ProfileInfo';
 
 import { Container } from './styles';
 
 export function Profile() {
   return (
     <Container>
-      <Text>Profile</Text>
+      <ProfileInfo />
     </Container>
   );
 }

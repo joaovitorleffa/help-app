@@ -11,7 +11,7 @@ import { OrganizationAuthNavigatorParamsList } from '@routes/types';
 import { FooterText } from '@molecules/FooterText';
 import { FormSteps } from '@molecules/Form/FormSteps';
 import { SectionHeader } from '@molecules/SectionHeader';
-import { SignUpFirstStep } from '@organisms/Forms/Organization/SignUpFirstStep';
+import { SignUpFirstStep } from '@organisms/Common/Forms/Organization/SignUpFirstStep';
 
 import { Container, Header, Wrapper } from './styles';
 

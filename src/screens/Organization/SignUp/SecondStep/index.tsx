@@ -1,5 +1,5 @@
 import React from 'react';
-import { SecondStepTemplate } from '@templates/SignUpTemplate/SecondStepTemplate';
+import { SecondStepTemplate } from '@templates/Organization/SignUpTemplate/SecondStepTemplate';
 
 import { Container } from './styles';
 

@@ -15,7 +15,7 @@ import { Text } from '@atoms/Text';
 import { FormSteps } from '@molecules/Form/FormSteps';
 import { useSignUpSteps } from '@hooks/useSignUpSteps';
 import { SectionHeader } from '@molecules/SectionHeader';
-import { SignUpThirdStep } from '@organisms/Forms/Organization/SignUpThirdStep';
+import { SignUpThirdStep } from '@organisms/Common/Forms/Organization/SignUpThirdStep';
 
 import { Container, Header, Wrapper, ErrorsWrapper } from './styles';
 

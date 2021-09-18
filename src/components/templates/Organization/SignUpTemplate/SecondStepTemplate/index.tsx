@@ -8,7 +8,7 @@ import { OrganizationAuthNavigatorParamsList } from '@routes/types';
 
 import { FormSteps } from '@molecules/Form/FormSteps';
 import { SectionHeader } from '@molecules/SectionHeader';
-import { SignUpSecondStep } from '@organisms/Forms/Organization/SignUpSecondStep';
+import { SignUpSecondStep } from '@organisms/Common/Forms/Organization/SignUpSecondStep';
 
 import { Container, Header, Wrapper } from './styles';
 import { SecondStepData } from '@dto/sign-up-dto';

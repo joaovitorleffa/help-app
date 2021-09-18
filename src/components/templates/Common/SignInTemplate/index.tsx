@@ -14,7 +14,7 @@ import { RootNavigatorParamsList } from '@routes/types';
 import { Text } from '@atoms/Text';
 import { FooterText } from '@molecules/FooterText';
 import { SectionHeader } from '@molecules/SectionHeader';
-import { FormSignIn } from '@organisms/Forms/FormSignIn';
+import { FormSignIn } from '@organisms/Common/Forms/FormSignIn';
 
 import { Container, Header } from './styles';
 

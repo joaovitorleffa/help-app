@@ -3,7 +3,7 @@ import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { InitialScreen } from '@templates/InitialScreen';
+import { InitialScreen } from '@templates/Common/InitialScreen';
 
 import { Container } from './styles';
 
