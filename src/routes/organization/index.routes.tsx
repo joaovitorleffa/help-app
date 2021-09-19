@@ -5,7 +5,7 @@ import { OrganizationNavigatorParamsList } from '../types';
 
 import { OrganizationAppStack } from './app.routes';
 import { OrganizationAuthStack } from './auth.routes';
-import { useAuth } from '@hooks/useAuth';
+import { EditProfile } from '@screens/Organization';
 
 const Stack = createStackNavigator<OrganizationNavigatorParamsList>();
 
@@ -14,6 +14,7 @@ export function OrganizationRoutes() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AppStack" component={OrganizationAppStack} />
       <Stack.Screen name="AuthStack" component={OrganizationAuthStack} />
+      <Stack.Screen name="EditProfile" component={EditProfile} />
     </Stack.Navigator>
   );
 }

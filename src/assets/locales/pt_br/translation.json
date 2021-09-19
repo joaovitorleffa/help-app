@@ -4,6 +4,7 @@
     "register": "Cadastrar",
 
     "password": "Senha",
+    "description": "Descrição",
     "confirm_password": "Confirmar senha",
     "name": "Nome",
     "email": "E-mail",
@@ -11,7 +12,10 @@
     "cep": "CEP",
     "number": "Número",
     "city": "Cidade",
-    "district": "Bairro"
+    "district": "Bairro",
+    "media_permission": "Precisamos da sua permissão para suas imagens",
+    "save": "Salvar",
+    "sorry": "Desculpe"
   },
 
   "greetings": {
@@ -40,6 +44,10 @@
     }
   },
 
+  "edit_profile": {
+    "edit_profile_title": "Editar informações"
+  },
+
   "errors": {
     "unique_email": "Já existe uma conta cadastrada com esse e-mail",
     "fill_name": "O nome é obrigatório!",
@@ -55,6 +63,7 @@
     "invalid_cep": "CEP inválido!",
     "fill_city": "A cidade é obrigatória!",
     "fill_district": "O bairro é obrigatório!",
-    "fill_number": "O número é obrigatório!"
+    "fill_number": "O número é obrigatório!",
+    "invalid_description": "A descrição deve ter no máximo 200 caracteres!"
   }
 }

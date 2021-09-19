@@ -23,6 +23,13 @@ export default {
     regular: 'NotoSansJP_400Regular',
     medium: 'NotoSansJP_500Medium',
     bold: 'NotoSansJP_700Bold',
+    size: {
+      xs: 0.6,
+      sm: 0.8,
+      md: 1,
+      lg: 1.35,
+      xl: 2,
+    },
   },
   spacing: {
     grid: 24,

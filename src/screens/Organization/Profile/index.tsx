@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
+import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 
+import { useAuth } from '@hooks/useAuth';
+
+import { FloatButton } from '@molecules/FloatButton';
 import { ProfileInfo } from '@templates/Organization/ProfileInfo';
 
 import { Container } from './styles';
-import { useAuth } from '@hooks/useAuth';
-import {
-  CompositeNavigationProp,
-  CompositeScreenProps,
-  useNavigation,
-} from '@react-navigation/core';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
-import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
-import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 type OrganizationProfileNavigationScreenProp = CompositeNavigationProp<
   BottomTabNavigationProp<OrganizationAppNavigatorParamsList, 'Home'>,
@@ -22,14 +20,19 @@ export function Profile() {
   const navigation = useNavigation<OrganizationProfileNavigationScreenProp>();
   const { organization, user, clearAuthData } = useAuth();
 
-  const onLogout = useCallback(async () => {
+  const handleLogout = useCallback(async () => {
     await clearAuthData();
     navigation.replace('AuthStack', { screen: 'Initial' });
   }, []);
 
+  const handleEdit = useCallback(() => {
+    navigation.navigate('EditProfile');
+  }, []);
+
   return (
     <Container>
-      <ProfileInfo name={organization.name} email={user.email} onLogout={onLogout} />
+      <ProfileInfo name={organization.name} email={user.email} onLogout={handleLogout} />
+      <FloatButton icon="mode-edit" onPress={handleEdit} />
     </Container>
   );
 }

@@ -1,8 +1,9 @@
 import React from 'react';
 
+import { ProfileBanner } from '@organisms/Organization/ProfileBanner';
 import { ProfileDescription } from '@organisms/Organization/ProfileDescription';
 
-import { Container } from './styles';
+import { Container, Wrapper } from './styles';
 
 interface ProfileInfoProps {
   name: string;
@@ -13,7 +14,10 @@ interface ProfileInfoProps {
 export function ProfileInfo({ name, email, onLogout }: ProfileInfoProps) {
   return (
     <Container>
-      <ProfileDescription name={name} email={email} onLogout={onLogout} />
+      <ProfileBanner />
+      <Wrapper>
+        <ProfileDescription name={name} email={email} onLogout={onLogout} />
+      </Wrapper>
     </Container>
   );
 }

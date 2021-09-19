@@ -4,6 +4,8 @@ interface OrganizationDto {
   id: number;
   name: string;
   phoneNumber: string;
+  profileImage: string | null;
+  description: string | null;
   cep: string;
   city: string;
   district: string;

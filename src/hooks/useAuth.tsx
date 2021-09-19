@@ -2,6 +2,7 @@ import { UserDto, UserTypeEnum } from '@dto/user-dto';
 import { AuthOrganizationDto, OrganizationDto } from '@dto/organization-dto';
 import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { api } from '@services/api';
 
 type SetOrganizationData = AuthOrganizationDto;
 
@@ -11,6 +12,7 @@ interface AuthContextData {
   organization: OrganizationDto;
   isLoading: boolean;
   clearAuthData: () => Promise<void>;
+  reconcileOrganizationData: (organizationData: OrganizationDto) => void;
   setOrganizationData: ({
     organizationData,
     userData,
@@ -46,9 +48,14 @@ function AuthProvider({ children }: AuthProviderProps) {
         STORAGE_KEY,
         JSON.stringify({ organizationData, userData, accessToken }),
       );
+      api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     } catch (error: any) {
       throw new Error(error);
     }
+  }
+
+  function reconcileOrganizationData(organizationData: OrganizationDto) {
+    setOrganization({ ...organization, ...organizationData });
   }
 
   async function clearAuthData(): Promise<void> {
@@ -58,6 +65,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
     try {
       await AsyncStorage.removeItem(STORAGE_KEY);
+      api.defaults.headers.common['Authorization'] = '';
     } catch (error: any) {
       console.log('[clearAuthData] error:', error);
       throw new Error(error);
@@ -82,7 +90,15 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ user, accessToken, organization, isLoading, setOrganizationData, clearAuthData }}>
+      value={{
+        user,
+        accessToken,
+        organization,
+        isLoading,
+        setOrganizationData,
+        reconcileOrganizationData,
+        clearAuthData,
+      }}>
       {children}
     </AuthContext.Provider>
   );
