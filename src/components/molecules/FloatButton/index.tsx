@@ -30,7 +30,7 @@ export function FloatButton({ icon, ...rest }: FloatButtonProps) {
       positionX.value = context.positionX + event.translationX;
       positionY.value = context.positionY + event.translationY;
     },
-    onEnd: (event) => {
+    onEnd: () => {
       positionX.value = withSpring(0);
       positionY.value = withSpring(0);
     },

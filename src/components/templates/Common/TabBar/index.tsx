@@ -1,68 +1,61 @@
 import React from 'react';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { TouchableOpacity } from 'react-native';
-
-import { Container, Button } from './styles';
-import { Text } from '@atoms/Text';
-import { useTheme } from 'styled-components';
 import { useRem } from 'responsive-native';
+import { useTheme } from 'styled-components';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
+import { Container, Content, Button } from './styles';
+
+export function TabBar({ state, descriptors, navigation }: BottomTabBarProps): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
 
   return (
     <Container>
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-            ? options.title
-            : route.name;
+      <Content>
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
 
-        const isFocused = state.index === index;
+          const isFocused = state.index === index;
 
-        const onPress = () => {
-          const event = navigation.emit({
-            type: 'tabPress',
-            target: route.key,
-            canPreventDefault: true,
-          });
+          const onPress = () => {
+            const event = navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
 
-          if (!isFocused && !event.defaultPrevented) {
-            // The `merge: true` option makes sure that the params inside the tab screen are preserved
-            navigation.navigate({ name: route.name, merge: true, params: {} });
-          }
-        };
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.navigate({ name: route.name, merge: true, params: {} });
+            }
+          };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: 'tabLongPress',
-            target: route.key,
-          });
-        };
+          const onLongPress = () => {
+            navigation.emit({
+              type: 'tabLongPress',
+              target: route.key,
+            });
+          };
 
-        return (
-          <Button
-            key={index}
-            accessibilityRole="button"
-            accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
-            isFocused={isFocused}
-            onPress={onPress}
-            onLongPress={onLongPress}>
-            {options.tabBarIcon &&
-              options.tabBarIcon({
-                focused: isFocused,
-                color: theme.colors.title_secondary,
-                size: rem(1.4),
-              })}
-          </Button>
-        );
-      })}
+          return (
+            <Button
+              key={index}
+              accessibilityRole="button"
+              accessibilityState={isFocused ? { selected: true } : {}}
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+              testID={options.tabBarTestID}
+              isFocused={isFocused}
+              onPress={onPress}
+              onLongPress={onLongPress}>
+              {options.tabBarIcon &&
+                options.tabBarIcon({
+                  focused: isFocused,
+                  color: theme.colors.title_secondary,
+                  size: rem(1.4),
+                })}
+            </Button>
+          );
+        })}
+      </Content>
     </Container>
   );
 }

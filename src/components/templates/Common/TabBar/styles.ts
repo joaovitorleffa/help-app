@@ -6,6 +6,10 @@ interface ButtonProps {
 }
 
 export const Container = styled.View`
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
+export const Content = styled.View`
   height: ${({ theme }) => theme.screen.rem(4) + getBottomSpace() / 3}px;
   background-color: ${({ theme }) => theme.colors.secondary};
   border-top-left-radius: ${({ theme }) => theme.screen.rem(2)}px;
@@ -29,6 +33,6 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   ${({ theme, isFocused }) =>
     isFocused &&
     css`
-      background-color: ${({ theme }) => theme.colors.primary};
+      background-color: ${theme.colors.primary};
     `}
 `;
