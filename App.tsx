@@ -1,6 +1,7 @@
 import React from 'react';
 import 'react-native-gesture-handler';
 import { ScreenProvider } from 'responsive-native';
+import FlashMessage from 'react-native-flash-message';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
@@ -16,7 +17,7 @@ import { Routes } from './src/routes/index.routes';
 import { ThemeProvider } from './src/styles/ThemeProvider';
 import { SignUpStepsProvider } from '@hooks/useSignUpSteps';
 
-function App() {
+function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
     NotoSansJP_400Regular,
     NotoSansJP_500Medium,
@@ -34,6 +35,7 @@ function App() {
           <SignUpStepsProvider>
             <AuthProvider>
               <Routes />
+              <FlashMessage position="top" />
             </AuthProvider>
           </SignUpStepsProvider>
         </ThemeProvider>

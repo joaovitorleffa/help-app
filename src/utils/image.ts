@@ -1,6 +1,12 @@
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 
-const getImageInfo = (image: ImageInfo, name?: string) => {
+type GetImageInfo = {
+  name: string;
+  type: string;
+  uri: string;
+};
+
+const getImageInfo = (image: ImageInfo, name?: string): GetImageInfo => {
   const splitBars = image.uri.split('/');
   const splitBarsLastIndex = splitBars.length - 1;
   const defaultFileName = splitBars[splitBarsLastIndex];

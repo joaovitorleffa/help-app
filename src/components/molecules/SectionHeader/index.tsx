@@ -11,7 +11,11 @@ interface SectionHeaderProps {
   isDark?: boolean;
 }
 
-export function SectionHeader({ title, subtitle, isDark = false }: SectionHeaderProps) {
+export function SectionHeader({
+  title,
+  subtitle,
+  isDark = false,
+}: SectionHeaderProps): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   return (

@@ -10,7 +10,7 @@ import { TabBar } from '@templates/Common/TabBar';
 
 const Stack = createBottomTabNavigator<OrganizationAppNavigatorParamsList>();
 
-export function OrganizationAppStack() {
+export function OrganizationAppStack(): JSX.Element {
   const theme = useTheme();
 
   return (

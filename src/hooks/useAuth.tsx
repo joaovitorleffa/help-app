@@ -1,8 +1,16 @@
+import React, {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+  useCallback,
+} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { api } from '@services/api';
 import { UserDto, UserTypeEnum } from '@dto/user-dto';
 import { AuthOrganizationDto, OrganizationDto } from '@dto/organization-dto';
-import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { api } from '@services/api';
 
 type SetOrganizationData = AuthOrganizationDto;
 
@@ -28,37 +36,36 @@ const AuthContext = createContext({} as AuthContextData);
 
 const STORAGE_KEY = '@help-app:user';
 
-function AuthProvider({ children }: AuthProviderProps) {
+function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [user, setUser] = useState({} as UserDto);
   const [accessToken, setAccessToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [organization, setOrganization] = useState({} as OrganizationDto);
 
-  async function setOrganizationData({
-    organizationData,
-    userData,
-    accessToken,
-  }: SetOrganizationData): Promise<void> {
-    setUser(userData);
-    setOrganization(organizationData);
-    setAccessToken(accessToken);
+  const setOrganizationData = useCallback(
+    async ({ organizationData, userData, accessToken }: SetOrganizationData): Promise<void> => {
+      setUser(userData);
+      setOrganization(organizationData);
+      setAccessToken(accessToken);
 
-    try {
-      await AsyncStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ organizationData, userData, accessToken }),
-      );
-      api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-    } catch (error: any) {
-      throw new Error(error);
-    }
-  }
+      try {
+        await AsyncStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ organizationData, userData, accessToken }),
+        );
+        api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      } catch (error: any) {
+        throw new Error(error);
+      }
+    },
+    [],
+  );
 
-  function reconcileOrganizationData(organizationData: OrganizationDto) {
-    setOrganization({ ...organization, ...organizationData });
-  }
+  const reconcileOrganizationData = useCallback((organizationData: OrganizationDto) => {
+    setOrganization((prevState) => ({ ...prevState, ...organizationData }));
+  }, []);
 
-  async function clearAuthData(): Promise<void> {
+  const clearAuthData = useCallback(async (): Promise<void> => {
     setAccessToken('');
     setUser({} as UserDto);
     setOrganization({} as OrganizationDto);
@@ -70,7 +77,7 @@ function AuthProvider({ children }: AuthProviderProps) {
       console.log('[clearAuthData] error:', error);
       throw new Error(error);
     }
-  }
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -86,7 +93,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       setIsLoading(false);
     })();
-  }, []);
+  }, [setOrganizationData]);
 
   return (
     <AuthContext.Provider
@@ -104,7 +111,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   );
 }
 
-function useAuth() {
+function useAuth(): AuthContextData {
   const context = useContext(AuthContext);
 
   return context;

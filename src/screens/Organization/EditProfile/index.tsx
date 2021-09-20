@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { showMessage } from 'react-native-flash-message';
 import Spinner from 'react-native-loading-spinner-overlay';
+import { RouteProp, useRoute } from '@react-navigation/core';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 import { Alert, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 import Animated, {
@@ -20,12 +22,16 @@ import { api } from '@services/api';
 import i18n from '@assets/locales/i18n';
 import { useAuth } from '@hooks/useAuth';
 import { getImageInfo } from '@utils/image';
+import { OrganizationNavigatorParamsList } from '@routes/types';
 
 import { Text } from '@atoms/Text';
 import { Banner } from '@molecules/Banner';
 import { Button } from '@molecules/Button';
+import { BackHeader } from '@molecules/BackHeader';
 
 import { Container, Wrapper, BannerContainer, TextArea } from './styles';
+
+type EditProfileScreenRouteProp = RouteProp<OrganizationNavigatorParamsList, 'EditProfile'>;
 
 interface Data {
   description: string;
@@ -35,16 +41,19 @@ const schema = Yup.object().shape({
   description: Yup.string().max(400, i18n.t('errors.invalid_description')),
 });
 
-export function EditProfile() {
+export function EditProfile(): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
+  const { params } = useRoute<EditProfileScreenRouteProp>();
+
+  const { profileImage, description } = params;
 
   const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [profileImage, setProfileImage] = useState<ImageInfo>({} as ImageInfo);
+  const [newProfileImage, setNewProfileImage] = useState<ImageInfo>({} as ImageInfo);
 
-  const { organization, reconcileOrganizationData, accessToken } = useAuth();
+  const { organization, reconcileOrganizationData } = useAuth();
 
   const {
     control,
@@ -62,9 +71,7 @@ export function EditProfile() {
 
   const updateImage = useCallback(async () => {
     try {
-      setIsLoading(true);
-
-      const imageInfo = getImageInfo(profileImage, organization.name);
+      const imageInfo = getImageInfo(newProfileImage, organization.name);
 
       const form = new FormData();
       const file = JSON.parse(JSON.stringify(imageInfo));
@@ -74,10 +81,21 @@ export function EditProfile() {
     } catch (error: any) {
       console.log('[updateImage]:', error);
       throw error;
-    } finally {
-      setIsLoading(false);
     }
-  }, [profileImage]);
+  }, [organization.name, newProfileImage]);
+
+  const updateProfile = useCallback(
+    async (data: Data) => {
+      try {
+        const response = await api.put('organizations/edit', data);
+        reconcileOrganizationData(response.data);
+      } catch (error) {
+        console.log('[updateProfile]: ', error);
+        throw error;
+      }
+    },
+    [reconcileOrganizationData],
+  );
 
   const handleSelectImage = useCallback(async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -85,7 +103,7 @@ export function EditProfile() {
       return Alert.alert(t('common.sorry'), t('common.media_permission'));
     }
 
-    let result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
@@ -93,17 +111,28 @@ export function EditProfile() {
     });
 
     if (!result.cancelled) {
-      setProfileImage(result);
+      setNewProfileImage(result);
     }
-  }, []);
+  }, [t]);
 
   const onSubmit = async (data: Data) => {
     try {
-      await updateImage();
-      const response = await api.put('organizations/edit', data);
-      reconcileOrganizationData(response.data);
+      setIsLoading(true);
+      if (Object.keys(newProfileImage).length) {
+        await updateImage();
+      }
+      if (description !== data.description) {
+        await updateProfile(data);
+      }
     } catch (error) {
       console.log('[onSubmit]:', error);
+      showMessage({
+        message: t('common.error'),
+        description: t('errors.edit_profile_error'),
+        type: 'danger',
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -113,24 +142,20 @@ export function EditProfile() {
     } else {
       heightAnim.value = withTiming(0, { duration: 200 });
     }
-  }, [isFocused]);
-
-  organization.profileImage;
+  }, [isFocused, heightAnim]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Container>
         <View>
           <Wrapper style={{ marginTop: 56 }}>
-            <Text fontSize={rem(theme.fonts.size.lg)} fontFamily="bold">
-              {t('edit_profile.edit_profile_title')}
-            </Text>
+            <BackHeader title={t('edit_profile.edit_profile_title')} />
           </Wrapper>
           <Animated.View style={heightStyle}>
             <BannerContainer>
               <Banner
                 showContent={!isFocused}
-                uri={profileImage?.uri ? profileImage.uri : organization.profileImage ?? ''}
+                uri={newProfileImage?.uri ? newProfileImage.uri : profileImage ?? ''}
                 onSelectImage={handleSelectImage}
               />
             </BannerContainer>
@@ -139,7 +164,7 @@ export function EditProfile() {
             <Controller
               control={control}
               name="description"
-              defaultValue={organization.description}
+              defaultValue={description}
               render={({ field: { onChange, value } }) => (
                 <TextArea
                   multiline
@@ -148,7 +173,7 @@ export function EditProfile() {
                   isFocused={isFocused}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
-                  placeholder={t('description')}
+                  placeholder={t('common.description')}
                   error={!!errors?.description?.message}
                   placeholderTextColor={theme.colors.placeholder}
                 />
@@ -169,7 +194,11 @@ export function EditProfile() {
             onPress={handleSubmit(onSubmit)}
           />
         </Wrapper>
-        <Spinner visible={isLoading} textContent={'Loading...'} />
+        <Spinner
+          visible={isLoading}
+          textContent={t('common.loading')}
+          textStyle={{ color: theme.colors.title_secondary }}
+        />
       </Container>
     </TouchableWithoutFeedback>
   );

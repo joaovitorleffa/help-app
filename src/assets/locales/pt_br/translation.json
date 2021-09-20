@@ -15,7 +15,9 @@
     "district": "Bairro",
     "media_permission": "Precisamos da sua permissão para suas imagens",
     "save": "Salvar",
-    "sorry": "Desculpe"
+    "sorry": "Desculpe",
+    "loading": "Carregando",
+    "error": "Erro"
   },
 
   "greetings": {
@@ -64,6 +66,9 @@
     "fill_city": "A cidade é obrigatória!",
     "fill_district": "O bairro é obrigatório!",
     "fill_number": "O número é obrigatório!",
-    "invalid_description": "A descrição deve ter no máximo 200 caracteres!"
+    "invalid_description": "A descrição deve ter no máximo 200 caracteres!",
+
+    "load_profile_error": "Não foi possível carregar os dados do perfil.",
+    "edit_profile_error": "Não foi possível editar perfil."
   }
 }

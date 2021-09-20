@@ -14,7 +14,7 @@ export type RootNavigatorParamsList = {
 export type OrganizationNavigatorParamsList = {
   AuthStack: NavigatorScreenParams<OrganizationAuthNavigatorParamsList>;
   AppStack: NavigatorScreenParams<OrganizationAppNavigatorParamsList>;
-  EditProfile: undefined;
+  EditProfile: { profileImage: string | null; description: string | null };
 };
 
 export type OrganizationAuthNavigatorParamsList = {

@@ -25,12 +25,12 @@ export const TextArea = styled.TextInput<TextAreaProps>`
   padding: 4px 0px;
   color: ${({ theme }) => theme.colors.text};
   border-color: ${({ theme }) => theme.colors.placeholder};
-  font-size: ${({ theme }) => theme.screen.rem(theme.fonts.size.sm)}px;
+  font-size: ${({ theme }) => theme.screen.rem(theme.fonts.size.md)}px;
 
   ${({ isFocused }) =>
     !isFocused &&
     css`
-      border-bottom-width: 2px;
+      border-bottom-width: 1px;
     `};
 
   ${({ error }) =>

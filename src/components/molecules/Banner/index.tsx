@@ -1,8 +1,8 @@
-import { Text } from '@atoms/Text';
 import React from 'react';
-import { View } from 'react-native';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
+
+import { Text } from '@atoms/Text';
 
 import { Container, Wrapper, Icon, Photo } from './styles';
 
@@ -12,7 +12,7 @@ interface BannerProps {
   onSelectImage: () => void;
 }
 
-export function Banner({ uri, showContent = true, onSelectImage }: BannerProps) {
+export function Banner({ uri, showContent = true, onSelectImage }: BannerProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   return (
