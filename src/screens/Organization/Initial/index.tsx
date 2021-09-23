@@ -7,7 +7,7 @@ import { InitialScreen } from '@templates/Common/InitialScreen';
 
 import { Container } from './styles';
 
-export function Initial() {
+export function Initial(): JSX.Element {
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -16,7 +16,7 @@ export function Initial() {
       <LinearGradient
         colors={[theme.colors.primary, theme.colors.primary_100, theme.colors.primary_200]}
         style={{ flex: 1 }}>
-        <InitialScreen title="Help." subtitle={t('ong.initial.subtitle')} />
+        <InitialScreen title="Help." subtitle={t('initial.subtitle')} />
       </LinearGradient>
     </Container>
   );

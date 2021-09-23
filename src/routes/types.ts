@@ -15,6 +15,7 @@ export type OrganizationNavigatorParamsList = {
   AuthStack: NavigatorScreenParams<OrganizationAuthNavigatorParamsList>;
   AppStack: NavigatorScreenParams<OrganizationAppNavigatorParamsList>;
   EditProfile: { profileImage: string | null; description: string | null };
+  AddCause: undefined;
 };
 
 export type OrganizationAuthNavigatorParamsList = {
@@ -26,7 +27,7 @@ export type OrganizationAuthNavigatorParamsList = {
 };
 
 export type OrganizationAppNavigatorParamsList = {
-  Home: undefined;
+  CauseList: undefined;
   Profile: undefined;
 };
 

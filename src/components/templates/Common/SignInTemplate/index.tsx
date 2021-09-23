@@ -25,7 +25,7 @@ interface Data {
   password: string;
 }
 
-export function SignInTemplate() {
+export function SignInTemplate(): JSX.Element {
   const { t } = useTranslation();
   const rem = useRem();
   const theme = useTheme();
@@ -42,7 +42,10 @@ export function SignInTemplate() {
         userData: response.data.user,
         accessToken: response.data.accessToken,
       });
-      navigation.replace('OrganizationStack', { screen: 'AppStack', params: { screen: 'Home' } });
+      navigation.replace('OrganizationStack', {
+        screen: 'AppStack',
+        params: { screen: 'CauseList' },
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status) {

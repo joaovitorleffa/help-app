@@ -17,7 +17,7 @@ interface FloatButtonProps extends RectButtonProps {
   icon: React.ComponentProps<typeof MaterialIcons>['name'];
 }
 
-export function FloatButton({ icon, ...rest }: FloatButtonProps) {
+export function FloatButton({ icon, ...rest }: FloatButtonProps): JSX.Element {
   const positionX = useSharedValue(0);
   const positionY = useSharedValue(0);
 

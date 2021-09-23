@@ -1,12 +1,12 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 import { Entypo, Ionicons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { OrganizationAppNavigatorParamsList } from '../types';
 
-import { Home, Profile } from '@screens/Organization';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useTheme } from 'styled-components';
 import { TabBar } from '@templates/Common/TabBar';
+import { CauseList, Profile } from '@screens/Organization';
 
 const Stack = createBottomTabNavigator<OrganizationAppNavigatorParamsList>();
 
@@ -21,9 +21,10 @@ export function OrganizationAppStack(): JSX.Element {
         tabBarActiveTintColor: theme.colors.title_secondary,
       }}>
       <Stack.Screen
-        name="Home"
-        component={Home}
+        name="CauseList"
+        component={CauseList}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <Entypo name="home" size={size} color={color} />,
         }}
       />

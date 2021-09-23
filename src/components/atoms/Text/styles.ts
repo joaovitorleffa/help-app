@@ -9,6 +9,12 @@ export const Content = styled.Text<TextStyleProps>`
   line-height: ${({ theme, fontSize }) =>
     (fontSize ?? theme.screen.rem(1)) + theme.screen.rem(0.5)}px;
 
+  ${({ lineHeight }) =>
+    lineHeight &&
+    css`
+      line-height: ${lineHeight}px;
+    `}
+
   ${({ textAlign }) =>
     textAlign &&
     css`

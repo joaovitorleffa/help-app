@@ -3,7 +3,7 @@ import { ThirdStepTemplate } from '@templates/Organization/SignUpTemplate/ThirdS
 
 import { Container } from './styles';
 
-export function ThirdStep() {
+export function ThirdStep(): JSX.Element {
   return (
     <Container>
       <ThirdStepTemplate />

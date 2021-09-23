@@ -26,7 +26,7 @@ type ThirdStepScreenNavigationProp = CompositeNavigationProp<
   StackNavigationProp<OrganizationAuthNavigatorParamsList>
 >;
 
-export function ThirdStepTemplate() {
+export function ThirdStepTemplate(): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const route = useRoute();

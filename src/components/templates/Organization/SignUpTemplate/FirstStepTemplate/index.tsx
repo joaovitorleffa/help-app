@@ -20,7 +20,7 @@ type FirstStepNavigationScreenProp = StackNavigationProp<
   'SignUpFirstStep'
 >;
 
-export function FirstStepTemplate() {
+export function FirstStepTemplate(): JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation<FirstStepNavigationScreenProp>();
 

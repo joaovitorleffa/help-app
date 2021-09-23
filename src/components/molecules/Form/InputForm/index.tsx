@@ -8,6 +8,9 @@ import { Input } from '../Input';
 import { Text } from '@atoms/Text';
 
 import { Container } from './styles';
+import { TextArea } from '../TextArea';
+import { Items, Select } from '../Select';
+import { DatePicker } from '../DatePicker';
 
 interface InputFormProps extends TextInputProps {
   control: Control;
@@ -16,6 +19,8 @@ interface InputFormProps extends TextInputProps {
   width?: string | number;
   mask?: (text: string) => string;
   defaultValue?: string;
+  items?: Items[];
+  inputType?: 'textArea' | 'input' | 'select' | 'date';
 }
 
 export function InputForm({
@@ -24,9 +29,11 @@ export function InputForm({
   error,
   width,
   mask,
+  items,
   defaultValue = '',
+  inputType = 'input',
   ...rest
-}: InputFormProps) {
+}: InputFormProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   return (
@@ -35,14 +42,29 @@ export function InputForm({
         control={control}
         name={name}
         defaultValue={defaultValue}
-        render={({ field: { onChange, value } }) => (
-          <Input
-            {...rest}
-            error={!!error}
-            value={mask ? mask(value) : value}
-            onChangeText={onChange}
-          />
-        )}
+        render={({ field: { onChange, value } }) =>
+          inputType === 'input' ? (
+            <Input
+              {...rest}
+              error={!!error}
+              value={mask ? mask(value) : value}
+              onChangeText={onChange}
+            />
+          ) : inputType === 'textArea' ? (
+            <TextArea {...rest} error={!!error} value={value} onChangeText={onChange} />
+          ) : inputType === 'select' ? (
+            <Select
+              style={rest.style}
+              items={items!}
+              placeholder={rest.placeholder!}
+              error={!!error}
+              value={value}
+              onChange={onChange}
+            />
+          ) : (
+            <DatePicker style={rest.style} />
+          )
+        }
       />
       {!!error && (
         <Text fontSize={rem(0.65)} color={theme.colors.error}>

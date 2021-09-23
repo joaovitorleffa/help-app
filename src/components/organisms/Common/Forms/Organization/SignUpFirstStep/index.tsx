@@ -28,7 +28,7 @@ const schema = Yup.object().shape({
     .max(11, i18n.t('errors.invalid_phone_number')),
 });
 
-export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps) {
+export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps): JSX.Element {
   const theme = useTheme();
   const { t } = useTranslation();
   const { formData, serializeFormData } = useSignUpSteps();

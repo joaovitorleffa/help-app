@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '@services/api';
 import { UserDto, UserTypeEnum } from '@dto/user-dto';
 import { AuthOrganizationDto, OrganizationDto } from '@dto/organization-dto';
+import axios from 'axios';
 
 type SetOrganizationData = AuthOrganizationDto;
 

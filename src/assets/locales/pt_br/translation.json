@@ -17,7 +17,11 @@
     "save": "Salvar",
     "sorry": "Desculpe",
     "loading": "Carregando",
-    "error": "Erro"
+    "error": "Erro",
+    "add_cause": "Adicionar causa",
+    "type": "Tipo",
+    "donation": "Doação",
+    "voluntary_work": "Trabalho voluntário"
   },
 
   "greetings": {
@@ -40,14 +44,20 @@
     "invalid_login": "Ops, login inválido!"
   },
 
-  "ong": {
-    "initial": {
-      "subtitle": "Cadastre causas para\nque as pessoas ajudem!"
-    }
+  "initial": {
+    "subtitle": "Cadastre causas para\nque as pessoas ajudem!"
   },
 
   "edit_profile": {
     "edit_profile_title": "Editar informações"
+  },
+
+  "cause_list": {
+    "title": "Minhas causas"
+  },
+
+  "create_cause": {
+    "title": "Criar causa"
   },
 
   "errors": {
@@ -67,6 +77,12 @@
     "fill_district": "O bairro é obrigatório!",
     "fill_number": "O número é obrigatório!",
     "invalid_description": "A descrição deve ter no máximo 200 caracteres!",
+    "fill_title": "O título é obrigatório!",
+    "max_title": "O título deve ter no máximo {{ caracteres }}!",
+    "fill_description": "A descrição é obrigatória!",
+    "max_description": "A descrição deve ter no máximo {{ caracteres }}!",
+    "fill_end_at": "A data de encerramento é obrigatória!",
+    "fill_type": "O tipo é obrigatório",
 
     "load_profile_error": "Não foi possível carregar os dados do perfil.",
     "edit_profile_error": "Não foi possível editar perfil."

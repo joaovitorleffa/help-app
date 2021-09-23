@@ -1,4 +1,5 @@
 import React from 'react';
+import { Host } from 'react-native-portalize';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -15,7 +16,7 @@ import { useTheme } from 'styled-components';
 
 const Stack = createStackNavigator<RootNavigatorParamsList>();
 
-export function Routes() {
+export function Routes(): JSX.Element {
   const { user, isLoading } = useAuth();
   const theme = useTheme();
 
@@ -23,20 +24,22 @@ export function Routes() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!user?.id ? (
-          <>
-            <Stack.Screen name="Greeting" component={Greetings} />
+      <Host>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          {!user?.id ? (
+            <>
+              <Stack.Screen name="Greeting" component={Greetings} />
+              <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
+              <Stack.Screen name="PersonStack" component={OrganizationRoutes} />
+            </>
+          ) : user.userType === UserTypeEnum.ORGANIZATION ? (
             <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
-            <Stack.Screen name="PersonStack" component={OrganizationRoutes} />
-          </>
-        ) : user.userType === UserTypeEnum.ORGANIZATION ? (
-          <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
-        ) : (
-          <Stack.Screen name="PersonStack" component={PersonRoutes} />
-        )}
-        <Stack.Screen name="Success" component={Success} />
-      </Stack.Navigator>
+          ) : (
+            <Stack.Screen name="PersonStack" component={PersonRoutes} />
+          )}
+          <Stack.Screen name="Success" component={Success} />
+        </Stack.Navigator>
+      </Host>
     </NavigationContainer>
   );
 }
