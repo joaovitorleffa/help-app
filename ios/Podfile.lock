@@ -18,6 +18,10 @@ PODS:
     - React-Core
     - UMCore
     - UMImageLoaderInterface
+  - EXImagePicker (10.1.4):
+    - UMCore
+    - UMFileSystemInterface
+    - UMPermissionsInterface
   - EXKeepAwake (9.1.2):
     - UMCore
   - EXLinearGradient (9.1.0):
@@ -288,6 +292,8 @@ PODS:
     - React-Core
   - RNCMaskedView (0.2.6):
     - React-Core
+  - RNDateTimePicker (3.2.0):
+    - React-Core
   - RNGestureHandler (1.10.3):
     - React-Core
   - RNReanimated (2.1.0):
@@ -354,6 +360,7 @@ DEPENDENCIES:
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
+  - EXImagePicker (from `../node_modules/expo-image-picker/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
   - EXPermissions (from `../node_modules/expo-permissions/ios`)
@@ -390,6 +397,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
+  - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -428,6 +436,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-font/ios"
   EXImageLoader:
     :path: "../node_modules/expo-image-loader/ios"
+  EXImagePicker:
+    :path: "../node_modules/expo-image-picker/ios"
   EXKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
   EXLinearGradient:
@@ -496,6 +506,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-masked-view/masked-view"
+  RNDateTimePicker:
+    :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNReanimated:
@@ -540,6 +552,7 @@ SPEC CHECKSUMS:
   EXFileSystem: dcf2273f49431e5037347c733a2dc5d08e0d0a9e
   EXFont: d6fb79f9863120f0d0b26b0c2d1453bc9511e9df
   EXImageLoader: da941c9399e01ec28f2d5b270bdd21f2c8ca596c
+  EXImagePicker: dd05b8a5cb782c79d07d1d72e5850c6acc2b9a37
   EXKeepAwake: d4e4a3ed8c1c4fd940dd62fc5a8be2a190371fd4
   EXLinearGradient: 39b1cf1df5b885e8c35e8afedc9d8893b9fced4b
   EXPermissions: 8f8c1c05580c4e02d4ee2c8dd74bfe173ff6a723
@@ -575,6 +588,7 @@ SPEC CHECKSUMS:
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   RNCAsyncStorage: e8b8d6320a0dd90eb610fb0d0b1ef90596697c69
   RNCMaskedView: c298b644a10c0c142055b3ae24d83879ecb13ccd
+  RNDateTimePicker: 17593e41b6b1585aeb8ecbe1c1cbc30cba3d0b4b
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: 70f662b5232dd5d19ccff581e919a54ea73df51c
   RNScreens: eb0dfb2d6b21d2d7f980ad46b14eb306d2f1062e
