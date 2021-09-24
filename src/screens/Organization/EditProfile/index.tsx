@@ -38,7 +38,7 @@ interface Data {
 }
 
 const schema = Yup.object().shape({
-  description: Yup.string().max(400, i18n.t('errors.invalid_description')),
+  description: Yup.string().nullable().max(400, i18n.t('errors.invalid_description')),
 });
 
 export function EditProfile(): JSX.Element {
@@ -148,7 +148,7 @@ export function EditProfile(): JSX.Element {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Container>
         <View>
-          <Wrapper style={{ marginTop: 56 }}>
+          <Wrapper style={{ marginTop: 24 }}>
             <BackHeader title={t('edit_profile.edit_profile_title')} />
           </Wrapper>
           <Animated.View style={heightStyle}>

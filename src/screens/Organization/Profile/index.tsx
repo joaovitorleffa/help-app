@@ -16,7 +16,7 @@ import { ProfileInfo } from '@templates/Organization/ProfileInfo';
 import { Container } from './styles';
 
 type OrganizationProfileNavigationScreenProp = CompositeNavigationProp<
-  BottomTabNavigationProp<OrganizationAppNavigatorParamsList, 'Home'>,
+  BottomTabNavigationProp<OrganizationAppNavigatorParamsList, 'Profile'>,
   StackNavigationProp<OrganizationNavigatorParamsList>
 >;
 

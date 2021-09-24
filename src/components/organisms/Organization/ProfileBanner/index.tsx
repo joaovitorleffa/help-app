@@ -7,13 +7,14 @@ import { Text } from '@atoms/Text';
 import { Container, Wrapper, Icon, Photo } from './styles';
 
 interface ProfileBannerProps {
-  uri: string;
+  uri: string | null;
 }
 
 export function ProfileBanner({ uri }: ProfileBannerProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
-
+  console.log(uri);
+  // console.log(!!uri === false);
   return (
     <Container>
       {!uri ? (
