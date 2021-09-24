@@ -62,7 +62,13 @@ export function InputForm({
               onChange={onChange}
             />
           ) : (
-            <DatePicker style={rest.style} />
+            <DatePicker
+              placeholder={rest.placeholder!}
+              error={!!error}
+              value={value}
+              onChange={onChange}
+              style={rest.style}
+            />
           )
         }
       />

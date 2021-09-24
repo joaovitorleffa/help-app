@@ -10,6 +10,7 @@ import { FloatButton } from '@molecules/FloatButton';
 
 import { Container, Content, Header } from './styles';
 import { useTranslation } from 'react-i18next';
+import { StatusBar } from 'react-native';
 
 type CauseListNavigationScreenProp = CompositeNavigationProp<
   StackNavigationProp<OrganizationAppNavigatorParamsList, 'CauseList'>,
@@ -28,6 +29,7 @@ export function CauseList(): JSX.Element {
 
   return (
     <Container>
+      <StatusBar barStyle="light-content" backgroundColor={theme.colors.primary} />
       <Content>
         <Header>
           <Text color={theme.colors.title} fontSize={rem(theme.fonts.size.lg)} fontFamily="bold">

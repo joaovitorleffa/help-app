@@ -24,7 +24,7 @@ export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Elemen
         name="title"
         control={control}
         error={errors?.title?.message}
-        placeholder={t('common.add_cause')}
+        placeholder={t('common.title')}
       />
       <InputForm
         style={{ marginTop: rem(0.8) }}

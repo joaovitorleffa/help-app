@@ -2,6 +2,7 @@
   "common": {
     "entry": "Entrar",
     "register": "Cadastrar",
+    "title": "Título",
 
     "password": "Senha",
     "description": "Descrição",
@@ -21,7 +22,10 @@
     "add_cause": "Adicionar causa",
     "type": "Tipo",
     "donation": "Doação",
-    "voluntary_work": "Trabalho voluntário"
+    "voluntary_work": "Trabalho voluntário",
+    "end_at": "Termina em",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar"
   },
 
   "greetings": {

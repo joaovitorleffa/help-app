@@ -7,6 +7,7 @@ type ContentProps = {
 };
 
 export const Content = styled(TextInput)<ContentProps>`
+  text-align-vertical: top;
   height: ${({ theme }) => theme.screen.rem(6)}px;
   background-color: ${({ theme }) => theme.colors.gray};
   padding: ${({ theme }) => theme.screen.rem(0.8)}px;

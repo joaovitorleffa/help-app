@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useMemo } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +6,7 @@ import { Portal } from 'react-native-portalize';
 import { Modalize } from 'react-native-modalize';
 import { TouchableOpacityProps } from 'react-native';
 
+import { Show } from '@atoms/Show';
 import { Text } from '@atoms/Text';
 
 import { Content, Header, Item, Icon, ItemWrapper } from './styles';
@@ -80,9 +81,23 @@ export function Select({
   return (
     <>
       <Content {...rest} error={error} activeOpacity={0.85} onPress={onOpen}>
-        <Text fontSize={rem(0.8)} lineHeight={rem(1)}>
-          {value ? t(`common.${value}`) : placeholder}
-        </Text>
+        <Show
+          when={!!value}
+          fallback={
+            <Text
+              fontSize={rem(0.8)}
+              lineHeight={rem(1)}
+              color={theme.colors[error ? 'error' : 'placeholder']}>
+              {placeholder}
+            </Text>
+          }>
+          <Text
+            fontSize={rem(0.8)}
+            lineHeight={rem(1)}
+            color={theme.colors[error ? 'error' : 'title']}>
+            {t(`common.${value}`)}
+          </Text>
+        </Show>
       </Content>
       <Portal>
         <Modalize
