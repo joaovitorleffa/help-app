@@ -54,7 +54,7 @@ export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Elemen
       />
       <InputForm
         style={{ marginTop: rem(0.8) }}
-        name="end_at"
+        name="endAt"
         control={control}
         error={errors?.end_at?.message}
         placeholder={t('common.end_at')}

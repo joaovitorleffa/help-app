@@ -14,6 +14,9 @@ import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
 import { BackHeader } from '@molecules/BackHeader';
+import { showMessage } from 'react-native-flash-message';
+import { api } from '@services/api';
+import { useNavigation } from '@react-navigation/core';
 
 const schema = Yup.object().shape({
   title: Yup.string()
@@ -22,14 +25,14 @@ const schema = Yup.object().shape({
   description: Yup.string()
     .required(i18n.t('errors.fill_description'))
     .max(200, i18n.t('errors.max_description', { caracteres: 200 })),
-  end_at: Yup.string().required(i18n.t('errors.fill_end_at')),
+  endAt: Yup.string().required(i18n.t('errors.fill_end_at')),
   type: Yup.string().required(i18n.t('errors.fill_type')),
 });
 
 interface Data {
   title: string;
   description: string;
-  end_at: string;
+  endAt: string;
   type: string;
 }
 
@@ -37,6 +40,7 @@ export function AddCause(): JSX.Element {
   const { t } = useTranslation();
   const theme = useTheme();
   const rem = useRem();
+  const navigation = useNavigation();
 
   const {
     control,
@@ -44,8 +48,27 @@ export function AddCause(): JSX.Element {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  const addCause = async (data: Data) => {
+    try {
+      await api.post('causes', data);
+      showMessage({
+        message: t('common.success'),
+        description: t('create_cause.created_cause_successfully'),
+        type: 'success',
+      });
+      navigation.goBack();
+    } catch (error) {
+      console.log('[addCause] error:', error);
+      showMessage({
+        message: t('common.error'),
+        description: t('errors.add_cause_error'),
+        type: 'danger',
+      });
+    }
+  };
+
   const onSubmit = (formData: Data) => {
-    console.log({ formData });
+    addCause(formData);
   };
 
   return (

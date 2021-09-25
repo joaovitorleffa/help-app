@@ -25,7 +25,8 @@
     "voluntary_work": "Trabalho voluntário",
     "end_at": "Termina em",
     "confirm": "Confirmar",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "success": "Sucesso"
   },
 
   "greetings": {
@@ -61,7 +62,8 @@
   },
 
   "create_cause": {
-    "title": "Criar causa"
+    "title": "Criar causa",
+    "created_cause_successfully": "Causa criada com sucesso 🥳"
   },
 
   "errors": {
@@ -89,6 +91,7 @@
     "fill_type": "O tipo é obrigatório",
 
     "load_profile_error": "Não foi possível carregar os dados do perfil.",
-    "edit_profile_error": "Não foi possível editar perfil."
+    "edit_profile_error": "Não foi possível editar perfil.",
+    "add_cause_error": "Não foi possível adicionar uma nova causa."
   }
 }
