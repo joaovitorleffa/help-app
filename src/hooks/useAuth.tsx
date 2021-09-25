@@ -11,7 +11,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '@services/api';
 import { UserDto, UserTypeEnum } from '@dto/user-dto';
 import { AuthOrganizationDto, OrganizationDto } from '@dto/organization-dto';
-import axios from 'axios';
 
 type SetOrganizationData = AuthOrganizationDto;
 
@@ -88,7 +87,7 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         const formattedData = JSON.parse(authData) as SetOrganizationData;
 
         if (formattedData?.userData?.userType === UserTypeEnum.ORGANIZATION) {
-          setOrganizationData(formattedData);
+          await setOrganizationData(formattedData);
         }
       }
 
