@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/core';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { showMessage } from 'react-native-flash-message';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
 import { api } from '@services/api';
 import i18n from '@assets/locales/i18n';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { UpdateCauseDto } from '@dto/update-cause-dto';
+import { OrganizationNavigatorParamsList } from '@routes/types';
 
 import { Button } from '@molecules/Button';
 import { BackHeader } from '@molecules/BackHeader';
-import { CreateCauseDto } from '@dto/create-cause-dto';
 import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
@@ -30,11 +31,16 @@ const schema = Yup.object().shape({
   type: Yup.string().required(i18n.t('errors.fill_type')),
 });
 
-export function AddCause(): JSX.Element {
-  const { t } = useTranslation();
-  const theme = useTheme();
+type EditCauseRouteProp = RouteProp<OrganizationNavigatorParamsList, 'EditCause'>;
+
+export function EditCause(): JSX.Element {
   const rem = useRem();
+  const theme = useTheme();
+  const { t } = useTranslation();
   const navigation = useNavigation();
+  const route = useRoute<EditCauseRouteProp>();
+
+  const id = useRef(route.params.id).current;
 
   const {
     control,
@@ -42,27 +48,27 @@ export function AddCause(): JSX.Element {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const addCause = async (data: CreateCauseDto) => {
+  const editCause = async (data: UpdateCauseDto) => {
     try {
-      await api.post('causes', data);
+      await api.post(`causes/${id}`, data);
       showMessage({
         message: t('common.success'),
-        description: t('create_cause.created_cause_successfully'),
+        description: t('edit_cause.updated_cause_successfully'),
         type: 'success',
       });
       navigation.goBack();
     } catch (error) {
-      console.log('[addCause] error:', error);
+      console.log('[editCause] error:', error);
       showMessage({
         message: t('common.error'),
-        description: t('errors.add_cause_error'),
+        description: t('errors.edit_cause_error'),
         type: 'danger',
       });
     }
   };
 
-  const onSubmit = (formData: CreateCauseDto) => {
-    addCause(formData);
+  const onSubmit = (formData: UpdateCauseDto) => {
+    editCause(formData);
   };
 
   return (
@@ -71,11 +77,11 @@ export function AddCause(): JSX.Element {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="padding">
           <Content>
-            <BackHeader title={t('create_cause.title')} />
-            <AddCauseForm control={control} errors={errors} />
+            <BackHeader title={t('edit_cause.title')} />
+            <AddCauseForm defaultValues={route.params} control={control} errors={errors} />
             <Button
               style={{ marginTop: rem(1.2) }}
-              title={t('common.register')}
+              title={t('common.edit')}
               onPress={handleSubmit(onSubmit)}
               color={theme.colors.primary}
               textColor={theme.colors.title_secondary}

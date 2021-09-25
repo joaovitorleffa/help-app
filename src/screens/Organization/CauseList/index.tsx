@@ -1,20 +1,12 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import { StatusBar } from 'react-native';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import { showMessage } from 'react-native-flash-message';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
-
-import { Text } from '@atoms/Text';
-import { FloatButton } from '@molecules/FloatButton';
-
-import { Container, Content, CustomText, Header } from './styles';
-import { useTranslation } from 'react-i18next';
-import { StatusBar } from 'react-native';
-import { Causes } from '@templates/Organization/Causes';
-import { showMessage } from 'react-native-flash-message';
-import { api } from '@services/api';
-import { CauseDto } from '@dto/cause-dto';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -22,6 +14,15 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+
+import { api } from '@services/api';
+import { CauseDto } from '@dto/cause-dto';
+import { UpdateCauseDto } from '@dto/update-cause-dto';
+
+import { FloatButton } from '@molecules/FloatButton';
+import { Causes } from '@templates/Organization/Causes';
+
+import { Container, Content, CustomText, Header } from './styles';
 
 const AnimatedText = Animated.createAnimatedComponent(CustomText);
 const AnimatedHeader = Animated.createAnimatedComponent(Header);
@@ -67,6 +68,13 @@ export function CauseList(): JSX.Element {
     navigation.navigate('AddCause');
   }, [navigation]);
 
+  const handleEdit = useCallback(
+    (cause: UpdateCauseDto) => {
+      navigation.navigate('EditCause', cause);
+    },
+    [navigation],
+  );
+
   const fetchCausesByOrganization = useCallback(async (_page: number) => {
     try {
       const { data } = await api.get(`causes/self?page=${_page}&limit=5`);
@@ -108,6 +116,7 @@ export function CauseList(): JSX.Element {
         </AnimatedHeader>
         <Causes
           data={causes}
+          onEdit={handleEdit}
           onScroll={scrollHandler}
           onEndReached={onEndReached}
           isLoadingMore={isLoadingMore}

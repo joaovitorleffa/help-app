@@ -3,16 +3,18 @@ import { Control } from 'react-hook-form';
 import { useRem } from 'responsive-native';
 import { useTranslation } from 'react-i18next';
 
+import { UpdateCauseDto } from '@dto/update-cause-dto';
 import { InputForm } from '@molecules/Form/InputForm';
 
 import { Container } from './styles';
 
 interface AddCauseFormProps {
   control: Control;
+  defaultValues?: UpdateCauseDto;
   errors: { [x: string]: any };
 }
 
-export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Element {
+export function AddCauseForm({ control, defaultValues, errors }: AddCauseFormProps): JSX.Element {
   const { t } = useTranslation();
 
   const rem = useRem();
@@ -20,6 +22,7 @@ export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Elemen
   return (
     <Container>
       <InputForm
+        defaultValue={defaultValues?.title}
         style={{ marginTop: 24 }}
         name="title"
         control={control}
@@ -27,6 +30,7 @@ export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Elemen
         placeholder={t('common.title')}
       />
       <InputForm
+        defaultValue={defaultValues?.description}
         style={{ marginTop: rem(0.8) }}
         name="description"
         control={control}
@@ -36,6 +40,7 @@ export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Elemen
       />
       <InputForm
         style={{ marginTop: rem(0.8) }}
+        defaultValue={defaultValues?.type}
         name="type"
         control={control}
         items={[
@@ -53,6 +58,7 @@ export function AddCauseForm({ control, errors }: AddCauseFormProps): JSX.Elemen
         inputType="select"
       />
       <InputForm
+        defaultValue={defaultValues?.endAt}
         style={{ marginTop: rem(0.8) }}
         name="endAt"
         control={control}

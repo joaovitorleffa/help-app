@@ -1,5 +1,7 @@
-import { FirstStepData, SecondStepData } from '@dto/sign-up-dto';
 import { NavigatorScreenParams } from '@react-navigation/core';
+
+import { UpdateCauseDto } from '@dto/update-cause-dto';
+import { FirstStepData, SecondStepData } from '@dto/sign-up-dto';
 
 export type RootNavigatorParamsList = {
   Greeting: undefined;
@@ -16,6 +18,7 @@ export type OrganizationNavigatorParamsList = {
   AppStack: NavigatorScreenParams<OrganizationAppNavigatorParamsList>;
   EditProfile: { profileImage: string | null; description: string | null };
   AddCause: undefined;
+  EditCause: UpdateCauseDto;
 };
 
 export type OrganizationAuthNavigatorParamsList = {

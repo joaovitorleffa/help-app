@@ -26,7 +26,8 @@
     "end_at": "Termina em",
     "confirm": "Confirmar",
     "cancel": "Cancelar",
-    "success": "Sucesso"
+    "success": "Sucesso",
+    "edit": "Editar"
   },
 
   "greetings": {
@@ -66,6 +67,11 @@
     "created_cause_successfully": "Causa criada com sucesso 🥳"
   },
 
+  "edit_cause": {
+    "title": "Editar causa",
+    "updated_cause_successfully": "Causa criada com sucesso 🥳"
+  },
+
   "errors": {
     "unique_email": "Já existe uma conta cadastrada com esse e-mail",
     "fill_name": "O nome é obrigatório!",
@@ -93,6 +99,7 @@
     "load_profile_error": "Não foi possível carregar os dados do perfil.",
     "edit_profile_error": "Não foi possível editar perfil.",
     "add_cause_error": "Não foi possível adicionar uma nova causa.",
+    "edit_cause_error": "Não foi possível editar a causa.",
     "list_causes_error": "Não foi possível listar as causas"
   }
 }
