@@ -92,6 +92,7 @@
 
     "load_profile_error": "Não foi possível carregar os dados do perfil.",
     "edit_profile_error": "Não foi possível editar perfil.",
-    "add_cause_error": "Não foi possível adicionar uma nova causa."
+    "add_cause_error": "Não foi possível adicionar uma nova causa.",
+    "list_causes_error": "Não foi possível listar as causas"
   }
 }

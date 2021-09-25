@@ -3,7 +3,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 export const Container = styled.View`
-  height: 300px;
+  height: ${({ theme }) => theme.screen.rem(14)}px; ;
 `;
 
 export const Icon = styled(MaterialCommunityIcons)`

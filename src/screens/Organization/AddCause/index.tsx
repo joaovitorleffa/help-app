@@ -73,7 +73,7 @@ export function AddCause(): JSX.Element {
 
   return (
     <Container>
-      <StatusBar barStyle="light-content" backgroundColor={theme.colors.primary} />
+      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primary} />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <KeyboardAvoidingView behavior="padding">
           <Content>

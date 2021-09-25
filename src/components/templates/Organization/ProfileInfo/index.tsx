@@ -33,7 +33,7 @@ export function ProfileInfo({
       <SkeletonContent
         isLoading={isLoading}
         containerStyle={{ width: '100%' }}
-        layout={[{ key: '1', width: '100%', height: 300 }]}>
+        layout={[{ key: '1', width: '100%', height: rem(14) }]}>
         <ProfileBanner uri={uri} />
       </SkeletonContent>
       <SkeletonContent
