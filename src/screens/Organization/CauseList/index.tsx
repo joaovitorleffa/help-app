@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { showMessage } from 'react-native-flash-message';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
+import { CompositeNavigationProp, useFocusEffect, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 import Animated, {
   Extrapolate,
@@ -23,6 +23,8 @@ import { FloatButton } from '@molecules/FloatButton';
 import { Causes } from '@templates/Organization/Causes';
 
 import { Container, Content, CustomText, Header } from './styles';
+import { Pagination } from '@dto/pagination-dto';
+import SkeletonContent from 'react-native-skeleton-content';
 
 const AnimatedText = Animated.createAnimatedComponent(CustomText);
 const AnimatedHeader = Animated.createAnimatedComponent(Header);
@@ -40,10 +42,13 @@ export function CauseList(): JSX.Element {
 
   const LG = useMemo(() => rem(theme.fonts.size.lg), [rem, theme]);
 
+  const [page, setPage] = useState(1);
   const [causes, setCauses] = useState<CauseDto[]>([]);
+  const [shouldFetch, setShouldFetch] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const [totalResults, setTotalResults] = useState(0);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [page, setPage] = useState(1);
 
   const scrollY = useSharedValue(0);
 
@@ -75,37 +80,58 @@ export function CauseList(): JSX.Element {
     [navigation],
   );
 
-  const fetchCausesByOrganization = useCallback(async (_page: number) => {
-    try {
-      const { data } = await api.get(`causes/self?page=${_page}&limit=5`);
-      setCauses((prev) => [...prev, ...data.results]);
-      setTotalResults(data.total);
-    } catch (error) {
-      console.log('[fetchCausesByOrganization] error:', error);
-      showMessage({
-        message: t('common.error'),
-        description: t('errors.list_causes_error'),
-        type: 'danger',
-      });
-    } finally {
-      setIsLoadingMore(false);
-    }
+  const fetchMore = useCallback(() => setShouldFetch(true), []);
+
+  const refresh = useCallback(() => {
+    setPage(1);
+    setIsRefreshing(true);
+    setShouldFetch(true);
   }, []);
 
-  const onEndReached = useCallback(() => {
-    if (!isLoadingMore && causes.length < totalResults) {
-      setIsLoadingMore(true);
-      setPage((prev) => {
-        const nextPage = prev + 1;
-        fetchCausesByOrganization(nextPage);
-        return nextPage;
-      });
-    }
-  }, [fetchCausesByOrganization, causes.length, totalResults, isLoadingMore]);
-
   useEffect(() => {
-    fetchCausesByOrganization(1);
-  }, [fetchCausesByOrganization]);
+    if (!shouldFetch) {
+      return;
+    }
+
+    if (causes.length && !isRefreshing) {
+      if (causes.length >= totalResults) {
+        return;
+      }
+    }
+
+    const fetch = async () => {
+      try {
+        setIsLoadingMore(true);
+
+        const { data } = await api.get<Pagination<CauseDto>>('causes/self', {
+          params: { page, limit: 2 },
+        });
+
+        const { total, results } = data;
+
+        setTimeout(() => {
+          page === 1 ? setCauses(results) : setCauses((prev) => [...prev, ...results]);
+          setTotalResults(total);
+          setPage((prev) => prev + 1);
+        }, 2000);
+      } catch (error) {
+        console.log('[fetch] error:', error);
+        showMessage({
+          message: t('common.error'),
+          description: t('errors.list_causes_error'),
+          type: 'danger',
+        });
+      } finally {
+        setTimeout(() => {
+          setShouldFetch(false);
+          setIsLoadingMore(false);
+          setIsRefreshing(false);
+        }, 2000);
+      }
+    };
+
+    fetch();
+  }, [page, causes.length, totalResults, shouldFetch, isRefreshing, t]);
 
   return (
     <Container>
@@ -114,13 +140,46 @@ export function CauseList(): JSX.Element {
         <AnimatedHeader style={headerAnimatedStyle}>
           <AnimatedText style={textContentAnimatedStyle}>{t('cause_list.title')}</AnimatedText>
         </AnimatedHeader>
-        <Causes
-          data={causes}
-          onEdit={handleEdit}
-          onScroll={scrollHandler}
-          onEndReached={onEndReached}
-          isLoadingMore={isLoadingMore}
-        />
+        <SkeletonContent
+          animationType="pulse"
+          isLoading={isLoadingMore && !causes.length}
+          containerStyle={{ flex: 1, width: '100%' }}
+          layout={[
+            {
+              key: '1',
+              width: '100%',
+              height: rem(8),
+              marginTop: 24,
+            },
+            {
+              key: '2',
+              width: '100%',
+              height: rem(8),
+              marginTop: 24,
+            },
+            {
+              key: '3',
+              width: '100%',
+              height: rem(8),
+              marginTop: 24,
+            },
+            {
+              key: '4',
+              width: '100%',
+              height: rem(8),
+              marginTop: 24,
+            },
+          ]}>
+          <Causes
+            data={causes}
+            onEdit={handleEdit}
+            refreshing={isRefreshing}
+            onScroll={scrollHandler}
+            onEndReached={fetchMore}
+            onRefresh={refresh}
+            isLoadingMore={isLoadingMore}
+          />
+        </SkeletonContent>
       </Content>
       <FloatButton icon="add" onPress={handleAdd} />
     </Container>

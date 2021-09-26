@@ -1,7 +1,12 @@
 import React, { useCallback } from 'react';
 import { useTheme } from 'styled-components';
 import Animated from 'react-native-reanimated';
-import { ActivityIndicator, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import {
+  ActivityIndicator,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  RefreshControl,
+} from 'react-native';
 
 import { CauseDto } from '@dto/cause-dto';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
@@ -12,8 +17,10 @@ import { List } from './styles';
 
 interface CausesProps {
   data: CauseDto[];
+  refreshing: boolean;
   isLoadingMore: boolean;
   onEndReached: () => void;
+  onRefresh: () => void;
   onEdit: (cause: UpdateCauseDto) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
 }
@@ -24,6 +31,8 @@ export function Causes({
   data,
   onEdit,
   onScroll,
+  onRefresh,
+  refreshing,
   onEndReached,
   isLoadingMore,
 }: CausesProps): JSX.Element {
@@ -41,7 +50,6 @@ export function Causes({
   return (
     <AnimatedList
       data={data}
-      bounces={false}
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       onScroll={onScroll}
@@ -49,6 +57,8 @@ export function Causes({
       onEndReachedThreshold={0.1}
       onEndReached={onEndReached}
       ListFooterComponent={ListFooterComponent}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       showsVerticalScrollIndicator={false}
     />
   );
