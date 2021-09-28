@@ -1,5 +1,3 @@
-import { rem } from 'responsive-native';
-
 export default {
   colors: {
     primary: '#7E6EF5',

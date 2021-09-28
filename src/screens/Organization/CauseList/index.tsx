@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState, useMemo } from 'react';
-import { StatusBar } from 'react-native';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { showMessage } from 'react-native-flash-message';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CompositeNavigationProp, useFocusEffect, useNavigation } from '@react-navigation/core';
+import { ActivityIndicator, StatusBar, View } from 'react-native';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 import Animated, {
   Extrapolate,
@@ -17,14 +17,14 @@ import Animated, {
 
 import { api } from '@services/api';
 import { CauseDto } from '@dto/cause-dto';
+import { Pagination } from '@dto/pagination-dto';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
 
+import { Text } from '@atoms/Text';
 import { FloatButton } from '@molecules/FloatButton';
 import { Causes } from '@templates/Organization/Causes';
 
 import { Container, Content, CustomText, Header } from './styles';
-import { Pagination } from '@dto/pagination-dto';
-import SkeletonContent from 'react-native-skeleton-content';
 
 const AnimatedText = Animated.createAnimatedComponent(CustomText);
 const AnimatedHeader = Animated.createAnimatedComponent(Header);
@@ -109,11 +109,9 @@ export function CauseList(): JSX.Element {
 
         const { total, results } = data;
 
-        setTimeout(() => {
-          page === 1 ? setCauses(results) : setCauses((prev) => [...prev, ...results]);
-          setTotalResults(total);
-          setPage((prev) => prev + 1);
-        }, 2000);
+        page === 1 ? setCauses(results) : setCauses((prev) => [...prev, ...results]);
+        setTotalResults(total);
+        setPage((prev) => prev + 1);
       } catch (error) {
         console.log('[fetch] error:', error);
         showMessage({
@@ -122,11 +120,9 @@ export function CauseList(): JSX.Element {
           type: 'danger',
         });
       } finally {
-        setTimeout(() => {
-          setShouldFetch(false);
-          setIsLoadingMore(false);
-          setIsRefreshing(false);
-        }, 2000);
+        setShouldFetch(false);
+        setIsLoadingMore(false);
+        setIsRefreshing(false);
       }
     };
 
@@ -136,40 +132,17 @@ export function CauseList(): JSX.Element {
   return (
     <Container>
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primary} />
+
       <Content>
         <AnimatedHeader style={headerAnimatedStyle}>
           <AnimatedText style={textContentAnimatedStyle}>{t('cause_list.title')}</AnimatedText>
         </AnimatedHeader>
-        <SkeletonContent
-          animationType="pulse"
-          isLoading={isLoadingMore && !causes.length}
-          containerStyle={{ flex: 1, width: '100%' }}
-          layout={[
-            {
-              key: '1',
-              width: '100%',
-              height: rem(8),
-              marginTop: 24,
-            },
-            {
-              key: '2',
-              width: '100%',
-              height: rem(8),
-              marginTop: 24,
-            },
-            {
-              key: '3',
-              width: '100%',
-              height: rem(8),
-              marginTop: 24,
-            },
-            {
-              key: '4',
-              width: '100%',
-              height: rem(8),
-              marginTop: 24,
-            },
-          ]}>
+        {isLoadingMore && !causes.length ? (
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+            <Text fontSize={rem(theme.fonts.size.sm)}>{t('loading')}</Text>
+          </View>
+        ) : (
           <Causes
             data={causes}
             onEdit={handleEdit}
@@ -179,9 +152,10 @@ export function CauseList(): JSX.Element {
             onRefresh={refresh}
             isLoadingMore={isLoadingMore}
           />
-        </SkeletonContent>
+        )}
+
+        <FloatButton icon="add" onPress={handleAdd} />
       </Content>
-      <FloatButton icon="add" onPress={handleAdd} />
     </Container>
   );
 }

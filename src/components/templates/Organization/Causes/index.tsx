@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTheme } from 'styled-components';
 import Animated from 'react-native-reanimated';
 import {
@@ -37,6 +37,7 @@ export function Causes({
   isLoadingMore,
 }: CausesProps): JSX.Element {
   const theme = useTheme();
+  const [callOnScrollEnd, setCallOnScrollEnd] = useState(false);
 
   const keyExtractor = useCallback((item: CauseDto, index: number) => String(item.id) + index, []);
 
@@ -55,10 +56,14 @@ export function Causes({
       onScroll={onScroll}
       scrollEventThrottle={16}
       onEndReachedThreshold={0.1}
-      onEndReached={onEndReached}
       ListFooterComponent={ListFooterComponent}
       refreshing={refreshing}
       onRefresh={onRefresh}
+      onEndReached={() => setCallOnScrollEnd(true)}
+      onMomentumScrollBegin={() => {
+        callOnScrollEnd && onEndReached();
+        setCallOnScrollEnd(false);
+      }}
       showsVerticalScrollIndicator={false}
     />
   );
