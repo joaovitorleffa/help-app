@@ -5,6 +5,7 @@ export default {
     primary_100: '#5D4AED',
     primary_200: '#513DEB',
     secondary: '#AE9DE5',
+    secondary_50: '#F0ECFF',
     background: '#FFFFFF',
     gray: '#F2F2F2',
     gray_50: '#e7e7e7',

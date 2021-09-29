@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useState, useMemo } from 'react';
+import React, { useCallback, useEffect, useState, useMemo, useRef } from 'react';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { showMessage } from 'react-native-flash-message';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ActivityIndicator, StatusBar, View } from 'react-native';
+import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 import Animated, {
@@ -24,7 +24,20 @@ import { Text } from '@atoms/Text';
 import { FloatButton } from '@molecules/FloatButton';
 import { Causes } from '@templates/Organization/Causes';
 
-import { Container, Content, CustomText, Header } from './styles';
+import {
+  Container,
+  Content,
+  CustomText,
+  Filter,
+  FilterWrapper,
+  Header,
+  Icon,
+  Row,
+  SearchBar,
+  SearchInput,
+} from './styles';
+import { Modalize } from 'react-native-modalize';
+import { Portal } from 'react-native-portalize';
 
 const AnimatedText = Animated.createAnimatedComponent(CustomText);
 const AnimatedHeader = Animated.createAnimatedComponent(Header);
@@ -40,6 +53,7 @@ export function CauseList(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
 
+  const modalizeRef = useRef<Modalize | null>(null);
   const LG = useMemo(() => rem(theme.fonts.size.lg), [rem, theme]);
 
   const [page, setPage] = useState(1);
@@ -134,9 +148,12 @@ export function CauseList(): JSX.Element {
       <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primary} />
 
       <Content>
-        <AnimatedHeader style={headerAnimatedStyle}>
-          <AnimatedText style={textContentAnimatedStyle}>{t('cause_list.title')}</AnimatedText>
-        </AnimatedHeader>
+        <Header style={[headerAnimatedStyle, styles.shadow]}>
+          <CustomText style={textContentAnimatedStyle}>{t('cause_list.title')}</CustomText>
+          <FilterWrapper onPress={() => modalizeRef.current?.open()}>
+            <Icon name="sliders" />
+          </FilterWrapper>
+        </Header>
         {isLoadingMore && !causes.length ? (
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <ActivityIndicator size="large" color={theme.colors.primary} />
@@ -153,9 +170,65 @@ export function CauseList(): JSX.Element {
             isLoadingMore={isLoadingMore}
           />
         )}
-
         <FloatButton icon="add" onPress={handleAdd} />
       </Content>
+      <Portal>
+        <Modalize
+          ref={modalizeRef}
+          childrenStyle={{ paddingVertical: 20, paddingHorizontal: theme.spacing.grid }}>
+          <SearchBar>
+            <Icon name="search" />
+            <SearchInput />
+          </SearchBar>
+          <Text fontFamily="bold" fontSize={rem(theme.fonts.size.sm)} style={{ marginBottom: 6 }}>
+            Situação
+          </Text>
+          <Row>
+            <Filter isActive>
+              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.primary}>
+                Encerrado
+              </Text>
+            </Filter>
+            <Filter>
+              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
+                Em andamento
+              </Text>
+            </Filter>
+          </Row>
+          <Text
+            fontFamily="bold"
+            fontSize={rem(theme.fonts.size.sm)}
+            style={{ marginBottom: 6, marginTop: 16 }}>
+            Tipo
+          </Text>
+          <Row>
+            <Filter>
+              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
+                Doação
+              </Text>
+            </Filter>
+            <Filter>
+              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
+                Trabalho voluntário
+              </Text>
+            </Filter>
+          </Row>
+        </Modalize>
+      </Portal>
     </Container>
   );
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#7E6EF5',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+});

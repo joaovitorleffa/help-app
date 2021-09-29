@@ -19,9 +19,9 @@ export type Items = {
 interface SelectProps extends TouchableOpacityProps {
   error?: boolean;
   value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
   items: Items[];
+  placeholder: string;
+  onChange: (value: string) => void;
 }
 
 export function Select({

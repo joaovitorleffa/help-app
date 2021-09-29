@@ -7,7 +7,11 @@ import { UpdateCauseDto } from '@dto/update-cause-dto';
 import { CauseType } from '@molecules/CauseType';
 import { CauseHeader } from '@molecules/CauseHeader';
 
-import { Container } from './styles';
+import { Container, Footer } from './styles';
+import { Text } from '@atoms/Text';
+import { format } from 'date-fns';
+import { useRem } from 'responsive-native';
+import { useTheme } from 'styled-components';
 
 interface CauseProps {
   cause: CauseDto;
@@ -16,6 +20,8 @@ interface CauseProps {
 
 export function Cause({ cause, onEdit }: CauseProps): JSX.Element {
   const { t } = useTranslation();
+  const rem = useRem();
+  const theme = useTheme();
 
   const handlePress = () => {
     onEdit(cause);
@@ -24,7 +30,12 @@ export function Cause({ cause, onEdit }: CauseProps): JSX.Element {
   return (
     <Container onPress={handlePress}>
       <CauseHeader title={cause.title} description={cause.description} />
-      <CauseType type={t(`common.${cause.type}`)} />
+      <Footer>
+        <CauseType type={t(`common.${cause.type}`)} />
+        <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
+          {format(new Date(cause.endAt), 'dd/MM/yyyy')}
+        </Text>
+      </Footer>
     </Container>
   );
 }
