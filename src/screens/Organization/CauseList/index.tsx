@@ -62,7 +62,7 @@ export function CauseList(): JSX.Element {
   };
 
   const handleEdit = (cause: UpdateCauseDto) => {
-    navigation.navigate('EditCause', cause);
+    navigation.navigate('Cause', cause);
   };
 
   const onChangePage = (_page: number) => {

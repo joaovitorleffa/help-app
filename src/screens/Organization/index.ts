@@ -6,3 +6,4 @@ export * from './AddCause';
 export * from './Profile';
 export * from './EditCause';
 export * from './EditProfile';
+export * from './Cause';

@@ -2,5 +2,5 @@ export interface CreateCauseDto {
   title: string;
   description: string;
   endAt: string;
-  type: string;
+  type: 'donation' | 'voluntary_work';
 }

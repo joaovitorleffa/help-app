@@ -1,13 +1,13 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import { OrganizationNavigatorParamsList } from '../types';
 
 import { OrganizationAppStack } from './app.routes';
 import { OrganizationAuthStack } from './auth.routes';
-import { AddCause, EditProfile, EditCause } from '@screens/Organization';
+import { AddCause, EditProfile, EditCause, Cause } from '@screens/Organization';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
-const Stack = createStackNavigator<OrganizationNavigatorParamsList>();
+const Stack = createSharedElementStackNavigator<OrganizationNavigatorParamsList>();
 
 export function OrganizationRoutes(): JSX.Element {
   return (
@@ -17,6 +17,7 @@ export function OrganizationRoutes(): JSX.Element {
       <Stack.Screen name="EditProfile" component={EditProfile} />
       <Stack.Screen name="AddCause" component={AddCause} />
       <Stack.Screen name="EditCause" component={EditCause} />
+      <Stack.Screen name="Cause" component={Cause} />
     </Stack.Navigator>
   );
 }

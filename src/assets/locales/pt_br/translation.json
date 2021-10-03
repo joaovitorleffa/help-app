@@ -29,7 +29,9 @@
     "success": "Sucesso",
     "edit": "Editar",
     "successfully_altered_image": "Imagem alterada! 🤩",
-    "saved_information": "Informações salvas! 🤩"
+    "saved_information": "Informações salvas! 🤩",
+    "in_progress_cause": "Causa em andamento",
+    "ended_cause": "Causa encerrada"
   },
 
   "greetings": {
@@ -73,6 +75,11 @@
   "edit_cause": {
     "title": "Editar causa",
     "updated_cause_successfully": "Causa editada com sucesso 🥳"
+  },
+
+  "cause": {
+    "add_feedback": "Adicionar feedback",
+    "add_feedback_info": "Adicionar feedback a causa pode motivar os doadores e voluntários a contribuir com uma nova causa no futuro!"
   },
 
   "errors": {
