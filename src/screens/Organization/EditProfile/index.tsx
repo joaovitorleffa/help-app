@@ -30,6 +30,9 @@ import { Button } from '@molecules/Button';
 import { BackHeader } from '@molecules/BackHeader';
 
 import { Container, Wrapper, BannerContainer, TextArea } from './styles';
+import { useMutation, useQueryClient } from 'react-query';
+import { updateProfile, updateProfileImage } from '@services/organization';
+import { OrganizationDto } from '@dto/organization-dto';
 
 type EditProfileScreenRouteProp = RouteProp<OrganizationNavigatorParamsList, 'EditProfile'>;
 
@@ -55,6 +58,45 @@ export function EditProfile(): JSX.Element {
 
   const { organization, reconcileOrganizationData } = useAuth();
 
+  const queryClient = useQueryClient();
+
+  const { mutate: mutateImage } = useMutation(updateProfileImage, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries('organization-profile');
+      showMessage({
+        message: t('common.success'),
+        description: t('common.successfully_altered_image'),
+        type: 'success',
+      });
+    },
+    onError: () => {
+      showMessage({
+        message: t('common.error'),
+        description: t('errors.edit_profile_error'),
+        type: 'danger',
+      });
+    },
+  });
+
+  const { mutate: mutateDescription } = useMutation(updateProfile, {
+    onSuccess: async (data) => {
+      await queryClient.invalidateQueries('organization-profile');
+      showMessage({
+        message: t('common.success'),
+        description: t('common.saved_information'),
+        type: 'success',
+      });
+      reconcileOrganizationData(data);
+    },
+    onError: () => {
+      showMessage({
+        message: t('common.error'),
+        description: t('errors.edit_profile_error'),
+        type: 'danger',
+      });
+    },
+  });
+
   const {
     control,
     handleSubmit,
@@ -70,32 +112,14 @@ export function EditProfile(): JSX.Element {
   });
 
   const updateImage = useCallback(async () => {
-    try {
-      const imageInfo = getImageInfo(newProfileImage, organization.name);
+    const imageInfo = getImageInfo(newProfileImage, organization.name);
 
-      const form = new FormData();
-      const file = JSON.parse(JSON.stringify(imageInfo));
-      form.append('file', file);
+    const form = new FormData();
+    const file = JSON.parse(JSON.stringify(imageInfo));
+    form.append('file', file);
 
-      await api.patch('organizations/edit/profile-image', form);
-    } catch (error: any) {
-      console.log('[updateImage]:', error);
-      throw error;
-    }
-  }, [organization.name, newProfileImage]);
-
-  const updateProfile = useCallback(
-    async (data: Data) => {
-      try {
-        const response = await api.put('organizations/edit', data);
-        reconcileOrganizationData(response.data);
-      } catch (error) {
-        console.log('[updateProfile]: ', error);
-        throw error;
-      }
-    },
-    [reconcileOrganizationData],
-  );
+    mutateImage(form);
+  }, [organization.name, newProfileImage, mutateImage]);
 
   const handleSelectImage = useCallback(async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -115,26 +139,17 @@ export function EditProfile(): JSX.Element {
     }
   }, [t]);
 
-  const onSubmit = async (data: Data) => {
-    try {
-      setIsLoading(true);
-      if (Object.keys(newProfileImage).length) {
-        await updateImage();
-      }
-      if (description !== data.description) {
-        await updateProfile(data);
-      }
-    } catch (error) {
-      console.log('[onSubmit]:', error);
-      showMessage({
-        message: t('common.error'),
-        description: t('errors.edit_profile_error'),
-        type: 'danger',
-      });
-    } finally {
-      setIsLoading(false);
+  const onSubmit = (data: Data) => {
+    if (description !== data.description) {
+      mutateDescription(data as OrganizationDto);
     }
   };
+
+  useEffect(() => {
+    if (Object.keys(newProfileImage).length) {
+      updateImage();
+    }
+  }, [newProfileImage, updateImage]);
 
   useEffect(() => {
     if (isFocused) {

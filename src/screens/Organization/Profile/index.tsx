@@ -14,6 +14,8 @@ import { FloatButton } from '@molecules/FloatButton';
 import { ProfileInfo } from '@templates/Organization/ProfileInfo';
 
 import { Container } from './styles';
+import { useQuery } from 'react-query';
+import { getProfile } from '@services/organization';
 
 type OrganizationProfileNavigationScreenProp = CompositeNavigationProp<
   BottomTabNavigationProp<OrganizationAppNavigatorParamsList, 'Profile'>,
@@ -25,26 +27,17 @@ export function Profile(): JSX.Element {
   const { t } = useTranslation();
   const { organization, user, clearAuthData } = useAuth();
 
-  const [profile, setProfile] = useState({} as OrganizationDto);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: profile, isLoading, isError } = useQuery('organization-profile', getProfile);
 
-  const fetchOrganizationProfile = useCallback(async () => {
-    try {
-      const { data } = await api.get<OrganizationDto>('organizations/profile');
-      setProfile(data);
-    } catch (error) {
-      console.log('[fetchOrganizationProfile]: ', error);
+  useEffect(() => {
+    if (isError) {
       showMessage({
         message: t('common.error'),
         description: t('errors.load_profile_error'),
         type: 'danger',
       });
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 2000);
     }
-  }, [t]);
+  }, [isError, t]);
 
   const handleLogout = useCallback(async () => {
     await clearAuthData();
@@ -52,17 +45,13 @@ export function Profile(): JSX.Element {
   }, [navigation, clearAuthData]);
 
   const handleEdit = useCallback(() => {
-    navigation.navigate('EditProfile', {
-      profileImage: profile.profileImage,
-      description: profile.description,
-    });
+    if (profile) {
+      navigation.navigate('EditProfile', {
+        profileImage: profile.profileImage,
+        description: profile.description,
+      });
+    }
   }, [navigation, profile]);
-
-  useFocusEffect(
-    useCallback(() => {
-      fetchOrganizationProfile();
-    }, [fetchOrganizationProfile]),
-  );
 
   return (
     <Container>

@@ -27,7 +27,9 @@
     "confirm": "Confirmar",
     "cancel": "Cancelar",
     "success": "Sucesso",
-    "edit": "Editar"
+    "edit": "Editar",
+    "successfully_altered_image": "Imagem alterada! 🤩",
+    "saved_information": "Informações salvas! 🤩"
   },
 
   "greetings": {
