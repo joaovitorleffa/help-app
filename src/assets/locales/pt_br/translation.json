@@ -59,7 +59,8 @@
   },
 
   "cause_list": {
-    "title": "Minhas causas"
+    "title": "Minhas causas",
+    "fetch_cause_list_error": "Ops, aconteceu um erro ao buscar as causas. Tente novamente mais tarde!"
   },
 
   "create_cause": {
@@ -69,7 +70,7 @@
 
   "edit_cause": {
     "title": "Editar causa",
-    "updated_cause_successfully": "Causa criada com sucesso 🥳"
+    "updated_cause_successfully": "Causa editada com sucesso 🥳"
   },
 
   "errors": {

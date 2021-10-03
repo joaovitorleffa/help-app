@@ -19,6 +19,8 @@ import { BackHeader } from '@molecules/BackHeader';
 import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
+import { useMutation, useQueryClient } from 'react-query';
+import { updateCause } from '@services/organization/causes.api';
 
 const schema = Yup.object().shape({
   title: Yup.string()
@@ -40,6 +42,8 @@ export function EditCause(): JSX.Element {
   const navigation = useNavigation();
   const route = useRoute<EditCauseRouteProp>();
 
+  const queryClient = useQueryClient();
+
   const id = useRef(route.params.id).current;
 
   const {
@@ -48,27 +52,20 @@ export function EditCause(): JSX.Element {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const editCause = async (data: UpdateCauseDto) => {
-    try {
-      await api.post(`causes/${id}`, data);
+  const { mutate } = useMutation(updateCause, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries('causes');
       showMessage({
         message: t('common.success'),
         description: t('edit_cause.updated_cause_successfully'),
         type: 'success',
       });
       navigation.goBack();
-    } catch (error) {
-      console.log('[editCause] error:', error);
-      showMessage({
-        message: t('common.error'),
-        description: t('errors.edit_cause_error'),
-        type: 'danger',
-      });
-    }
-  };
+    },
+  });
 
   const onSubmit = (formData: UpdateCauseDto) => {
-    editCause(formData);
+    mutate({ ...formData, id });
   };
 
   return (

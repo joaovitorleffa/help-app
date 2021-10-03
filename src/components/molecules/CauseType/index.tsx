@@ -8,14 +8,15 @@ import { Container } from './styles';
 
 interface CauseTypeProps {
   type: string;
+  variant: 'danger' | 'success';
 }
 
-export function CauseType({ type }: CauseTypeProps): JSX.Element {
+export function CauseType({ type, variant }: CauseTypeProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
 
   return (
-    <Container>
+    <Container variant={variant}>
       <Text
         color={theme.colors.title_secondary}
         fontSize={rem(theme.fonts.size.xs)}

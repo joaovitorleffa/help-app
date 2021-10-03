@@ -44,7 +44,9 @@ export function AddCause(): JSX.Element {
 
   const addCause = async (data: CreateCauseDto) => {
     try {
-      await api.post('causes', data);
+      console.log(data);
+      const res = await api.post('causes', data);
+      console.log(res);
       showMessage({
         message: t('common.success'),
         description: t('create_cause.created_cause_successfully'),

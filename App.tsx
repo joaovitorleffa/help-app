@@ -16,6 +16,11 @@ import { AuthProvider } from '@hooks/useAuth';
 import { Routes } from './src/routes/index.routes';
 import { ThemeProvider } from './src/styles/ThemeProvider';
 import { SignUpStepsProvider } from '@hooks/useSignUpSteps';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { SpinnerProvider } from '@hooks/useSpinner';
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
@@ -23,6 +28,8 @@ function App(): JSX.Element {
     NotoSansJP_500Medium,
     NotoSansJP_700Bold,
   });
+
+  const queryClient = new QueryClient();
 
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -32,12 +39,16 @@ function App(): JSX.Element {
     <SafeAreaProvider>
       <ScreenProvider baseFontSize={18}>
         <ThemeProvider>
-          <SignUpStepsProvider>
-            <AuthProvider>
-              <Routes />
-              <FlashMessage position="top" />
-            </AuthProvider>
-          </SignUpStepsProvider>
+          <QueryClientProvider client={queryClient}>
+            <SpinnerProvider>
+              <SignUpStepsProvider>
+                <AuthProvider>
+                  <Routes />
+                  <FlashMessage position="top" />
+                </AuthProvider>
+              </SignUpStepsProvider>
+            </SpinnerProvider>
+          </QueryClientProvider>
         </ThemeProvider>
       </ScreenProvider>
     </SafeAreaProvider>

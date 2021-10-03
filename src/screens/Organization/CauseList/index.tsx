@@ -1,46 +1,24 @@
-import React, { useCallback, useEffect, useState, useMemo, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import { showMessage } from 'react-native-flash-message';
+import { Modalize } from 'react-native-modalize';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Platform, StatusBar, StyleSheet } from 'react-native';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedScrollHandler,
-  useAnimatedStyle,
-  useSharedValue,
-} from 'react-native-reanimated';
 
-import { api } from '@services/api';
-import { CauseDto } from '@dto/cause-dto';
-import { Pagination } from '@dto/pagination-dto';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
 
 import { Text } from '@atoms/Text';
 import { FloatButton } from '@molecules/FloatButton';
 import { Causes } from '@templates/Organization/Causes';
+import { Filters, Situation, Type } from '@templates/Common/Filters';
 
-import {
-  Container,
-  Content,
-  CustomText,
-  Filter,
-  FilterWrapper,
-  Header,
-  Icon,
-  Row,
-  SearchBar,
-  SearchInput,
-} from './styles';
-import { Modalize } from 'react-native-modalize';
-import { Portal } from 'react-native-portalize';
-
-const AnimatedText = Animated.createAnimatedComponent(CustomText);
-const AnimatedHeader = Animated.createAnimatedComponent(Header);
+import { Container, Content, CustomText, Header, FilterWrapper, Icon, Wrapper } from './styles';
+import { useQuery, useQueryClient } from 'react-query';
+import { getCauses } from '@services/organization/causes.api';
+import { useSpinner } from '@hooks/useSpinner';
 
 type CauseListNavigationScreenProp = CompositeNavigationProp<
   StackNavigationProp<OrganizationAppNavigatorParamsList, 'CauseList'>,
@@ -49,172 +27,99 @@ type CauseListNavigationScreenProp = CompositeNavigationProp<
 
 export function CauseList(): JSX.Element {
   const navigation = useNavigation<CauseListNavigationScreenProp>();
+  const queryClient = useQueryClient();
   const { t } = useTranslation();
   const theme = useTheme();
   const rem = useRem();
+  const spinner = useSpinner();
 
   const modalizeRef = useRef<Modalize | null>(null);
-  const LG = useMemo(() => rem(theme.fonts.size.lg), [rem, theme]);
 
   const [page, setPage] = useState(1);
-  const [causes, setCauses] = useState<CauseDto[]>([]);
-  const [shouldFetch, setShouldFetch] = useState(true);
-  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [type, setType] = useState<Type>('all');
+  const [situation, setSituation] = useState<Situation>('all');
 
-  const [totalResults, setTotalResults] = useState(0);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  const scrollY = useSharedValue(0);
-
-  const scrollHandler = useAnimatedScrollHandler((event) => {
-    scrollY.value = event.contentOffset.y;
-  });
-
-  const headerAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      height: interpolate(scrollY.value, [0, 60], [60, 0], Extrapolate.CLAMP),
-      opacity: interpolate(scrollY.value, [0, 60], [1, 0], Extrapolate.CLAMP),
-    };
-  });
-
-  const textContentAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      fontSize: interpolate(scrollY.value, [0, 60], [LG, 10], Extrapolate.CLAMP),
-    };
-  });
-
-  const handleAdd = useCallback(() => {
-    navigation.navigate('AddCause');
-  }, [navigation]);
-
-  const handleEdit = useCallback(
-    (cause: UpdateCauseDto) => {
-      navigation.navigate('EditCause', cause);
+  const { data, status, isFetching } = useQuery(
+    ['causes', { page, limit: 10, situation, type }],
+    getCauses,
+    {
+      keepPreviousData: true,
     },
-    [navigation],
   );
 
-  const fetchMore = useCallback(() => setShouldFetch(true), []);
-
-  const refresh = useCallback(() => {
+  const onChangeSituation = (situation: Situation) => {
+    setSituation(situation);
     setPage(1);
-    setIsRefreshing(true);
-    setShouldFetch(true);
-  }, []);
+  };
+
+  const onChangeType = (type: Type) => {
+    setType(type);
+    setPage(1);
+  };
+
+  const handleAdd = () => {
+    navigation.navigate('AddCause');
+  };
+
+  const handleEdit = (cause: UpdateCauseDto) => {
+    navigation.navigate('EditCause', cause);
+  };
+
+  const onChangePage = (_page: number) => {
+    setPage(_page);
+  };
 
   useEffect(() => {
-    if (!shouldFetch) {
-      return;
-    }
-
-    if (causes.length && !isRefreshing) {
-      if (causes.length >= totalResults) {
-        return;
+    if (data) {
+      if (data.results.length < data.total) {
+        queryClient.prefetchQuery(['causes', { page: page, situation, type }], getCauses);
       }
     }
+  }, [data, situation, type, page, queryClient]);
 
-    const fetch = async () => {
-      try {
-        setIsLoadingMore(true);
-
-        const { data } = await api.get<Pagination<CauseDto>>('causes/self', {
-          params: { page, limit: 2 },
-        });
-
-        const { total, results } = data;
-
-        page === 1 ? setCauses(results) : setCauses((prev) => [...prev, ...results]);
-        setTotalResults(total);
-        setPage((prev) => prev + 1);
-      } catch (error) {
-        console.log('[fetch] error:', error);
-        showMessage({
-          message: t('common.error'),
-          description: t('errors.list_causes_error'),
-          type: 'danger',
-        });
-      } finally {
-        setShouldFetch(false);
-        setIsLoadingMore(false);
-        setIsRefreshing(false);
-      }
-    };
-
-    fetch();
-  }, [page, causes.length, totalResults, shouldFetch, isRefreshing, t]);
+  useEffect(() => {
+    isFetching && data?.results.length
+      ? spinner({ visibility: true })
+      : spinner({ visibility: false });
+  }, [isFetching, data, spinner]);
 
   return (
     <Container>
-      <StatusBar barStyle="dark-content" backgroundColor={theme.colors.primary} />
+      <StatusBar
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
+        backgroundColor={theme.colors.primary}
+      />
 
       <Content>
-        <Header style={[headerAnimatedStyle, styles.shadow]}>
-          <CustomText style={textContentAnimatedStyle}>{t('cause_list.title')}</CustomText>
-          <FilterWrapper onPress={() => modalizeRef.current?.open()}>
+        <Header>
+          <CustomText>{t('cause_list.title')}</CustomText>
+          <FilterWrapper onPress={() => modalizeRef.current?.open()} style={styles.shadow}>
             <Icon name="sliders" />
           </FilterWrapper>
         </Header>
-        {isLoadingMore && !causes.length ? (
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        {status === 'loading' ? (
+          <Wrapper>
             <ActivityIndicator size="large" color={theme.colors.primary} />
             <Text fontSize={rem(theme.fonts.size.sm)}>{t('loading')}</Text>
-          </View>
+          </Wrapper>
+        ) : status === 'error' || !data ? (
+          <Wrapper>
+            <Text fontSize={rem(theme.fonts.size.md)}>
+              {t('cause_list.fetch_cause_list_error')}
+            </Text>
+          </Wrapper>
         ) : (
           <Causes
-            data={causes}
+            data={data.results}
             onEdit={handleEdit}
-            refreshing={isRefreshing}
-            onScroll={scrollHandler}
-            onEndReached={fetchMore}
-            onRefresh={refresh}
-            isLoadingMore={isLoadingMore}
+            totalResults={data.total}
+            currentPage={page}
+            onChangePage={onChangePage}
           />
         )}
         <FloatButton icon="add" onPress={handleAdd} />
       </Content>
-      <Portal>
-        <Modalize
-          ref={modalizeRef}
-          childrenStyle={{ paddingVertical: 20, paddingHorizontal: theme.spacing.grid }}>
-          <SearchBar>
-            <Icon name="search" />
-            <SearchInput />
-          </SearchBar>
-          <Text fontFamily="bold" fontSize={rem(theme.fonts.size.sm)} style={{ marginBottom: 6 }}>
-            Situação
-          </Text>
-          <Row>
-            <Filter isActive>
-              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.primary}>
-                Encerrado
-              </Text>
-            </Filter>
-            <Filter>
-              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
-                Em andamento
-              </Text>
-            </Filter>
-          </Row>
-          <Text
-            fontFamily="bold"
-            fontSize={rem(theme.fonts.size.sm)}
-            style={{ marginBottom: 6, marginTop: 16 }}>
-            Tipo
-          </Text>
-          <Row>
-            <Filter>
-              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
-                Doação
-              </Text>
-            </Filter>
-            <Filter>
-              <Text fontSize={rem(theme.fonts.size.sm)} color={theme.colors.text}>
-                Trabalho voluntário
-              </Text>
-            </Filter>
-          </Row>
-        </Modalize>
-      </Portal>
+      <Filters ref={modalizeRef} {...{ situation, type, onChangeSituation, onChangeType }} />
     </Container>
   );
 }
@@ -229,6 +134,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
 
-    elevation: 3,
+    backgroundColor: '#fff',
+    elevation: 4,
   },
 });
