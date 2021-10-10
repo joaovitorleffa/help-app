@@ -21,6 +21,7 @@ import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 import { Container, Content } from './styles';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateCause } from '@services/organization/causes.api';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const schema = Yup.object().shape({
   title: Yup.string()
@@ -35,11 +36,16 @@ const schema = Yup.object().shape({
 
 type EditCauseRouteProp = RouteProp<OrganizationNavigatorParamsList, 'EditCause'>;
 
+type EditCauseNavigationScreenProp = StackNavigationProp<
+  OrganizationNavigatorParamsList,
+  'EditCause'
+>;
+
 export function EditCause(): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation = useNavigation<EditCauseNavigationScreenProp>();
   const route = useRoute<EditCauseRouteProp>();
 
   const queryClient = useQueryClient();
@@ -60,7 +66,7 @@ export function EditCause(): JSX.Element {
         description: t('edit_cause.updated_cause_successfully'),
         type: 'success',
       });
-      navigation.goBack();
+      navigation.navigate('AppStack', { screen: 'CauseList' });
     },
   });
 

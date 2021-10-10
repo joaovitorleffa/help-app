@@ -6,23 +6,29 @@ import { RectButtonProps } from 'react-native-gesture-handler';
 import { Text } from '@atoms/Text';
 
 import { Container } from './styles';
+import { ActivityIndicator } from 'react-native';
 
 interface ButtonProps extends RectButtonProps {
   title: string;
   color?: string;
   textColor?: string;
   onPress: () => void;
+  isLoading?: boolean;
 }
 
-export function Button({ title, textColor, color, ...rest }: ButtonProps) {
+export function Button({ title, textColor, color, isLoading, ...rest }: ButtonProps): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
 
   return (
     <Container {...rest} activeOpacity={0.75} color={color} underlayColor={theme.colors.underlay}>
-      <Text color={textColor ?? theme.colors.title} fontSize={rem(1)} fontFamily="medium">
-        {title}
-      </Text>
+      {isLoading ? (
+        <ActivityIndicator color={theme.colors.title_secondary} />
+      ) : (
+        <Text color={textColor ?? theme.colors.title} fontSize={rem(1)} fontFamily="medium">
+          {title}
+        </Text>
+      )}
     </Container>
   );
 }

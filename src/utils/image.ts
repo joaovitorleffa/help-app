@@ -1,6 +1,6 @@
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 
-type GetImageInfo = {
+export type GetImageInfo = {
   name: string;
   type: string;
   uri: string;

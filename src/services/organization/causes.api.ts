@@ -9,13 +9,32 @@ const getCauses = ({ queryKey }): Promise<Pagination<CauseDto>> => {
 
   return api
     .get('/causes/self', { params: { page, limit: limit ?? 10, type, situation } })
-    .then((response) => response.data);
+    .then((res) => res.data);
+};
+
+const getCauseById = (id: number): Promise<CauseDto> => {
+  return api.get(`/causes/${id}`).then((res) => res.data);
 };
 
 const updateCause = (updateCause: UpdateCauseDto): Promise<CauseDto> => {
   const { id } = updateCause;
-  console.log(updateCause);
-  return api.put(`/causes/${id}`, updateCause).then((response) => response.data);
+  return api.put(`/causes/${id}`, updateCause).then((res) => res.data);
 };
 
-export { getCauses, updateCause };
+const createFeedback = (createFeedback: {
+  id: number;
+  feedback: string;
+  images: Array<any>;
+}): Promise<CauseDto> => {
+  const { id, feedback, images } = createFeedback;
+
+  const form = new FormData();
+  form.append('feedback', feedback);
+  for (const image of images) {
+    form.append('files', image);
+  }
+
+  return api.put(`/causes/${id}/add/feedback`, form).then((res) => res.data);
+};
+
+export { getCauses, getCauseById, updateCause, createFeedback };

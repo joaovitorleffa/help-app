@@ -19,6 +19,7 @@ export type OrganizationNavigatorParamsList = {
   EditProfile: { profileImage: string | null; description: string | null };
   AddCause: undefined;
   EditCause: UpdateCauseDto;
+  AddFeedback: { id: number };
   Cause: UpdateCauseDto;
 };
 

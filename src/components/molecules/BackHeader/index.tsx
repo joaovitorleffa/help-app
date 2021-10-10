@@ -29,7 +29,7 @@ export function BackHeader({ title, isDark = false }: BackHeaderProps): JSX.Elem
       <Text
         style={{ marginLeft: 12 }}
         color={theme.colors[isDark ? 'title_secondary' : 'title']}
-        fontSize={rem(theme.fonts.size.lg)}
+        fontSize={rem(theme.fonts.size.md)}
         fontFamily="bold">
         {title}
       </Text>

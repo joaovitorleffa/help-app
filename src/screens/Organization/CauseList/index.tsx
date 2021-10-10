@@ -102,13 +102,13 @@ export function CauseList(): JSX.Element {
             <ActivityIndicator size="large" color={theme.colors.primary} />
             <Text fontSize={rem(theme.fonts.size.sm)}>{t('loading')}</Text>
           </Wrapper>
-        ) : status === 'error' || !data ? (
+        ) : status === 'error' ? (
           <Wrapper>
             <Text fontSize={rem(theme.fonts.size.md)}>
               {t('cause_list.fetch_cause_list_error')}
             </Text>
           </Wrapper>
-        ) : (
+        ) : data ? (
           <Causes
             data={data.results}
             onEdit={handleEdit}
@@ -116,6 +116,10 @@ export function CauseList(): JSX.Element {
             currentPage={page}
             onChangePage={onChangePage}
           />
+        ) : (
+          <Wrapper>
+            <Text fontSize={rem(theme.fonts.size.md)}>Nenhuma causa encontrada</Text>
+          </Wrapper>
         )}
         <FloatButton icon="add" onPress={handleAdd} />
       </Content>

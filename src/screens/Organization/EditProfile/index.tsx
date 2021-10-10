@@ -18,7 +18,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { api } from '@services/api';
 import i18n from '@assets/locales/i18n';
 import { useAuth } from '@hooks/useAuth';
 import { getImageInfo } from '@utils/image';
@@ -53,14 +52,13 @@ export function EditProfile(): JSX.Element {
   const { profileImage, description } = params;
 
   const [isFocused, setIsFocused] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [newProfileImage, setNewProfileImage] = useState<ImageInfo>({} as ImageInfo);
 
   const { organization, reconcileOrganizationData } = useAuth();
 
   const queryClient = useQueryClient();
 
-  const { mutate: mutateImage } = useMutation(updateProfileImage, {
+  const { mutate: mutateImage, isLoading } = useMutation(updateProfileImage, {
     onSuccess: async () => {
       await queryClient.invalidateQueries('organization-profile');
       showMessage({
@@ -78,24 +76,27 @@ export function EditProfile(): JSX.Element {
     },
   });
 
-  const { mutate: mutateDescription } = useMutation(updateProfile, {
-    onSuccess: async (data) => {
-      await queryClient.invalidateQueries('organization-profile');
-      showMessage({
-        message: t('common.success'),
-        description: t('common.saved_information'),
-        type: 'success',
-      });
-      reconcileOrganizationData(data);
+  const { mutate: mutateDescription, isLoading: isUpdatingDescription } = useMutation(
+    updateProfile,
+    {
+      onSuccess: async (data) => {
+        await queryClient.invalidateQueries('organization-profile');
+        showMessage({
+          message: t('common.success'),
+          description: t('common.saved_information'),
+          type: 'success',
+        });
+        reconcileOrganizationData(data);
+      },
+      onError: () => {
+        showMessage({
+          message: t('common.error'),
+          description: t('errors.edit_profile_error'),
+          type: 'danger',
+        });
+      },
     },
-    onError: () => {
-      showMessage({
-        message: t('common.error'),
-        description: t('errors.edit_profile_error'),
-        type: 'danger',
-      });
-    },
-  });
+  );
 
   const {
     control,
@@ -210,7 +211,7 @@ export function EditProfile(): JSX.Element {
           />
         </Wrapper>
         <Spinner
-          visible={isLoading}
+          visible={isLoading || isUpdatingDescription}
           textContent={t('common.loading')}
           textStyle={{ color: theme.colors.title_secondary }}
         />

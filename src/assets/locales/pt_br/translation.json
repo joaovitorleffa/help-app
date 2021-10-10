@@ -31,7 +31,8 @@
     "successfully_altered_image": "Imagem alterada! 🤩",
     "saved_information": "Informações salvas! 🤩",
     "in_progress_cause": "Causa em andamento",
-    "ended_cause": "Causa encerrada"
+    "ended_cause": "Causa encerrada",
+    "feedback": "Feedback"
   },
 
   "greetings": {
@@ -48,7 +49,7 @@
   },
 
   "sign_in": {
-    "welcome": "Bem-vindo (a),",
+    "welcome": "Bem-vindo,",
     "subtitle": "Entre para continuar!",
     "no_have_account": "Eu não tenho uma conta,",
     "invalid_login": "Ops, login inválido!"
@@ -82,6 +83,12 @@
     "add_feedback_info": "Adicionar feedback a causa pode motivar os doadores e voluntários a contribuir com uma nova causa no futuro!"
   },
 
+  "add_feedback": {
+    "title": "Adicionar feedback",
+    "feedback_placeholder": "Nos conte como foi utilizado a ajuda dos usuários...",
+    "add_feedback_success": "Feedback adicionado com sucesso 🤩"
+  },
+
   "errors": {
     "unique_email": "Já existe uma conta cadastrada com esse e-mail",
     "fill_name": "O nome é obrigatório!",
@@ -110,6 +117,9 @@
     "edit_profile_error": "Não foi possível editar perfil.",
     "add_cause_error": "Não foi possível adicionar uma nova causa.",
     "edit_cause_error": "Não foi possível editar a causa.",
-    "list_causes_error": "Não foi possível listar as causas"
+    "list_causes_error": "Não foi possível listar as causas",
+
+    "fill_feedback": "A mensagem de feedback é obrigatória!",
+    "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!"
   }
 }
