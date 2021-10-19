@@ -4,6 +4,8 @@ import { Entypo } from '@expo/vector-icons';
 export const Container = styled.View`
   flex-direction: row;
   align-items: center;
+  margin-top: ${({ theme }) => theme.screen.rem(0.7)}px;
+  margin-bottom: ${({ theme }) => theme.screen.rem(0.7)}px;
 `;
 
 export const Icon = styled(Entypo)`

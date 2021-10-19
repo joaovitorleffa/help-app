@@ -13,10 +13,12 @@ export const Wrapper = styled.View`
   margin: 0px ${({ theme }) => theme.spacing.grid}px;
 `;
 
-export const Header = styled.View`
-  margin-bottom: ${({ theme }) => theme.screen.rem(0.7)}px;
+export const AddFeedbackWrapper = styled.SafeAreaView`
+  margin-left: ${({ theme }) => theme.spacing.grid}px;
+  margin-right: ${({ theme }) => theme.spacing.grid}px;
+  margin-bottom: ${({ theme }) => theme.screen.rem(1)}px;
 `;
 
-export const FeedbackWrapper = styled.View`
+export const FeedbackWrapper = styled.ScrollView`
   margin-top: ${({ theme }) => theme.screen.rem(1)}px;
 `;

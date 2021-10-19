@@ -9,14 +9,16 @@ import { FeedbackImage } from '@dto/cause-dto';
 import { Text } from '@atoms/Text';
 import { FeedbackPhoto } from '@molecules/FeedbackPhoto';
 
-import { Container, Wrapper } from './styles';
+import { Container, Header, Icon, Wrapper } from './styles';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 interface FeedbackProps {
   feedback: string;
   images: Array<FeedbackImage>;
+  onEditFeedback: () => void;
 }
 
-export function Feedback({ feedback, images }: FeedbackProps): JSX.Element {
+export function Feedback({ feedback, images, onEditFeedback }: FeedbackProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -34,11 +36,14 @@ export function Feedback({ feedback, images }: FeedbackProps): JSX.Element {
     <Container>
       {!!feedback && (
         <>
-          <Wrapper>
+          <Header>
             <Text fontFamily="bold" fontSize={rem(theme.fonts.size.lg)} color={theme.colors.title}>
               {t('common.feedback')}
             </Text>
-          </Wrapper>
+            <BorderlessButton onPress={onEditFeedback}>
+              <Icon name="edit" />
+            </BorderlessButton>
+          </Header>
           <FlatList
             data={images}
             renderItem={renderItem}

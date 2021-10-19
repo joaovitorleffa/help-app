@@ -10,7 +10,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { Alert, Keyboard, TouchableWithoutFeedback, View } from 'react-native';
 
 import i18n from '@assets/locales/i18n';
-import { getImageInfo } from '@utils/image';
+import { GetImageInfo, getImageInfo, ImageProps } from '@utils/image';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { OrganizationNavigatorParamsList } from '@routes/types';
 
@@ -21,7 +21,7 @@ import { createFeedback } from '@services/organization';
 import { FeedbackPhoto } from '@molecules/FeedbackPhoto';
 import { showMessage } from 'react-native-flash-message';
 
-import { Container, Content, Header, Photos } from './styles';
+import { Container, Content, Photos } from './styles';
 
 const schema = Yup.object().shape({
   feedback: Yup.string()
@@ -43,13 +43,11 @@ export function AddFeedback(): JSX.Element {
 
   const queryClient = useQueryClient();
 
-  const { id } = route.params;
+  const { id, feedback, images: imageParams } = route.params;
 
-  const [images, setImages] = useState<Array<ImageInfo>>([
-    {} as ImageInfo,
-    {} as ImageInfo,
-    {} as ImageInfo,
-  ]);
+  const [images, setImages] = useState<Array<ImageProps>>(
+    imageParams ?? [{} as ImageProps, {} as ImageProps, {} as ImageProps],
+  );
 
   const {
     control,
@@ -103,7 +101,20 @@ export function AddFeedback(): JSX.Element {
 
   const onSubmit = (data: FormData) => {
     const filteredImages = images.filter((element) => Object.keys(element).length > 0);
-    const imagesInfo = filteredImages.map((element) => getImageInfo(element));
+    if (filteredImages.length === 0 && data.feedback === feedback) {
+      return;
+    }
+
+    const imagesInfo: Array<GetImageInfo> = [];
+    for (let i = 0; i < filteredImages.length; i++) {
+      if (imageParams) {
+        if (filteredImages[i].uri === imageParams[i].uri) {
+          continue;
+        }
+      }
+      imagesInfo.push(getImageInfo(filteredImages[i]));
+    }
+
     mutate({ ...data, id, images: imagesInfo });
   };
 
@@ -112,11 +123,11 @@ export function AddFeedback(): JSX.Element {
       <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <Content>
           <View>
-            <Header>
-              <BackHeader title={t('add_feedback.title')} />
-            </Header>
+            <BackHeader title={t('add_feedback.title')} />
+
             <InputForm
               control={control}
+              defaultValue={feedback ?? ''}
               error={errors?.feedback?.message}
               name="feedback"
               inputType="textArea"

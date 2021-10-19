@@ -54,7 +54,7 @@ export function AddCause(): JSX.Element {
       });
       navigation.goBack();
     } catch (error) {
-      console.log('[addCause] error:', error);
+      console.log('[addCause] error:');
       showMessage({
         message: t('common.error'),
         description: t('errors.add_cause_error'),

@@ -31,7 +31,9 @@ const createFeedback = (createFeedback: {
   const form = new FormData();
   form.append('feedback', feedback);
   for (const image of images) {
-    form.append('files', image);
+    if (image) {
+      form.append('files', image);
+    }
   }
 
   return api.put(`/causes/${id}/add/feedback`, form).then((res) => res.data);

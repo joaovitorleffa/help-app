@@ -2,6 +2,7 @@ import { NavigatorScreenParams } from '@react-navigation/core';
 
 import { UpdateCauseDto } from '@dto/update-cause-dto';
 import { FirstStepData, SecondStepData } from '@dto/sign-up-dto';
+import { ImageProps } from '@utils/image';
 
 export type RootNavigatorParamsList = {
   Greeting: undefined;
@@ -19,7 +20,7 @@ export type OrganizationNavigatorParamsList = {
   EditProfile: { profileImage: string | null; description: string | null };
   AddCause: undefined;
   EditCause: UpdateCauseDto;
-  AddFeedback: { id: number };
+  AddFeedback: { id: number; feedback?: string; images?: Array<ImageProps> };
   Cause: UpdateCauseDto;
 };
 

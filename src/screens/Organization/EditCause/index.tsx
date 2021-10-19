@@ -6,22 +6,21 @@ import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { showMessage } from 'react-native-flash-message';
+import { useMutation, useQueryClient } from 'react-query';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 import { Keyboard, KeyboardAvoidingView, StatusBar, TouchableWithoutFeedback } from 'react-native';
 
-import { api } from '@services/api';
 import i18n from '@assets/locales/i18n';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
 import { OrganizationNavigatorParamsList } from '@routes/types';
+import { updateCause } from '@services/organization/causes.api';
 
 import { Button } from '@molecules/Button';
 import { BackHeader } from '@molecules/BackHeader';
 import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
-import { useMutation, useQueryClient } from 'react-query';
-import { updateCause } from '@services/organization/causes.api';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 const schema = Yup.object().shape({
   title: Yup.string()

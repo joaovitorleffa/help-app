@@ -11,10 +11,6 @@ export const Content = styled.View`
   margin: 0px ${({ theme }) => theme.spacing.grid}px;
 `;
 
-export const Header = styled.View`
-  margin-bottom: ${({ theme }) => theme.screen.rem(0.7)}px;
-`;
-
 export const Photos = styled.View`
   flex-direction: row;
   align-items: center;

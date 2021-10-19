@@ -16,6 +16,7 @@ export const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-top: ${({ theme }) => theme.screen.rem(0.7)}px; ;
 `;
 
 export const CustomText = styled.Text`
