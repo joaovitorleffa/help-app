@@ -1,0 +1,125 @@
+{
+  "common": {
+    "entry": "Entrar",
+    "register": "Cadastrar",
+    "title": "Título",
+
+    "password": "Senha",
+    "description": "Descrição",
+    "confirm_password": "Confirmar senha",
+    "name": "Nome",
+    "email": "E-mail",
+    "whatsapp_number": "Nº de WhatsApp",
+    "cep": "CEP",
+    "number": "Número",
+    "city": "Cidade",
+    "district": "Bairro",
+    "media_permission": "Precisamos da sua permissão para suas imagens",
+    "save": "Salvar",
+    "sorry": "Desculpe",
+    "loading": "Carregando",
+    "error": "Erro",
+    "add_cause": "Adicionar causa",
+    "type": "Tipo",
+    "donation": "Doação",
+    "voluntary_work": "Trabalho voluntário",
+    "end_at": "Termina em",
+    "confirm": "Confirmar",
+    "cancel": "Cancelar",
+    "success": "Sucesso",
+    "edit": "Editar",
+    "successfully_altered_image": "Imagem alterada! 🤩",
+    "saved_information": "Informações salvas! 🤩",
+    "in_progress_cause": "Causa em andamento",
+    "ended_cause": "Causa encerrada",
+    "feedback": "Feedback"
+  },
+
+  "greetings": {
+    "subtitle": "Ajude a transformar vidas!",
+    "register_a_ong": "Cadastrar uma ONG",
+    "help_a_ong": "Ajudar uma ONG"
+  },
+
+  "sign_up": {
+    "create_title": "Crie uma conta,",
+    "create_message": "Preencha os dados para continuar!",
+    "sign_up_successfully_title": "Cadastro realizado com sucesso",
+    "sign_up_successfully_message": "Você já pode aproveitar todos os benefícios do Help. Comece agora mesmo!"
+  },
+
+  "sign_in": {
+    "welcome": "Bem-vindo,",
+    "subtitle": "Entre para continuar!",
+    "no_have_account": "Eu não tenho uma conta,",
+    "invalid_login": "Ops, login inválido!"
+  },
+
+  "initial": {
+    "subtitle": "Cadastre causas para\nque as pessoas ajudem!"
+  },
+
+  "edit_profile": {
+    "edit_profile_title": "Editar informações"
+  },
+
+  "cause_list": {
+    "title": "Minhas causas",
+    "fetch_cause_list_error": "Ops, aconteceu um erro ao buscar as causas. Tente novamente mais tarde!"
+  },
+
+  "create_cause": {
+    "title": "Criar causa",
+    "created_cause_successfully": "Causa criada com sucesso 🥳"
+  },
+
+  "edit_cause": {
+    "title": "Editar causa",
+    "updated_cause_successfully": "Causa editada com sucesso 🥳"
+  },
+
+  "cause": {
+    "add_feedback": "Adicionar feedback",
+    "add_feedback_info": "Adicionar feedback a causa pode motivar os doadores e voluntários a contribuir com uma nova causa no futuro!"
+  },
+
+  "add_feedback": {
+    "title": "Adicionar feedback",
+    "feedback_placeholder": "Nos conte como foi utilizado a ajuda dos usuários...",
+    "add_feedback_success": "Feedback adicionado com sucesso 🤩"
+  },
+
+  "errors": {
+    "unique_email": "Já existe uma conta cadastrada com esse e-mail",
+    "fill_name": "O nome é obrigatório!",
+    "fill_email": "O e-mail é obrigatório!",
+    "invalid_email": "E-mail inválido",
+    "fill_password": "A senha é obrigatória!",
+    "min_password": "A senha deve ter ao menos 6 caracteres!",
+    "fill_confirm_password": "Confirme a senha!",
+    "different_passwords": "As senhas não coincidem!",
+    "fill_phone_number": "O Nº de WhatsApp é obrigatório",
+    "invalid_phone_number": "Nº de WhatsApp inválido!",
+    "fill_cep": "O CEP é obrigatório!",
+    "invalid_cep": "CEP inválido!",
+    "fill_city": "A cidade é obrigatória!",
+    "fill_district": "O bairro é obrigatório!",
+    "fill_number": "O número é obrigatório!",
+    "invalid_description": "A descrição deve ter no máximo 200 caracteres!",
+    "fill_title": "O título é obrigatório!",
+    "max_title": "O título deve ter no máximo {{ caracteres }}!",
+    "fill_description": "A descrição é obrigatória!",
+    "max_description": "A descrição deve ter no máximo {{ caracteres }}!",
+    "fill_end_at": "A data de encerramento é obrigatória!",
+    "fill_type": "O tipo é obrigatório",
+
+    "load_profile_error": "Não foi possível carregar os dados do perfil.",
+    "edit_profile_error": "Não foi possível editar perfil.",
+    "add_cause_error": "Não foi possível adicionar uma nova causa.",
+    "edit_cause_error": "Não foi possível editar a causa.",
+    "list_causes_error": "Não foi possível listar as causas",
+
+    "fill_feedback": "A mensagem de feedback é obrigatória!",
+    "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!"
+  }
+}

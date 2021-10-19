@@ -1,6 +1,29 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "strict": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@screens/*": ["./src/screens/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@assets/": ["./src/assets/"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@molecules/*": ["./src/components/molecules/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@templates/*": ["./src/components/templates/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@routes": ["./src/routes"],
+      "@utils/*": ["./src/utils/*"],
+      "@dto/*": ["./src/dto/*"],
+      "@services/*": ["./src/services/*"]
+    }
+  },
+  "allowSyntheticDefaultImports": true,
+  "esModuleInterop": true,
+  "skipLibCheck": false,
+  "experimentalDecorators": true,
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"]
 }
