@@ -16,16 +16,26 @@ interface FeedbackProps {
   feedback: string;
   images: Array<FeedbackImage>;
   onEditFeedback: () => void;
+  onPressImage: (imageIndex: number) => void;
 }
 
-export function Feedback({ feedback, images, onEditFeedback }: FeedbackProps): JSX.Element {
+export function Feedback({
+  feedback,
+  images,
+  onEditFeedback,
+  onPressImage,
+}: FeedbackProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
 
   const renderItem = useCallback(
-    ({ item }: { item: FeedbackImage }) => (
-      <FeedbackPhoto uri={item.name} style={{ marginRight: 16, borderWidth: 0 }} />
+    ({ item, index }: { item: FeedbackImage; index: number }) => (
+      <FeedbackPhoto
+        uri={item.name}
+        style={{ marginRight: 16, borderWidth: 0 }}
+        onPress={() => onPressImage(index)}
+      />
     ),
     [],
   );

@@ -1,33 +1,23 @@
 import React from 'react';
+import { View } from 'react-native';
+import { useRem } from 'responsive-native';
 import LottieView from 'lottie-react-native';
+import { useTheme } from 'styled-components';
+import { RootNavigatorParamsList } from '@routes/types';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 
-import CheckAnimation from '../../assets/animations/check.json';
+import { Text } from '@atoms/Text';
+import { Button } from '@molecules/Button';
+import CheckAnimation from '@assets/animations/check.json';
 
 import { Container, TextWrapper } from './styles';
-import { Text } from '@atoms/Text';
-import {
-  CompositeNavigationProp,
-  CompositeScreenProps,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/core';
-import {
-  OrganizationAuthNavigatorParamsList,
-  PersonNavigatorParamsList,
-  RootNavigatorParamsList,
-} from '@routes/types';
-import { useRem } from 'responsive-native';
-import { Button } from '@molecules/Button';
-import { useTheme } from 'styled-components';
-import { View } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 type SuccessScreenProp = RouteProp<RootNavigatorParamsList, 'Success'>;
 
 type SuccessNavigationScreeProp = StackNavigationProp<RootNavigatorParamsList, 'Success'>;
 
-export function Success() {
+export function Success(): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const route = useRoute<SuccessScreenProp>();

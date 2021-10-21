@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { isBefore } from 'date-fns';
 import { useQuery } from 'react-query';
 import { SafeAreaView, ScrollView } from 'react-native';
@@ -6,11 +6,17 @@ import { useRem } from 'responsive-native';
 import { Skeleton } from '@motify/skeleton';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import ImageView from 'react-native-image-viewing';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
+import {
+  CompositeNavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/core';
 
 import { getCauseById } from '@services/organization';
-import { OrganizationNavigatorParamsList } from '@routes/types';
+import { OrganizationNavigatorParamsList, RootNavigatorParamsList } from '@routes/types';
 
 import { Info } from '@molecules/Info';
 import { Button } from '@molecules/Button';
@@ -21,10 +27,14 @@ import { CauseDetailsInfo } from '@organisms/Common/CauseDetailsInfo';
 
 import { Container, Content, Wrapper, FeedbackWrapper, AddFeedbackWrapper } from './styles';
 import { ImageProps } from '@utils/image';
+import ImageViewerFooter from '@molecules/ImageViewerFooter';
 
 type CauseRouteScreenProp = RouteProp<OrganizationNavigatorParamsList, 'Cause'>;
 
-type CauseNavigationScreenProp = StackNavigationProp<OrganizationNavigatorParamsList, 'Cause'>;
+type CauseNavigationScreenProp = CompositeNavigationProp<
+  StackNavigationProp<RootNavigatorParamsList, 'OrganizationStack'>,
+  StackNavigationProp<OrganizationNavigatorParamsList, 'Cause'>
+>;
 
 export function Cause(): JSX.Element {
   const route = useRoute<CauseRouteScreenProp>();
@@ -33,6 +43,9 @@ export function Cause(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   const { t } = useTranslation();
+
+  const [isVisibleImageViewer, setIsVisibleImageViewer] = useState(false);
+  const [imageViewerIndex, setImageViewerIndex] = useState(0);
 
   const { id, title, description, endAt, type } = route.params;
 
@@ -66,6 +79,11 @@ export function Cause(): JSX.Element {
     navigation.navigate('AddFeedback', { id });
   };
 
+  const handlePressImage = (imageIndex: number) => {
+    setIsVisibleImageViewer(true);
+    setImageViewerIndex(imageIndex);
+  };
+
   return (
     <Container>
       <ScrollView
@@ -85,6 +103,7 @@ export function Cause(): JSX.Element {
                   feedback={data?.feedback ?? ''}
                   images={data?.feedbackImages ?? []}
                   onEditFeedback={handleEditFeedback}
+                  onPressImage={handlePressImage}
                 />
               </FeedbackWrapper>
             </Skeleton>
@@ -107,6 +126,20 @@ export function Cause(): JSX.Element {
         <SafeAreaView>
           <FloatButton icon="edit" onPress={handleEdit} style={{ bottom: 12 }} />
         </SafeAreaView>
+      )}
+      {data?.feedbackImages && (
+        <ImageView
+          images={data?.feedbackImages?.map((element) => ({ uri: element.name }))}
+          imageIndex={imageViewerIndex}
+          visible={isVisibleImageViewer}
+          FooterComponent={(props) => (
+            <ImageViewerFooter
+              imageIndex={props.imageIndex}
+              total={data?.feedbackImages?.length ?? 0}
+            />
+          )}
+          onRequestClose={() => setIsVisibleImageViewer(false)}
+        />
       )}
     </Container>
   );

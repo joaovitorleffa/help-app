@@ -1,18 +1,19 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 import { Host } from 'react-native-portalize';
+import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 
+import { useAuth } from '@hooks/useAuth';
+import { UserTypeEnum } from '@dto/user-dto';
 import { RootNavigatorParamsList } from './types';
 
 import { Success } from '@screens/Success';
 import { Greetings } from '@screens/Greetings';
-import { OrganizationRoutes } from './organization/index.routes';
-import { useAuth } from '@hooks/useAuth';
-import { UserTypeEnum } from '@dto/user-dto';
+import { ImageViewer } from '@screens/ImageViewer';
 import { PersonRoutes } from './person/index.routes';
-import { ActivityIndicator } from 'react-native';
-import { useTheme } from 'styled-components';
+import { OrganizationRoutes } from './organization/index.routes';
 
 const Stack = createStackNavigator<RootNavigatorParamsList>();
 
@@ -38,6 +39,7 @@ export function Routes(): JSX.Element {
             <Stack.Screen name="PersonStack" component={PersonRoutes} />
           )}
           <Stack.Screen name="Success" component={Success} />
+          <Stack.Screen name="ImageViewer" component={ImageViewer} />
         </Stack.Navigator>
       </Host>
     </NavigationContainer>

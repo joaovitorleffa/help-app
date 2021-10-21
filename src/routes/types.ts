@@ -10,6 +10,7 @@ export type RootNavigatorParamsList = {
     title: string;
     text: string;
   };
+  ImageViewer: { images: Array<string>; selectedIndex?: number };
   OrganizationStack: NavigatorScreenParams<OrganizationNavigatorParamsList>;
   PersonStack: NavigatorScreenParams<PersonNavigatorParamsList>;
 };
