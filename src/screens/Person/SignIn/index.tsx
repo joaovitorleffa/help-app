@@ -23,8 +23,11 @@ export function SignIn(): JSX.Element {
 
   const { mutate, isLoading } = useMutation(loginPerson, {
     onSuccess: async (data) => {
-      await setPersonData(data);
-      navigation.reset({ index: 0, routes: [{ name: 'PersonHome' }] });
+      await setPersonData({
+        personData: data.person,
+        userData: data.user,
+        accessToken: data.accessToken,
+      });
     },
     onError: (error) => {
       if (axios.isAxiosError(error)) {

@@ -12,11 +12,14 @@ import { api } from '@services/api';
 import { UserDto, UserTypeEnum } from '@dto/user-dto';
 import { AuthOrganizationDto, OrganizationDto } from '@dto/organization-dto';
 import { PersonDto } from '@dto/person-dto';
-import { PersonLoginResponseDto } from '@dto/login-dto';
 
 type SetOrganizationData = AuthOrganizationDto;
 
-type SetPersonData = PersonLoginResponseDto;
+type SetPersonData = {
+  userData: UserDto;
+  personData: PersonDto;
+  accessToken: string;
+};
 
 interface AuthContextData {
   user: UserDto;
@@ -70,14 +73,14 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   );
 
   const setPersonData = useCallback(
-    async ({ person: personData, user: userData, accessToken: _accessToken }: SetPersonData) => {
+    async ({ personData, userData, accessToken: _accessToken }: SetPersonData) => {
       setUser(userData);
       setPerson(personData);
       setAccessToken(_accessToken);
       try {
         await AsyncStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ personData, userData, _accessToken }),
+          JSON.stringify({ personData, userData, accessToken: _accessToken }),
         );
         api.defaults.headers.common['Authorization'] = `Bearer ${_accessToken}`;
       } catch (error: any) {
@@ -112,8 +115,8 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
 
   useEffect(() => {
     (async () => {
+      setIsLoading(true);
       const authData = await AsyncStorage.getItem(STORAGE_KEY);
-
       if (authData) {
         const formattedData = JSON.parse(authData);
 
