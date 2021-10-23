@@ -30,22 +30,28 @@
     "edit": "Editar",
     "successfully_altered_image": "Imagem alterada! 🤩",
     "saved_information": "Informações salvas! 🤩",
+
     "in_progress_cause": "Causa em andamento",
     "ended_cause": "Causa encerrada",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "already_have_an_account": "Eu já tenho uma conta,"
   },
 
   "greetings": {
     "subtitle": "Ajude a transformar vidas!",
     "register_a_ong": "Cadastrar uma ONG",
-    "help_a_ong": "Ajudar uma ONG"
+    "help_a_ong": "Ajudar uma ONG",
+    "help_peoples": "Ajude pessoas!"
   },
 
   "sign_up": {
     "create_title": "Crie uma conta,",
     "create_message": "Preencha os dados para continuar!",
+    "create_message_secondary": "Cadastre-se para começar!",
     "sign_up_successfully_title": "Cadastro realizado com sucesso",
-    "sign_up_successfully_message": "Você já pode aproveitar todos os benefícios do Help. Comece agora mesmo!"
+    "sign_up_successfully_message": "Você já pode aproveitar todos os benefícios do Help. Comece agora mesmo!",
+    "created_account_success": "Conta criada com sucesso!",
+    "created_account_success_message": "Você já pode aproveitar todos os benefícios do Help. Comece agora mesmo!"
   },
 
   "sign_in": {
@@ -95,7 +101,8 @@
     "fill_email": "O e-mail é obrigatório!",
     "invalid_email": "E-mail inválido",
     "fill_password": "A senha é obrigatória!",
-    "min_password": "A senha deve ter ao menos 6 caracteres!",
+    "min_name": "O nome deve ter ao menos 5 caracteres!",
+    "min_password": "A senha deve ter ao menos 8 caracteres!",
     "fill_confirm_password": "Confirme a senha!",
     "different_passwords": "As senhas não coincidem!",
     "fill_phone_number": "O Nº de WhatsApp é obrigatório",

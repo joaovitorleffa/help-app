@@ -31,7 +31,7 @@ export function Routes(): JSX.Element {
             <>
               <Stack.Screen name="Greeting" component={Greetings} />
               <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
-              <Stack.Screen name="PersonStack" component={OrganizationRoutes} />
+              <Stack.Screen name="PersonStack" component={PersonRoutes} />
             </>
           ) : user.userType === UserTypeEnum.ORGANIZATION ? (
             <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />

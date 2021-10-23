@@ -23,7 +23,7 @@ const schema = Yup.object().shape({
   passwordConfirm: Yup.string().required(i18n.t('errors.fill_confirm_password')),
 });
 
-export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps) {
+export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps): JSX.Element {
   const theme = useTheme();
   const { t } = useTranslation();
   const { formData, serializeFormData } = useSignUpSteps();

@@ -14,7 +14,7 @@ type InitialScreenNavigationProp = StackNavigationProp<
   'Initial'
 >;
 
-export function InitialScreenFooter() {
+export function InitialScreenFooter(): JSX.Element {
   const { t } = useTranslation();
   const navigation = useNavigation<InitialScreenNavigationProp>();
 
