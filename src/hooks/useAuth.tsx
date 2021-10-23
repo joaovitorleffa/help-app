@@ -11,21 +11,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '@services/api';
 import { UserDto, UserTypeEnum } from '@dto/user-dto';
 import { AuthOrganizationDto, OrganizationDto } from '@dto/organization-dto';
+import { PersonDto } from '@dto/person-dto';
+import { PersonLoginResponseDto } from '@dto/login-dto';
 
 type SetOrganizationData = AuthOrganizationDto;
+
+type SetPersonData = PersonLoginResponseDto;
 
 interface AuthContextData {
   user: UserDto;
   accessToken: string;
   organization: OrganizationDto;
+  person: PersonDto;
   isLoading: boolean;
   clearAuthData: () => Promise<void>;
   reconcileOrganizationData: (organizationData: OrganizationDto) => void;
-  setOrganizationData: ({
-    organizationData,
-    userData,
-    accessToken,
-  }: SetOrganizationData) => Promise<void>;
+  reconcilePersonData: (personData: PersonDto) => void;
+  setPersonData: (data: SetPersonData) => Promise<void>;
+  setOrganizationData: (data: SetOrganizationData) => Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -41,19 +44,42 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const [accessToken, setAccessToken] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [organization, setOrganization] = useState({} as OrganizationDto);
+  const [person, setPerson] = useState({} as PersonDto);
 
   const setOrganizationData = useCallback(
-    async ({ organizationData, userData, accessToken }: SetOrganizationData): Promise<void> => {
+    async ({
+      organizationData,
+      userData,
+      accessToken: _accessToken,
+    }: SetOrganizationData): Promise<void> => {
       setUser(userData);
       setOrganization(organizationData);
-      setAccessToken(accessToken);
+      setAccessToken(_accessToken);
 
       try {
         await AsyncStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ organizationData, userData, accessToken }),
+          JSON.stringify({ organizationData, userData, _accessToken }),
         );
-        api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        api.defaults.headers.common['Authorization'] = `Bearer ${_accessToken}`;
+      } catch (error: any) {
+        throw new Error(error);
+      }
+    },
+    [],
+  );
+
+  const setPersonData = useCallback(
+    async ({ person: personData, user: userData, accessToken: _accessToken }: SetPersonData) => {
+      setUser(userData);
+      setPerson(personData);
+      setAccessToken(_accessToken);
+      try {
+        await AsyncStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({ personData, userData, _accessToken }),
+        );
+        api.defaults.headers.common['Authorization'] = `Bearer ${_accessToken}`;
       } catch (error: any) {
         throw new Error(error);
       }
@@ -65,9 +91,14 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     setOrganization((prevState) => ({ ...prevState, ...organizationData }));
   }, []);
 
+  const reconcilePersonData = useCallback((personData: PersonDto) => {
+    setPerson((prevState) => ({ ...prevState, ...personData }));
+  }, []);
+
   const clearAuthData = useCallback(async (): Promise<void> => {
     setAccessToken('');
     setUser({} as UserDto);
+    setPerson({} as PersonDto);
     setOrganization({} as OrganizationDto);
 
     try {
@@ -84,10 +115,12 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       const authData = await AsyncStorage.getItem(STORAGE_KEY);
 
       if (authData) {
-        const formattedData = JSON.parse(authData) as SetOrganizationData;
+        const formattedData = JSON.parse(authData);
 
         if (formattedData?.userData?.userType === UserTypeEnum.ORGANIZATION) {
           await setOrganizationData(formattedData);
+        } else if (formattedData?.userData?.userType === UserTypeEnum.PERSON) {
+          await setPersonData(formattedData);
         }
       }
 
@@ -99,9 +132,12 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     <AuthContext.Provider
       value={{
         user,
+        person,
         accessToken,
         organization,
         isLoading,
+        reconcilePersonData,
+        setPersonData,
         setOrganizationData,
         reconcileOrganizationData,
         clearAuthData,

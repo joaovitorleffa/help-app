@@ -10,7 +10,7 @@ export function PersonRoutes(): JSX.Element {
   return (
     <Stack.Navigator initialRouteName="PersonInitial">
       <Stack.Screen name="PersonInitial" component={Initial} options={{ headerShown: false }} />
-      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="PersonHome" component={Home} />
       <Stack.Screen name="PersonSignUp" component={SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="PersonSignIn" component={SignIn} options={{ headerShown: false }} />
     </Stack.Navigator>

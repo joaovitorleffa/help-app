@@ -39,7 +39,7 @@ export type OrganizationAppNavigatorParamsList = {
 };
 
 export type PersonNavigatorParamsList = {
-  Home: undefined;
+  PersonHome: undefined;
   PersonInitial: undefined;
   PersonSignIn: undefined;
   PersonSignUp: undefined;

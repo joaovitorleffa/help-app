@@ -1,11 +1,11 @@
 type UserType = 'organization' | 'person';
 
-enum UserTypeEnum {
+export enum UserTypeEnum {
   ORGANIZATION = 'organization',
-  person = 'person',
+  PERSON = 'person',
 }
 
-interface UserDto {
+export interface UserDto {
   id: number;
   email: string;
   userType: UserTypeEnum;
@@ -13,5 +13,3 @@ interface UserDto {
   updatedAt: string;
   emailVerifiedAt: string;
 }
-
-export { UserDto, UserTypeEnum };
