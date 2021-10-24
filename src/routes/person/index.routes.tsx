@@ -1,19 +1,25 @@
-import { useAuth } from '@hooks/useAuth';
-import { createStackNavigator } from '@react-navigation/stack';
-import { PersonNavigatorParamsList } from '@routes/types';
-import { Initial, SignIn, SignUp } from '@screens/Person';
-import { Home } from '@screens/Person/Home';
 import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import { useAuth } from '@hooks/useAuth';
+import { PersonNavigatorParamsList } from '@routes/types';
+
+import { PersonAppTabStack } from './app.routes';
+import { Initial, SignIn, SignUp } from '@screens/Person';
 
 const Stack = createStackNavigator<PersonNavigatorParamsList>();
 
 export function PersonRoutes(): JSX.Element {
   const { accessToken } = useAuth();
-  console.log({ accessToken });
+
   return (
     <Stack.Navigator>
       {accessToken ? (
-        <Stack.Screen name="PersonHome" component={Home} />
+        <Stack.Screen
+          name="PersonAppTab"
+          component={PersonAppTabStack}
+          options={{ headerShown: false }}
+        />
       ) : (
         <Stack.Group>
           <Stack.Screen name="PersonInitial" component={Initial} options={{ headerShown: false }} />

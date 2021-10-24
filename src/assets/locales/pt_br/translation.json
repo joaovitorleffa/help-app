@@ -127,6 +127,8 @@
     "list_causes_error": "Não foi possível listar as causas",
 
     "fill_feedback": "A mensagem de feedback é obrigatória!",
-    "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!"
+    "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!",
+
+    "update_profile_image": "Não foi possível atualizar a foto de perfil 😥. Tente novamente mais tarde!"
   }
 }

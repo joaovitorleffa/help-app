@@ -2,8 +2,8 @@ import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  padding-top: 48px;
-  padding-bottom: 38px;
+  margin-top: 48px;
+  margin-bottom: 38px;
   margin-left: ${({ theme }) => theme.spacing.grid}px;
   margin-right: ${({ theme }) => theme.spacing.grid}px;
   justify-content: space-between;

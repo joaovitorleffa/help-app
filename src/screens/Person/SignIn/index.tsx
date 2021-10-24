@@ -21,6 +21,8 @@ export function SignIn(): JSX.Element {
   const navigation = useNavigation<PersonSignInNavigationScreenProp>();
   const { setPersonData } = useAuth();
 
+  const [isInvalid, setIsInvalid] = useState(false);
+
   const { mutate, isLoading } = useMutation(loginPerson, {
     onSuccess: async (data) => {
       await setPersonData({
@@ -37,8 +39,6 @@ export function SignIn(): JSX.Element {
       }
     },
   });
-
-  const [isInvalid, setIsInvalid] = useState(false);
 
   const goToSignUp = () => navigation.navigate('PersonSignUp');
 

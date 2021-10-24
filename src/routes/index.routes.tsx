@@ -3,15 +3,15 @@ import { useTheme } from 'styled-components';
 import { Host } from 'react-native-portalize';
 import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { useAuth } from '@hooks/useAuth';
 import { UserTypeEnum } from '@dto/user-dto';
 import { RootNavigatorParamsList } from './types';
 
-import { Success } from '@screens/Success';
-import { Greetings } from '@screens/Greetings';
-import { ImageViewer } from '@screens/ImageViewer';
+import { Success } from '@screens/Common/Success';
+import { Greetings } from '@screens/Common/Greetings';
+import { ImageViewer } from '@screens/Common/ImageViewer';
 import { PersonRoutes } from './person/index.routes';
 import { OrganizationRoutes } from './organization/index.routes';
 
