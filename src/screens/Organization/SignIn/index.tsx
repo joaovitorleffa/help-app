@@ -28,10 +28,6 @@ export function SignIn(): JSX.Element {
         userData: response.data.user,
         accessToken: response.data.accessToken,
       });
-      navigation.replace('OrganizationStack', {
-        screen: 'AppStack',
-        params: { screen: 'CauseList' },
-      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response?.status) {

@@ -37,10 +37,9 @@ export function Profile(): JSX.Element {
     }
   }, [isError, t]);
 
-  const handleLogout = useCallback(async () => {
-    await clearAuthData();
-    navigation.replace('AuthStack', { screen: 'Initial' });
-  }, [navigation, clearAuthData]);
+  const handleLogout = useCallback(() => {
+    clearAuthData();
+  }, [clearAuthData]);
 
   const handleEdit = useCallback(() => {
     if (profile) {
