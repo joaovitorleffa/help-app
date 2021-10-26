@@ -6,7 +6,7 @@ interface ContainerProps {
 }
 
 export const Container = styled(RectButton)<ContainerProps>`
-  height: ${({ theme }) => theme.screen.rem(8)}px;
+  height: ${({ theme }) => theme.screen.rem(9)}px;
   background-color: ${({ theme, ended }) =>
     ended ? theme.colors.error_50 : theme.colors.success_50};
   border-radius: 4px;

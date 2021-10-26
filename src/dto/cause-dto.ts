@@ -1,4 +1,4 @@
-enum CauseEnum {
+export enum CauseEnum {
   DONATION = 'donation',
   VOLUNTARY_WORK = 'voluntary_work',
 }
@@ -20,4 +20,10 @@ export interface CauseDto {
   createdAt: string;
   updatedAt: string;
   feedbackImages?: Array<FeedbackImage>;
+}
+
+export interface AllCausesDto extends CauseDto {
+  organization: {
+    name: string;
+  };
 }

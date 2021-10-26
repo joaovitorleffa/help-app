@@ -23,6 +23,7 @@ export function PersonAppTabStack(): JSX.Element {
         name="PersonCauses"
         component={Causes}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size }) => <Entypo name="home" size={size} color={color} />,
         }}
       />

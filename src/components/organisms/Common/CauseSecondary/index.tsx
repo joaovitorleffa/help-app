@@ -1,20 +1,20 @@
 import React from 'react';
 import { format, isAfter } from 'date-fns';
 
-import { CauseDto } from '@dto/cause-dto';
+import { AllCausesDto } from '@dto/cause-dto';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
 
-import { CauseHeader } from '@molecules/CauseHeader';
 import { CauseFooter } from '@molecules/CauseFooter';
+import { CauseHeader } from '@molecules/CauseHeader';
 
 import { Container } from './styles';
 
-interface CauseProps {
-  cause: CauseDto;
+interface CauseSecondaryProps {
+  cause: AllCausesDto;
   onPress: (cause: UpdateCauseDto) => void;
 }
 
-export function Cause({ cause, onPress }: CauseProps): JSX.Element {
+export function CauseSecondary({ cause, onPress }: CauseSecondaryProps): JSX.Element {
   const handlePress = () => {
     onPress(cause);
   };
@@ -23,7 +23,11 @@ export function Cause({ cause, onPress }: CauseProps): JSX.Element {
 
   return (
     <Container onPress={handlePress} ended={ended}>
-      <CauseHeader title={cause.title} description={cause.description} />
+      <CauseHeader
+        ong={cause.organization.name}
+        title={cause.title}
+        description={cause.description}
+      />
       <CauseFooter
         ended={ended}
         endAt={format(new Date(cause.endAt), 'dd/MM/yyyy')}

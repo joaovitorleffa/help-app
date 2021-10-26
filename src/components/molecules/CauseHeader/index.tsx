@@ -4,22 +4,40 @@ import { useTheme } from 'styled-components';
 
 import { Text } from '@atoms/Text';
 
-import { Container } from './styles';
+import { Container, Header, Icon } from './styles';
+import { View } from 'react-native';
 
 interface CauseHeaderProps {
   title: string;
+  ong: string;
   description: string;
+  isFavorite?: boolean;
+  onFavorite?: () => void;
 }
 
-export function CauseHeader({ title, description }: CauseHeaderProps): JSX.Element {
+export function CauseHeader({
+  title,
+  ong,
+  description,
+  isFavorite = false,
+  ...rest
+}: CauseHeaderProps): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
 
   return (
     <Container>
-      <Text color={theme.colors.title} fontFamily="medium">
-        {title}
-      </Text>
+      <Header>
+        <View>
+          <Text color={theme.colors.title} fontFamily="medium">
+            {title}
+          </Text>
+          <Text color={theme.colors.title} fontFamily="bold" fontSize={rem(theme.fonts.size.sm)}>
+            {ong}
+          </Text>
+        </View>
+        <Icon name="favorite-border" />
+      </Header>
       <Text numberOfLines={2} fontSize={rem(theme.fonts.size.xs)} color={theme.colors.text}>
         {description}
       </Text>
