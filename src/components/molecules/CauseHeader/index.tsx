@@ -36,7 +36,7 @@ export function CauseHeader({
             {ong}
           </Text>
         </View>
-        <Icon name="favorite-border" />
+        {rest.onFavorite && <Icon name="favorite-border" />}
       </Header>
       <Text numberOfLines={2} fontSize={rem(theme.fonts.size.xs)} color={theme.colors.text}>
         {description}
