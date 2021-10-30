@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Alert } from 'react-native';
+import { useRem } from 'responsive-native';
+import { useTheme } from 'styled-components';
+import { Alert, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { useMutation, useQuery } from 'react-query';
@@ -8,19 +10,26 @@ import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
 
 import { useAuth } from '@hooks/useAuth';
 import { getImageInfo } from '@utils/image';
+import { getFavorites } from '@services/person/cause.api';
 import { show, updateProfileImage } from '@services/person';
 
+import { Text } from '@atoms/Text';
 import { ProfileData } from '@organisms/Person/ProfileData';
+import { CauseSecondary } from '@organisms/Common/CauseSecondary';
 
 import { Container, Content } from './styles';
 
 export function Profile(): JSX.Element {
   const { t } = useTranslation();
+  const rem = useRem();
+  const theme = useTheme();
   const { person, user, reconcilePersonData, clearAuthData } = useAuth();
 
   const [newProfileImage, setNewProfileImage] = useState<ImageInfo>({} as ImageInfo);
 
   const { data } = useQuery('personProfile', show);
+
+  const { data: causes } = useQuery('personFavoriteCauses', getFavorites);
 
   const { mutate } = useMutation(updateProfileImage, {
     onSuccess: (data) => {
@@ -65,6 +74,13 @@ export function Profile(): JSX.Element {
     }
   };
 
+  const onPress = () => {};
+
+  const renderItem = useCallback(
+    ({ item }) => <CauseSecondary cause={item} onPress={onPress} removeOption />,
+    [],
+  );
+
   useEffect(() => {
     if (Object.keys(newProfileImage).length) {
       updateImage();
@@ -82,6 +98,25 @@ export function Profile(): JSX.Element {
           profileImageUri={
             newProfileImage?.uri ? newProfileImage.uri : data?.profileImage ?? undefined
           }
+        />
+        <Text
+          fontFamily="bold"
+          fontSize={rem(theme.fonts.size.lg)}
+          style={{ marginTop: rem(1), marginBottom: rem(0.8) }}>
+          {t('common.saved')}
+        </Text>
+        <FlatList
+          data={causes}
+          renderItem={renderItem}
+          ListEmptyComponent={
+            <Text
+              fontSize={rem(theme.fonts.size.sm)}
+              style={{ marginTop: rem(1), textAlign: 'center' }}>
+              {t('common.no_saved_causes')}
+            </Text>
+          }
+          keyExtractor={(item) => String(item.id)}
+          showsVerticalScrollIndicator={false}
         />
       </Content>
     </Container>

@@ -23,6 +23,7 @@ export interface CauseDto {
 }
 
 export interface AllCausesDto extends CauseDto {
+  isFavorite?: boolean;
   organization: {
     name: string;
   };

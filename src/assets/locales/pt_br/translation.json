@@ -34,7 +34,10 @@
     "in_progress_cause": "Causa em andamento",
     "ended_cause": "Causa encerrada",
     "feedback": "Feedback",
-    "already_have_an_account": "Eu já tenho uma conta,"
+    "already_have_an_account": "Eu já tenho uma conta,",
+
+    "saved": "Salvo",
+    "no_saved_causes": "Nenhuma causa salva"
   },
 
   "greetings": {

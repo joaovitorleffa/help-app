@@ -8,15 +8,33 @@ import { CauseFooter } from '@molecules/CauseFooter';
 import { CauseHeader } from '@molecules/CauseHeader';
 
 import { Container } from './styles';
+import { useMutation, useQueryClient } from 'react-query';
+import { updateFavoriteCause } from '@services/person/cause.api';
 
 interface CauseSecondaryProps {
   cause: AllCausesDto;
+  removeOption?: boolean;
   onPress: (cause: UpdateCauseDto) => void;
 }
 
-export function CauseSecondary({ cause, onPress }: CauseSecondaryProps): JSX.Element {
+export function CauseSecondary({ cause, removeOption, onPress }: CauseSecondaryProps): JSX.Element {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation(updateFavoriteCause, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('allCauses');
+      queryClient.invalidateQueries('personFavoriteCauses');
+    },
+  });
   const handlePress = () => {
     onPress(cause);
+  };
+
+  const onFavorite = () => {
+    if (removeOption) {
+      return mutate({ ...cause, isFavorite: false });
+    }
+    mutate({ ...cause, isFavorite: !cause.isFavorite });
   };
 
   const ended = !isAfter(new Date(cause.endAt), new Date());
@@ -26,6 +44,9 @@ export function CauseSecondary({ cause, onPress }: CauseSecondaryProps): JSX.Ele
       <CauseHeader
         ong={cause.organization.name}
         title={cause.title}
+        isFavorite={cause.isFavorite}
+        onFavorite={onFavorite}
+        removeOption={!!removeOption}
         description={cause.description}
       />
       <CauseFooter

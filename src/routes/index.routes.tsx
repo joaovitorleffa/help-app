@@ -18,7 +18,7 @@ import { OrganizationRoutes } from './organization/index.routes';
 const Stack = createStackNavigator<RootNavigatorParamsList>();
 
 export function Routes(): JSX.Element {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, accessToken } = useAuth();
   const theme = useTheme();
 
   if (isLoading) return <ActivityIndicator color={theme.colors.primary} />;
@@ -27,7 +27,7 @@ export function Routes(): JSX.Element {
     <NavigationContainer>
       <Host>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {!user?.id ? (
+          {!!accessToken === false ? (
             <>
               <Stack.Screen name="Greeting" component={Greetings} />
               <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
