@@ -41,6 +41,14 @@ export type OrganizationAppNavigatorParamsList = {
 export type PersonNavigatorParamsList = {
   PersonHome: undefined;
   PersonAppTab: NavigatorScreenParams<PersonAppTabNavigationParamsList>;
+  PersonCauseDetails: {
+    id: number;
+    title: string;
+    ongName: string;
+    type: 'donation' | 'voluntary_work';
+    description: string;
+    endAt: string;
+  };
   PersonInitial: undefined;
   PersonSignIn: undefined;
   PersonSignUp: undefined;

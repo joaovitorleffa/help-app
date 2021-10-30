@@ -12,11 +12,18 @@ import { CauseSecondary } from '@organisms/Common/CauseSecondary';
 import { CausesPagination } from '@templates/Common/CausesPagination';
 
 import { Container, Content, CustomText, Header, Wrapper } from './styles';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PersonNavigatorParamsList } from '@routes/types';
+import { useNavigation } from '@react-navigation/core';
+import { AllCausesDto } from '@dto/cause-dto';
+
+type CausesNavigationScreenProp = StackNavigationProp<PersonNavigatorParamsList, 'PersonAppTab'>;
 
 export function Causes(): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
+  const navigation = useNavigation<CausesNavigationScreenProp>();
   const queryClient = useQueryClient();
 
   const [page, setPage] = useState(1);
@@ -25,8 +32,15 @@ export function Causes(): JSX.Element {
     keepPreviousData: true,
   });
 
-  const onPress = () => {
-    console.log('press');
+  const onPress = (cause: AllCausesDto) => {
+    navigation.navigate('PersonCauseDetails', {
+      id: cause.id,
+      title: cause.title,
+      type: cause.type,
+      endAt: cause.endAt,
+      description: cause.description,
+      ongName: cause.organization.name,
+    });
   };
 
   const onChangePage = (_page: number) => {

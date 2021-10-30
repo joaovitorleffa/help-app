@@ -15,7 +15,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 interface FeedbackProps {
   feedback: string;
   images: Array<FeedbackImage>;
-  onEditFeedback: () => void;
+  onEditFeedback?: () => void;
   onPressImage: (imageIndex: number) => void;
 }
 
@@ -50,9 +50,11 @@ export function Feedback({
             <Text fontFamily="bold" fontSize={rem(theme.fonts.size.lg)} color={theme.colors.title}>
               {t('common.feedback')}
             </Text>
-            <BorderlessButton onPress={onEditFeedback}>
-              <Icon name="edit" />
-            </BorderlessButton>
+            {onEditFeedback && (
+              <BorderlessButton onPress={onEditFeedback}>
+                <Icon name="edit" />
+              </BorderlessButton>
+            )}
           </Header>
           <FlatList
             data={images}

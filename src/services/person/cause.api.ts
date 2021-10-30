@@ -1,4 +1,4 @@
-import { AllCausesDto } from '@dto/cause-dto';
+import { AllCausesDto, CauseDetailsDto } from '@dto/cause-dto';
 import { Pagination } from '@dto/pagination-dto';
 import { api } from '@services/api';
 
@@ -14,4 +14,8 @@ export const updateFavoriteCause = async (cause: AllCausesDto): Promise<AllCause
 
 export const getFavorites = async (): Promise<Omit<AllCausesDto, 'isFavorite'>[]> => {
   return api.get('/persons/favorite').then((res) => res.data);
+};
+
+export const getCauseDetails = async (id: number): Promise<CauseDetailsDto> => {
+  return api.get(`/causes/details/${id}`).then((res) => res.data);
 };

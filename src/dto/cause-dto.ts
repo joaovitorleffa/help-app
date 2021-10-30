@@ -1,3 +1,5 @@
+import { OrganizationDto } from './organization-dto';
+
 export enum CauseEnum {
   DONATION = 'donation',
   VOLUNTARY_WORK = 'voluntary_work',
@@ -28,3 +30,7 @@ export interface AllCausesDto extends CauseDto {
     name: string;
   };
 }
+
+export type CauseDetailsDto = CauseDto & {
+  organization: OrganizationDto;
+};

@@ -7,6 +7,7 @@ import { CauseDto } from '@dto/cause-dto';
 import { Pagination } from '@organisms/Common/Pagination';
 
 import { List } from './styles';
+import { useRem } from 'responsive-native';
 
 const MAX_PAGES = 5;
 const MAX_PAGES_LEFT = (MAX_PAGES - 1) / 2;
@@ -29,6 +30,7 @@ export function CausesPagination({
   totalResults = 40,
 }: CausesProps): JSX.Element {
   const flatListRef = useRef<FlatList | null>(null);
+  const rem = useRem();
 
   const keyExtractor = useCallback((item: CauseDto, index: number) => String(item.id) + index, []);
 
@@ -62,7 +64,7 @@ export function CausesPagination({
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ListFooterComponent={ListFooterComponent}
-      contentContainerStyle={{ paddingTop: 24, paddingBottom: 40 }}
+      contentContainerStyle={{ paddingTop: rem(0.4), paddingBottom: 40 }}
       showsVerticalScrollIndicator={false}
     />
   );

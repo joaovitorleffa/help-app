@@ -2,7 +2,6 @@ import React from 'react';
 import { format, isAfter } from 'date-fns';
 
 import { AllCausesDto } from '@dto/cause-dto';
-import { UpdateCauseDto } from '@dto/update-cause-dto';
 
 import { CauseFooter } from '@molecules/CauseFooter';
 import { CauseHeader } from '@molecules/CauseHeader';
@@ -14,7 +13,7 @@ import { updateFavoriteCause } from '@services/person/cause.api';
 interface CauseSecondaryProps {
   cause: AllCausesDto;
   removeOption?: boolean;
-  onPress: (cause: UpdateCauseDto) => void;
+  onPress: (cause: AllCausesDto) => void;
 }
 
 export function CauseSecondary({ cause, removeOption, onPress }: CauseSecondaryProps): JSX.Element {

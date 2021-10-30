@@ -42,6 +42,7 @@ export function FormSignIn({ onSignIn, isLoading = false }: FormSignInProps): JS
           control={control}
           name="password"
           placeholder="Senha"
+          secureTextEntry
           autoCorrect={false}
           autoCapitalize="none"
         />

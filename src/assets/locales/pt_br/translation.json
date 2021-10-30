@@ -37,7 +37,8 @@
     "already_have_an_account": "Eu já tenho uma conta,",
 
     "saved": "Salvo",
-    "no_saved_causes": "Nenhuma causa salva"
+    "no_saved_causes": "Nenhuma causa salva",
+    "whatsapp_message": "Olá, vi sua causa {{ cause }} no Help"
   },
 
   "greetings": {
@@ -132,6 +133,7 @@
     "fill_feedback": "A mensagem de feedback é obrigatória!",
     "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!",
 
-    "update_profile_image": "Não foi possível atualizar a foto de perfil 😥. Tente novamente mais tarde!"
+    "update_profile_image": "Não foi possível atualizar a foto de perfil 😥. Tente novamente mais tarde!",
+    "whatsapp": "Não foi possível abrir o WhatsApp 😥"
   }
 }
