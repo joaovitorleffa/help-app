@@ -15,17 +15,27 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 interface FeedbackProps {
   feedback: string;
   images: Array<FeedbackImage>;
-  onEditFeedback: () => void;
+  onEditFeedback?: () => void;
+  onPressImage: (imageIndex: number) => void;
 }
 
-export function Feedback({ feedback, images, onEditFeedback }: FeedbackProps): JSX.Element {
+export function Feedback({
+  feedback,
+  images,
+  onEditFeedback,
+  onPressImage,
+}: FeedbackProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
 
   const renderItem = useCallback(
-    ({ item }: { item: FeedbackImage }) => (
-      <FeedbackPhoto uri={item.name} style={{ marginRight: 16, borderWidth: 0 }} />
+    ({ item, index }: { item: FeedbackImage; index: number }) => (
+      <FeedbackPhoto
+        uri={item.name}
+        style={{ marginRight: 16, borderWidth: 0 }}
+        onPress={() => onPressImage(index)}
+      />
     ),
     [],
   );
@@ -40,9 +50,11 @@ export function Feedback({ feedback, images, onEditFeedback }: FeedbackProps): J
             <Text fontFamily="bold" fontSize={rem(theme.fonts.size.lg)} color={theme.colors.title}>
               {t('common.feedback')}
             </Text>
-            <BorderlessButton onPress={onEditFeedback}>
-              <Icon name="edit" />
-            </BorderlessButton>
+            {onEditFeedback && (
+              <BorderlessButton onPress={onEditFeedback}>
+                <Icon name="edit" />
+              </BorderlessButton>
+            )}
           </Header>
           <FlatList
             data={images}

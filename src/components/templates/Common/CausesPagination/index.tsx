@@ -3,12 +3,11 @@ import { FlatList } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { CauseDto } from '@dto/cause-dto';
-import { UpdateCauseDto } from '@dto/update-cause-dto';
 
-import { Cause } from '@organisms/Common/Cause';
 import { Pagination } from '@organisms/Common/Pagination';
 
 import { List } from './styles';
+import { useRem } from 'responsive-native';
 
 const MAX_PAGES = 5;
 const MAX_PAGES_LEFT = (MAX_PAGES - 1) / 2;
@@ -17,24 +16,23 @@ interface CausesProps {
   data: CauseDto[];
   totalResults: number;
   currentPage: number;
+  renderItem: ({ item, index }: { item: any; index?: number }) => JSX.Element;
   onChangePage: (page: number) => void;
-  onEdit: (cause: UpdateCauseDto) => void;
 }
 
 const AnimatedList = Animated.createAnimatedComponent(List);
 
-export function Causes({
+export function CausesPagination({
   data,
-  onEdit,
   onChangePage,
+  renderItem,
   currentPage = 1,
   totalResults = 40,
 }: CausesProps): JSX.Element {
   const flatListRef = useRef<FlatList | null>(null);
+  const rem = useRem();
 
   const keyExtractor = useCallback((item: CauseDto, index: number) => String(item.id) + index, []);
-
-  const renderItem = useCallback(({ item }) => <Cause cause={item} onEdit={onEdit} />, [onEdit]);
 
   const pages = Math.ceil(totalResults / 10);
 
@@ -66,7 +64,7 @@ export function Causes({
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ListFooterComponent={ListFooterComponent}
-      contentContainerStyle={{ paddingTop: 24, paddingBottom: 40 }}
+      contentContainerStyle={{ paddingTop: rem(0.4), paddingBottom: 40 }}
       showsVerticalScrollIndicator={false}
     />
   );

@@ -10,7 +10,7 @@ interface InitialScreenProps {
   subtitle: string;
 }
 
-export function InitialScreen({ title, subtitle }: InitialScreenProps) {
+export function InitialScreen({ title, subtitle }: InitialScreenProps): JSX.Element {
   return (
     <Container>
       <Content>

@@ -4,7 +4,7 @@ import { FirstStepTemplate } from '@templates/Organization/SignUpTemplate/FirstS
 
 import { Container } from './styles';
 
-export function FirstStep() {
+export function FirstStep(): JSX.Element {
   return (
     <Container>
       <FirstStepTemplate />

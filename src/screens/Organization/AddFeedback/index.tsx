@@ -101,9 +101,6 @@ export function AddFeedback(): JSX.Element {
 
   const onSubmit = (data: FormData) => {
     const filteredImages = images.filter((element) => Object.keys(element).length > 0);
-    if (filteredImages.length === 0 && data.feedback === feedback) {
-      return;
-    }
 
     const imagesInfo: Array<GetImageInfo> = [];
     for (let i = 0; i < filteredImages.length; i++) {
@@ -113,6 +110,10 @@ export function AddFeedback(): JSX.Element {
         }
       }
       imagesInfo.push(getImageInfo(filteredImages[i]));
+    }
+
+    if (imagesInfo.length === 0 && data.feedback === feedback) {
+      return navigation.goBack();
     }
 
     mutate({ ...data, id, images: imagesInfo });

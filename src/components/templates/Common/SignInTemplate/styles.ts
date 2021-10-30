@@ -1,10 +1,12 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  padding-top: 48px;
-  padding-bottom: 38px;
-  padding-left: ${({ theme }) => theme.spacing.grid}px;
-  padding-right: ${({ theme }) => theme.spacing.grid}px;
+export const Container = styled.SafeAreaView`
+  flex: 1;
+  margin-top: 48px;
+  margin-bottom: 38px;
+  margin-left: ${({ theme }) => theme.spacing.grid}px;
+  margin-right: ${({ theme }) => theme.spacing.grid}px;
+  justify-content: space-between;
 `;
 
 export const Header = styled.View`

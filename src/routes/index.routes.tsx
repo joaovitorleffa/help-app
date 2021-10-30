@@ -1,23 +1,24 @@
 import React from 'react';
+import { useTheme } from 'styled-components';
 import { Host } from 'react-native-portalize';
+import { ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { RootNavigatorParamsList } from './types';
-
-import { Success } from '@screens/Success';
-import { Greetings } from '@screens/Greetings';
-import { OrganizationRoutes } from './organization/index.routes';
 import { useAuth } from '@hooks/useAuth';
 import { UserTypeEnum } from '@dto/user-dto';
+import { RootNavigatorParamsList } from './types';
+
+import { Success } from '@screens/Common/Success';
+import { Greetings } from '@screens/Common/Greetings';
+import { ImageViewer } from '@screens/Common/ImageViewer';
 import { PersonRoutes } from './person/index.routes';
-import { ActivityIndicator } from 'react-native';
-import { useTheme } from 'styled-components';
+import { OrganizationRoutes } from './organization/index.routes';
 
 const Stack = createStackNavigator<RootNavigatorParamsList>();
 
 export function Routes(): JSX.Element {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, accessToken } = useAuth();
   const theme = useTheme();
 
   if (isLoading) return <ActivityIndicator color={theme.colors.primary} />;
@@ -26,11 +27,11 @@ export function Routes(): JSX.Element {
     <NavigationContainer>
       <Host>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {!user?.id ? (
+          {!!accessToken === false ? (
             <>
               <Stack.Screen name="Greeting" component={Greetings} />
               <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
-              <Stack.Screen name="PersonStack" component={OrganizationRoutes} />
+              <Stack.Screen name="PersonStack" component={PersonRoutes} />
             </>
           ) : user.userType === UserTypeEnum.ORGANIZATION ? (
             <Stack.Screen name="OrganizationStack" component={OrganizationRoutes} />
@@ -38,6 +39,7 @@ export function Routes(): JSX.Element {
             <Stack.Screen name="PersonStack" component={PersonRoutes} />
           )}
           <Stack.Screen name="Success" component={Success} />
+          <Stack.Screen name="ImageViewer" component={ImageViewer} />
         </Stack.Navigator>
       </Host>
     </NavigationContainer>

@@ -1,13 +1,11 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { showMessage } from 'react-native-flash-message';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { CompositeNavigationProp, useFocusEffect, useNavigation } from '@react-navigation/core';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 
-import { api } from '@services/api';
 import { useAuth } from '@hooks/useAuth';
-import { OrganizationDto } from '@dto/organization-dto';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 
 import { FloatButton } from '@molecules/FloatButton';
@@ -39,10 +37,9 @@ export function Profile(): JSX.Element {
     }
   }, [isError, t]);
 
-  const handleLogout = useCallback(async () => {
-    await clearAuthData();
-    navigation.replace('AuthStack', { screen: 'Initial' });
-  }, [navigation, clearAuthData]);
+  const handleLogout = useCallback(() => {
+    clearAuthData();
+  }, [clearAuthData]);
 
   const handleEdit = useCallback(() => {
     if (profile) {

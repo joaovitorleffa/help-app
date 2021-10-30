@@ -4,7 +4,7 @@ import { UpdateCauseDto } from '@dto/update-cause-dto';
 
 import { api } from '../api';
 
-const getCauses = ({ queryKey }): Promise<Pagination<CauseDto>> => {
+const getCauses = async ({ queryKey }): Promise<Pagination<CauseDto>> => {
   const [_key, { page, limit, type, situation }] = queryKey;
 
   return api

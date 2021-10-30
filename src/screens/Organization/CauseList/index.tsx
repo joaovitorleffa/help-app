@@ -1,24 +1,25 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import { Modalize } from 'react-native-modalize';
+import { useQuery, useQueryClient } from 'react-query';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ActivityIndicator, Platform, StatusBar, StyleSheet } from 'react-native';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 
+import { useSpinner } from '@hooks/useSpinner';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
+import { getCauses } from '@services/organization/causes.api';
 
 import { Text } from '@atoms/Text';
+import { Cause } from '@organisms/Common/Cause';
 import { FloatButton } from '@molecules/FloatButton';
-import { Causes } from '@templates/Organization/Causes';
+import { CausesPagination } from '@templates/Common/CausesPagination';
 import { Filters, Situation, Type } from '@templates/Common/Filters';
 
 import { Container, Content, CustomText, Header, FilterWrapper, Icon, Wrapper } from './styles';
-import { useQuery, useQueryClient } from 'react-query';
-import { getCauses } from '@services/organization/causes.api';
-import { useSpinner } from '@hooks/useSpinner';
 
 type CauseListNavigationScreenProp = CompositeNavigationProp<
   StackNavigationProp<OrganizationAppNavigatorParamsList, 'CauseList'>,
@@ -61,13 +62,18 @@ export function CauseList(): JSX.Element {
     navigation.navigate('AddCause');
   };
 
-  const handleEdit = (cause: UpdateCauseDto) => {
+  const handleEdit = useCallback((cause: UpdateCauseDto) => {
     navigation.navigate('Cause', cause);
-  };
+  }, []);
 
   const onChangePage = (_page: number) => {
     setPage(_page);
   };
+
+  const renderItem = useCallback(
+    ({ item }) => <Cause cause={item} onPress={handleEdit} />,
+    [handleEdit],
+  );
 
   useEffect(() => {
     if (data) {
@@ -109,9 +115,9 @@ export function CauseList(): JSX.Element {
             </Text>
           </Wrapper>
         ) : data ? (
-          <Causes
+          <CausesPagination
+            renderItem={renderItem}
             data={data.results}
-            onEdit={handleEdit}
             totalResults={data.total}
             currentPage={page}
             onChangePage={onChangePage}

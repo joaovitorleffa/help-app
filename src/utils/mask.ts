@@ -11,10 +11,11 @@ export function phoneNumberMask(text: string): string {
     if (text.length === 16) {
       return text;
     }
-    return removeSpecialCharacters(text).replace(
-      /^(\d{2})(\d{1})(\d{4})(\d{4}).*/,
-      '($1) $2 $3-$4',
-    );
+    const phone = removeSpecialCharacters(text);
+    if (phone.length <= 10) {
+      return phone.replace(/^(\d{2})(\d{8}).*/, '($1) $2');
+    }
+    return phone.replace(/^(\d{2})(\d{9}).*/, '($1) $2');
   } catch {
     return text;
   }

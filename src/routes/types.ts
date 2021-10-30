@@ -10,6 +10,7 @@ export type RootNavigatorParamsList = {
     title: string;
     text: string;
   };
+  ImageViewer: { images: Array<string>; selectedIndex?: number };
   OrganizationStack: NavigatorScreenParams<OrganizationNavigatorParamsList>;
   PersonStack: NavigatorScreenParams<PersonNavigatorParamsList>;
 };
@@ -38,7 +39,29 @@ export type OrganizationAppNavigatorParamsList = {
 };
 
 export type PersonNavigatorParamsList = {
-  Home: undefined;
-  SignIn: undefined;
-  SignUp: undefined;
+  PersonHome: undefined;
+  PersonAppTab: NavigatorScreenParams<PersonAppTabNavigationParamsList>;
+  PersonCauseDetails: {
+    id: number;
+    title: string;
+    ongName: string;
+    type: 'donation' | 'voluntary_work';
+    description: string;
+    endAt: string;
+  };
+  PersonInitial: undefined;
+  PersonSignIn: undefined;
+  PersonSignUp: undefined;
+  PersonOngDetails: {
+    id: number;
+    image: string | null;
+    name: string;
+    description: string | null;
+    address: string;
+  };
+};
+
+export type PersonAppTabNavigationParamsList = {
+  PersonProfile: undefined;
+  PersonCauses: undefined;
 };

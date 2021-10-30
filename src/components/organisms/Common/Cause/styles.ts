@@ -14,9 +14,3 @@ export const Container = styled(RectButton)<ContainerProps>`
   justify-content: space-between;
   padding: 16px 20px;
 `;
-
-export const Footer = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;

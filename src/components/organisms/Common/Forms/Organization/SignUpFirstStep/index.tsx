@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import i18n from '@assets/locales/i18n';
-import { phoneNumberMask } from '@utils/mask';
+import { phoneNumberMask, removeSpecialCharacters } from '@utils/mask';
 import { FirstStepData } from '@dto/sign-up-dto';
 import { useSignUpSteps } from '@hooks/useSignUpSteps';
 
@@ -24,7 +24,8 @@ const schema = Yup.object().shape({
   email: Yup.string().required(i18n.t('errors.fill_email')).email(i18n.t('errors.invalid_email')),
   phoneNumber: Yup.string()
     .required(i18n.t('errors.fill_phone_number'))
-    .min(11, i18n.t('errors.invalid_phone_number'))
+    .transform(removeSpecialCharacters)
+    .min(10, i18n.t('errors.invalid_phone_number2'))
     .max(11, i18n.t('errors.invalid_phone_number')),
 });
 
@@ -37,11 +38,15 @@ export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps): JSX.E
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({ resolver: yupResolver(schema) });
+
+  const phoneNumber = watch('phoneNumber');
+  console.log(phoneNumber);
 
   const onSubmit = (data: FirstStepData) => {
     serializeFormData(data);
-    handleNextStep(data);
+    handleNextStep({ ...data, phoneNumber: '55' + data.phoneNumber.trim() });
   };
 
   return (

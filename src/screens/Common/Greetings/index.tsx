@@ -15,7 +15,7 @@ import { Container, Footer, Wrapper } from './styles';
 
 type GreetingsNavigationScreenProps = StackNavigationProp<RootNavigatorParamsList, 'Greeting'>;
 
-export function Greetings() {
+export function Greetings(): JSX.Element {
   const theme = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation<GreetingsNavigationScreenProps>();
@@ -28,7 +28,7 @@ export function Greetings() {
   };
 
   const handleHelpOng = () => {
-    // navigation.navigate('PersonStack');
+    navigation.navigate('PersonStack', { screen: 'PersonInitial' });
   };
 
   return (
