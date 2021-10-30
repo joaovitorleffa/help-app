@@ -52,6 +52,13 @@ export type PersonNavigatorParamsList = {
   PersonInitial: undefined;
   PersonSignIn: undefined;
   PersonSignUp: undefined;
+  PersonOngDetails: {
+    id: number;
+    image: string | null;
+    name: string;
+    description: string | null;
+    address: string;
+  };
 };
 
 export type PersonAppTabNavigationParamsList = {

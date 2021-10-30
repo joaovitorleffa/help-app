@@ -5,9 +5,10 @@ import { useAuth } from '@hooks/useAuth';
 import { PersonNavigatorParamsList } from '@routes/types';
 
 import { PersonAppTabStack } from './app.routes';
-import { CauseDetails, Initial, SignIn, SignUp } from '@screens/Person';
+import { CauseDetails, Initial, OngDetails, SignIn, SignUp } from '@screens/Person';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 
-const Stack = createStackNavigator<PersonNavigatorParamsList>();
+const Stack = createSharedElementStackNavigator<PersonNavigatorParamsList>();
 
 export function PersonRoutes(): JSX.Element {
   const { accessToken } = useAuth();
@@ -15,7 +16,7 @@ export function PersonRoutes(): JSX.Element {
   return (
     <Stack.Navigator>
       {accessToken ? (
-        <Stack.Group>
+        <>
           <Stack.Screen
             name="PersonAppTab"
             component={PersonAppTabStack}
@@ -28,13 +29,39 @@ export function PersonRoutes(): JSX.Element {
               headerShown: false,
             }}
           />
-        </Stack.Group>
+          <Stack.Screen
+            name="PersonOngDetails"
+            component={OngDetails}
+            options={{
+              headerShown: false,
+            }}
+            sharedElements={(route, otherRoute, showing) => {
+              const { id } = route.params;
+              console.log(`item.${id}.photo`);
+              return [
+                {
+                  id: `item.${id}.photo`,
+                },
+                {
+                  id: `item.${id}.name`,
+                  animation: 'fade-in',
+                },
+                {
+                  id: `item.${id}.address`,
+                },
+                {
+                  id: `item.${id}.description`,
+                },
+              ];
+            }}
+          />
+        </>
       ) : (
-        <Stack.Group>
+        <>
           <Stack.Screen name="PersonInitial" component={Initial} options={{ headerShown: false }} />
           <Stack.Screen name="PersonSignUp" component={SignUp} options={{ headerShown: false }} />
           <Stack.Screen name="PersonSignIn" component={SignIn} options={{ headerShown: false }} />
-        </Stack.Group>
+        </>
       )}
     </Stack.Navigator>
   );

@@ -13,8 +13,7 @@ interface ProfileBannerProps {
 export function ProfileBanner({ uri }: ProfileBannerProps): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
-  console.log(uri);
-  // console.log(!!uri === false);
+
   return (
     <Container>
       {!uri ? (

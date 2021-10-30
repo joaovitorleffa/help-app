@@ -5,3 +5,4 @@ export * from './SignIn';
 export * from './Causes';
 export * from './Profile';
 export * from './CauseDetails';
+export * from './OngDetails';

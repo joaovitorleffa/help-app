@@ -18,11 +18,21 @@ import { ProfileData } from '@organisms/Person/ProfileData';
 import { CauseSecondary } from '@organisms/Common/CauseSecondary';
 
 import { Container, Content } from './styles';
+import { AllCausesDto } from '@dto/cause-dto';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { PersonAppTabNavigationParamsList, PersonNavigatorParamsList } from '@routes/types';
+
+type PersonProfileNavigationScreenProp = CompositeNavigationProp<
+  StackNavigationProp<PersonAppTabNavigationParamsList, 'PersonProfile'>,
+  StackNavigationProp<PersonNavigatorParamsList>
+>;
 
 export function Profile(): JSX.Element {
   const { t } = useTranslation();
   const rem = useRem();
   const theme = useTheme();
+  const navigation = useNavigation<PersonProfileNavigationScreenProp>();
   const { person, user, reconcilePersonData, clearAuthData } = useAuth();
 
   const [newProfileImage, setNewProfileImage] = useState<ImageInfo>({} as ImageInfo);
@@ -74,11 +84,23 @@ export function Profile(): JSX.Element {
     }
   };
 
-  const onPress = () => {};
+  const onPress = useCallback(
+    (cause: AllCausesDto) => {
+      navigation.navigate('PersonCauseDetails', {
+        id: cause.id,
+        title: cause.title,
+        type: cause.type,
+        endAt: cause.endAt,
+        description: cause.description,
+        ongName: cause.organization.name,
+      });
+    },
+    [navigation],
+  );
 
   const renderItem = useCallback(
     ({ item }) => <CauseSecondary cause={item} onPress={onPress} removeOption />,
-    [],
+    [onPress],
   );
 
   useEffect(() => {

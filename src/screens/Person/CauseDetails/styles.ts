@@ -12,3 +12,13 @@ export const Wrapper = styled.View`
 export const FeedbackWrapper = styled.ScrollView`
   margin-top: ${({ theme }) => theme.screen.rem(1)}px;
 `;
+
+export const Row = styled.View`
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: ${({ theme }) => theme.screen.rem(1)}px;
+`;
+
+export const Info = styled.View`
+  margin-left: ${({ theme }) => theme.screen.rem(0.8)}px;
+`;

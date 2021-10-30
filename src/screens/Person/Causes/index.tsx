@@ -28,20 +28,23 @@ export function Causes(): JSX.Element {
 
   const [page, setPage] = useState(1);
 
-  const { data, status, isFetching } = useQuery(['allCauses', { page, limit: 10 }], getCauses, {
+  const { data, status } = useQuery(['allCauses', { page, limit: 10 }], getCauses, {
     keepPreviousData: true,
   });
 
-  const onPress = (cause: AllCausesDto) => {
-    navigation.navigate('PersonCauseDetails', {
-      id: cause.id,
-      title: cause.title,
-      type: cause.type,
-      endAt: cause.endAt,
-      description: cause.description,
-      ongName: cause.organization.name,
-    });
-  };
+  const onPress = useCallback(
+    (cause: AllCausesDto) => {
+      navigation.navigate('PersonCauseDetails', {
+        id: cause.id,
+        title: cause.title,
+        type: cause.type,
+        endAt: cause.endAt,
+        description: cause.description,
+        ongName: cause.organization.name,
+      });
+    },
+    [navigation],
+  );
 
   const onChangePage = (_page: number) => {
     setPage(_page);
@@ -49,7 +52,7 @@ export function Causes(): JSX.Element {
 
   const renderItem = useCallback(
     ({ item }) => <CauseSecondary cause={item} onPress={onPress} />,
-    [],
+    [onPress],
   );
 
   useEffect(() => {

@@ -4,29 +4,38 @@ import { Alert, Linking, ScrollView } from 'react-native';
 import { useRem } from 'responsive-native';
 import { Skeleton } from '@motify/skeleton';
 import { useTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
 import ImageView from 'react-native-image-viewing';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { RouteProp, useRoute } from '@react-navigation/core';
+import { SharedElement } from 'react-navigation-shared-element';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/core';
 
 import { PersonNavigatorParamsList } from '@routes/types';
 import { getCauseDetails } from '@services/person/cause.api';
 
 import { Text } from '@atoms/Text';
 import { BackHeader } from '@molecules/BackHeader';
+import { AvatarPhoto } from '@molecules/AvatarPhoto';
 import { Feedback } from '@organisms/Common/Feedback';
 import ImageViewerFooter from '@molecules/ImageViewerFooter';
 import { FloatButtonSocial } from '@molecules/FloatButtonSocial';
 import { CauseDetailsInfo } from '@organisms/Common/CauseDetailsInfo';
 
-import { Container, Wrapper, FeedbackWrapper } from './styles';
-import { useTranslation } from 'react-i18next';
+import { Container, Wrapper, FeedbackWrapper, Row, Info } from './styles';
 
 type CauseDetailsScreenProp = RouteProp<PersonNavigatorParamsList, 'PersonCauseDetails'>;
+
+type CauseDetailsNavigationScreenProp = StackNavigationProp<
+  PersonNavigatorParamsList,
+  'PersonCauseDetails'
+>;
 
 export function CauseDetails(): JSX.Element {
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
+  const navigation = useNavigation<CauseDetailsNavigationScreenProp>();
   const route = useRoute<CauseDetailsScreenProp>();
 
   const { id, title, ongName, endAt, description, type } = route.params;
@@ -39,6 +48,20 @@ export function CauseDetails(): JSX.Element {
   const handlePressImage = (imageIndex: number) => {
     setIsVisibleImageViewer(true);
     setImageViewerIndex(imageIndex);
+  };
+
+  const handleOngDetails = () => {
+    if (data) {
+      navigation.navigate('PersonOngDetails', {
+        id,
+        name: data?.organization.name,
+        image: data.organization.profileImage,
+        description: data.organization.description,
+        address: `${data?.organization.city.toUpperCase()} - ${data?.organization.district}, ${
+          data?.organization.number
+        }`,
+      });
+    }
   };
 
   const handleWhatsapp = () => {
@@ -64,12 +87,34 @@ export function CauseDetails(): JSX.Element {
         contentContainerStyle={{ paddingBottom: 20 }}>
         <Wrapper>
           <BackHeader title={title} />
-          <Text
-            fontFamily="bold"
-            fontSize={rem(theme.fonts.size.sm)}
-            style={{ marginBottom: rem(1) }}>
-            {ongName}
-          </Text>
+          <Row>
+            <Skeleton show={isLoading}>
+              {data?.organization.profileImage ? (
+                <SharedElement id={`item.${id}.photo`}>
+                  <AvatarPhoto
+                    uri={data?.organization.profileImage ?? ''}
+                    onPress={handleOngDetails}
+                  />
+                </SharedElement>
+              ) : (
+                <AvatarPhoto
+                  uri={data?.organization.profileImage ?? ''}
+                  onPress={handleOngDetails}
+                />
+              )}
+            </Skeleton>
+            <Info>
+              <Text fontFamily="bold" fontSize={rem(theme.fonts.size.sm)}>
+                {ongName}
+              </Text>
+              <Skeleton show={isLoading}>
+                <Text fontFamily="bold" fontSize={rem(theme.fonts.size.xs)}>
+                  {data?.organization.city.toUpperCase()} - {data?.organization.district},{' '}
+                  {data?.organization.number}
+                </Text>
+              </Skeleton>
+            </Info>
+          </Row>
           <CauseDetailsInfo endAt={endAt} description={description} type={type} />
         </Wrapper>
 
