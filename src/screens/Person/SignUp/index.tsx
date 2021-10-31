@@ -149,7 +149,7 @@ export function SignUp(): JSX.Element {
                   isLoading={isLoading}
                   style={{ marginTop: rem(1.2) }}
                   title="Cadastrar"
-                  color={theme.colors.primary}
+                  color={theme.colors.button}
                   textColor={theme.colors.title_secondary}
                   onPress={handleSubmit(onSubmit)}
                 />

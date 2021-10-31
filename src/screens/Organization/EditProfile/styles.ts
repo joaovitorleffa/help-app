@@ -5,11 +5,15 @@ type TextAreaProps = {
   error?: boolean;
 };
 
-export const Container = styled.SafeAreaView`
+export const Container = styled.View`
   flex: 1;
-  justify-content: space-between;
-  margin-bottom: 38px;
+  padding-bottom: 38px;
   background-color: ${({ theme }) => theme.colors.background};
+`;
+
+export const Content = styled.SafeAreaView`
+  justify-content: space-between;
+  flex: 1;
 `;
 
 export const Wrapper = styled.View`

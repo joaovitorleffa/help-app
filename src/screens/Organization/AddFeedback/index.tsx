@@ -147,7 +147,7 @@ export function AddFeedback(): JSX.Element {
           </View>
           <Button
             isLoading={isLoading}
-            color={theme.colors.primary}
+            color={theme.colors.button}
             textColor={theme.colors.title_secondary}
             title={t('common.save')}
             onPress={handleSubmit(onSubmit)}

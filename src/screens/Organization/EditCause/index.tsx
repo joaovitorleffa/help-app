@@ -85,7 +85,7 @@ export function EditCause(): JSX.Element {
               style={{ marginTop: rem(1.2) }}
               title={t('common.edit')}
               onPress={handleSubmit(onSubmit)}
-              color={theme.colors.primary}
+              color={theme.colors.button}
               textColor={theme.colors.title_secondary}
             />
           </Content>

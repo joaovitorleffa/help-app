@@ -62,7 +62,7 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       try {
         await AsyncStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ organizationData, userData, _accessToken }),
+          JSON.stringify({ organizationData, userData, accessToken: _accessToken }),
         );
         api.defaults.headers.common['Authorization'] = `Bearer ${_accessToken}`;
       } catch (error: any) {

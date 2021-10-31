@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 import { Host } from 'react-native-portalize';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Platform, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -25,6 +25,7 @@ export function Routes(): JSX.Element {
 
   return (
     <NavigationContainer>
+      <StatusBar barStyle={theme.bar.style} backgroundColor={theme.colors.primary} />
       <Host>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {!!accessToken === false ? (

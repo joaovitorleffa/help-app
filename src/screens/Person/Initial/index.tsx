@@ -1,9 +1,6 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
-import * as Google from 'expo-google-app-auth';
 import { LinearGradient } from 'expo-linear-gradient';
-
-import { InitialScreen } from '@templates/Common/InitialScreen';
 
 import { Container, Content, Footer, Wrapper } from './styles';
 import { SectionHeader } from '@molecules/SectionHeader';
@@ -26,9 +23,7 @@ export function Initial(): JSX.Element {
 
   return (
     <Container>
-      <LinearGradient
-        colors={[theme.colors.primary, theme.colors.primary_100, theme.colors.primary_200]}
-        style={{ flex: 1 }}>
+      <LinearGradient colors={theme.colors.gradient} style={{ flex: 1 }}>
         <Content>
           <SectionHeader title="Help." subtitle={t('greetings.help_peoples')} />
           <Footer>

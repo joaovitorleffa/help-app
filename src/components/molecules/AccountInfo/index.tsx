@@ -3,6 +3,7 @@ import { useRem } from 'responsive-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
+  onChange,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -11,6 +12,8 @@ import Animated, {
 import { Text } from '@atoms/Text';
 
 import { Container, Icon, Row } from './styles';
+import { Switch } from '@molecules/Switch';
+import { useSwitchTheme } from '@hooks/useSwitchTheme';
 
 interface AccountInfoProps {
   name: string;
@@ -55,10 +58,11 @@ export function AccountInfo({ name, email, onLogout }: AccountInfoProps): JSX.El
           </BorderlessButton>
         </Row>
       </Animated.View>
-      <Animated.View style={textStyle}>
+      <Animated.View style={[textStyle, { flexDirection: 'row', justifyContent: 'space-between' }]}>
         <Text fontSize={rem(0.8)} fontFamily="bold">
           {email}
         </Text>
+        <Switch />
       </Animated.View>
     </Container>
   );

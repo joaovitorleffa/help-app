@@ -28,7 +28,7 @@ import { Banner } from '@molecules/Banner';
 import { Button } from '@molecules/Button';
 import { BackHeader } from '@molecules/BackHeader';
 
-import { Container, Wrapper, BannerContainer, TextArea } from './styles';
+import { Container, Wrapper, BannerContainer, Content, TextArea } from './styles';
 import { useMutation, useQueryClient } from 'react-query';
 import { updateProfile, updateProfileImage } from '@services/organization';
 import { OrganizationDto } from '@dto/organization-dto';
@@ -161,60 +161,62 @@ export function EditProfile(): JSX.Element {
   }, [isFocused, heightAnim]);
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    <TouchableWithoutFeedback style={{ flex: 1 }} onPress={() => Keyboard.dismiss()}>
       <Container>
-        <View>
-          <Wrapper style={{ marginTop: 24 }}>
-            <BackHeader title={t('edit_profile.edit_profile_title')} />
-          </Wrapper>
-          <Animated.View style={heightStyle}>
-            <BannerContainer>
-              <Banner
-                showContent={!isFocused}
-                uri={newProfileImage?.uri ? newProfileImage.uri : profileImage ?? ''}
-                onSelectImage={handleSelectImage}
-              />
-            </BannerContainer>
-          </Animated.View>
-          <Wrapper style={{ marginTop: 24 }}>
-            <Controller
-              control={control}
-              name="description"
-              defaultValue={description}
-              render={({ field: { onChange, value } }) => (
-                <TextArea
-                  multiline
-                  value={value}
-                  onChangeText={onChange}
-                  isFocused={isFocused}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
-                  placeholder={t('common.description')}
-                  error={!!errors?.description?.message}
-                  placeholderTextColor={theme.colors.placeholder}
+        <Content>
+          <View>
+            <Wrapper style={{ marginTop: 24 }}>
+              <BackHeader title={t('edit_profile.edit_profile_title')} />
+            </Wrapper>
+            <Animated.View style={heightStyle}>
+              <BannerContainer>
+                <Banner
+                  showContent={!isFocused}
+                  uri={newProfileImage?.uri ? newProfileImage.uri : profileImage ?? ''}
+                  onSelectImage={handleSelectImage}
                 />
+              </BannerContainer>
+            </Animated.View>
+            <Wrapper style={{ marginTop: 24 }}>
+              <Controller
+                control={control}
+                name="description"
+                defaultValue={description}
+                render={({ field: { onChange, value } }) => (
+                  <TextArea
+                    multiline
+                    value={value}
+                    onChangeText={onChange}
+                    isFocused={isFocused}
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    placeholder={t('common.description')}
+                    error={!!errors?.description?.message}
+                    placeholderTextColor={theme.colors.placeholder}
+                  />
+                )}
+              />
+              {!!errors?.description?.message && (
+                <Text fontSize={rem(0.65)} color={theme.colors.error}>
+                  {errors.description.message}
+                </Text>
               )}
+            </Wrapper>
+          </View>
+          <Wrapper>
+            <Button
+              color={theme.colors.button}
+              textColor={theme.colors.title_secondary}
+              title={t('common.save')}
+              onPress={handleSubmit(onSubmit)}
             />
-            {!!errors?.description?.message && (
-              <Text fontSize={rem(0.65)} color={theme.colors.error}>
-                {errors.description.message}
-              </Text>
-            )}
           </Wrapper>
-        </View>
-        <Wrapper>
-          <Button
-            color={theme.colors.primary}
-            textColor={theme.colors.title_secondary}
-            title={t('common.save')}
-            onPress={handleSubmit(onSubmit)}
+          <Spinner
+            visible={isLoading || isUpdatingDescription}
+            textContent={t('common.loading')}
+            textStyle={{ color: theme.colors.title_secondary }}
           />
-        </Wrapper>
-        <Spinner
-          visible={isLoading || isUpdatingDescription}
-          textContent={t('common.loading')}
-          textStyle={{ color: theme.colors.title_secondary }}
-        />
+        </Content>
       </Container>
     </TouchableWithoutFeedback>
   );

@@ -91,11 +91,6 @@ export function CauseList(): JSX.Element {
 
   return (
     <Container>
-      <StatusBar
-        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-        backgroundColor={theme.colors.primary}
-      />
-
       <Content>
         <Header>
           <CustomText>{t('cause_list.title')}</CustomText>
@@ -144,7 +139,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
 
-    backgroundColor: '#fff',
     elevation: 4,
   },
 });

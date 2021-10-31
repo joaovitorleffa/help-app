@@ -20,8 +20,8 @@ export const Content = styled(TextInput)<ContentProps>`
   ${({ theme, error }) =>
     error &&
     css`
-      border-color: ${theme.colors.error};
-      background-color: ${theme.colors.error_50};
+      border-color: ${theme.colors.input_error};
+      background-color: ${theme.colors.input_error_50};
     `}
 
   ${({ theme, isFocused }) =>

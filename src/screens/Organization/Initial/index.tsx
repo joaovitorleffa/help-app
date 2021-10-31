@@ -13,9 +13,7 @@ export function Initial(): JSX.Element {
 
   return (
     <Container>
-      <LinearGradient
-        colors={[theme.colors.primary, theme.colors.primary_100, theme.colors.primary_200]}
-        style={{ flex: 1 }}>
+      <LinearGradient colors={theme.colors.gradient} style={{ flex: 1 }}>
         <InitialScreen title="Help." subtitle={t('initial.subtitle')} />
       </LinearGradient>
     </Container>

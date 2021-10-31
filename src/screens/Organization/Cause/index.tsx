@@ -115,7 +115,7 @@ export function Cause(): JSX.Element {
           <Info text={t('cause.add_feedback_info')} variant="info" />
           <Button
             title={t('cause.add_feedback')}
-            color={theme.colors.primary}
+            color={theme.colors.button}
             textColor={theme.colors.title_secondary}
             style={{ marginTop: rem(0.9) }}
             onPress={handleAddFeedback}

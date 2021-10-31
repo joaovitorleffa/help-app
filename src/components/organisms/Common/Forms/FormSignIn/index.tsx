@@ -50,7 +50,7 @@ export function FormSignIn({ onSignIn, isLoading = false }: FormSignInProps): JS
       <Button
         title={t('common.entry')}
         isLoading={isLoading}
-        color={theme.colors.primary}
+        color={theme.colors.button}
         textColor={theme.colors.title_secondary}
         onPress={handleSubmit(onSubmit)}
       />
