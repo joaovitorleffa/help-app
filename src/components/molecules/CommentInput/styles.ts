@@ -20,7 +20,6 @@ export const Photo = styled.Image`
 
 export const Left = styled.View`
   flex-direction: row;
-  max-width: 75%;
 `;
 
 export const Input = styled.TextInput`

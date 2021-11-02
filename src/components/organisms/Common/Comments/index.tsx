@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { useQuery } from 'react-query';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
@@ -40,7 +40,7 @@ export function Comments({ causeId }: CommentsProps): JSX.Element {
     <Container>
       <View style={{ marginBottom: 12 }}>
         <Text fontSize={rem(theme.fonts.size.sm)}>
-          {data?.total || 0} {!data?.total || data?.total >= 1 ? 'comentários' : 'comentário'}
+          {data?.total || 0} {!data?.total || data?.total > 1 ? 'comentários' : 'comentário'}
         </Text>
       </View>
       {data?.results &&
@@ -61,12 +61,12 @@ export function Comments({ causeId }: CommentsProps): JSX.Element {
             }
           />
         ))}
-      {!!data?.total && (
-        <BorderlessButton onPress={handleMore}>
+      {!!data?.total && data.total > 2 && (
+        <TouchableOpacity onPress={handleMore}>
           <Text color={theme.colors.primary} fontSize={rem(theme.fonts.size.sm)} textAlign="center">
             {t('comment.view_more')}
           </Text>
-        </BorderlessButton>
+        </TouchableOpacity>
       )}
     </Container>
   );

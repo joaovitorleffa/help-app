@@ -16,6 +16,7 @@ export default {
     secondary_50: '#3c3847',
     background: '#1E1E1E',
     button: '#41414D',
+    defaultButton: '#41414D',
     gray: '#36343a',
     gray_50: '#2F2C39',
     gray_100: '#111016',

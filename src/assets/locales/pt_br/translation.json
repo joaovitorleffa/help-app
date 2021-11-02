@@ -77,6 +77,10 @@
     "fetch_cause_list_error": "Ops, aconteceu um erro ao buscar as causas. Tente novamente mais tarde!"
   },
 
+  "causes": {
+    "title": "Causas"
+  },
+
   "create_cause": {
     "title": "Criar causa",
     "created_cause_successfully": "Causa criada com sucesso 🥳"
@@ -99,7 +103,7 @@
   },
 
   "comment": {
-    "placeholder": "Adicionar um comentário",
+    "placeholder": "Comentar...",
     "view_more": "Ver mais comentários"
   },
 

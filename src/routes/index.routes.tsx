@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useAuth } from '@hooks/useAuth';
 import { UserTypeEnum } from '@dto/user-dto';
 import { RootNavigatorParamsList } from './types';
+import { useSwitchTheme } from '@hooks/useSwitchTheme';
 
 import { Success } from '@screens/Common/Success';
 import { Comments } from '@screens/Common/Comments';
@@ -21,11 +22,23 @@ const Stack = createStackNavigator<RootNavigatorParamsList>();
 export function Routes(): JSX.Element {
   const { user, isLoading, accessToken } = useAuth();
   const theme = useTheme();
+  const { checked: isDark } = useSwitchTheme();
 
   if (isLoading) return <ActivityIndicator color={theme.colors.primary} />;
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      theme={{
+        dark: isDark,
+        colors: {
+          primary: theme.colors.primary,
+          background: theme.colors.background,
+          card: theme.colors.secondary,
+          text: theme.colors.text,
+          border: theme.colors.primary,
+          notification: theme.colors.primary,
+        },
+      }}>
       <StatusBar barStyle={theme.bar.style} backgroundColor={theme.colors.primary} />
       <Host>
         <Stack.Navigator

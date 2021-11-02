@@ -20,7 +20,6 @@ export const CustomText = styled.Text`
 export const Content = styled.SafeAreaView`
   flex: 1;
   margin: 0px ${({ theme }) => theme.spacing.grid}px;
-  margin-top: 48px;
 `;
 
 export const Wrapper = styled.View`

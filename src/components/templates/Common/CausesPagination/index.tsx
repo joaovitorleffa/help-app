@@ -48,16 +48,17 @@ export function CausesPagination({
   );
 
   const ListFooterComponent = useCallback(
-    () => (
-      <Pagination
-        currentPage={currentPage}
-        pages={pages}
-        maxPages={MAX_PAGES}
-        onChange={handleChangePage}
-        maxPagesLeft={MAX_PAGES_LEFT}
-      />
-    ),
-    [pages, currentPage, handleChangePage],
+    () =>
+      totalResults > 10 ? (
+        <Pagination
+          currentPage={currentPage}
+          pages={pages}
+          maxPages={MAX_PAGES}
+          onChange={handleChangePage}
+          maxPagesLeft={MAX_PAGES_LEFT}
+        />
+      ) : null,
+    [pages, currentPage, handleChangePage, totalResults],
   );
 
   const ListEmptyComponent = useCallback(

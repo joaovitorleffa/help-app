@@ -1,6 +1,6 @@
 import axios from 'axios';
 
 const brasilApi = axios.create({ baseURL: 'https://brasilapi.com.br/api' });
-const api = axios.create({ baseURL: 'http://192.168.0.102:3000' });
+const api = axios.create({ baseURL: 'http://137.184.159.242' });
 
 export { api, brasilApi };

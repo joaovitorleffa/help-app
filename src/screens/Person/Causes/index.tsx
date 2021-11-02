@@ -67,7 +67,7 @@ export function Causes(): JSX.Element {
     <Container>
       <Content>
         <Header>
-          <CustomText>Causas</CustomText>
+          <CustomText>{t('causes.title')}</CustomText>
         </Header>
         {status === 'loading' ? (
           <Wrapper>

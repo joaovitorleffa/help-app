@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
+import { format } from 'date-fns';
 import { useRem } from 'responsive-native';
+import { useTheme } from 'styled-components';
+import { useTranslation } from 'react-i18next';
+import { TouchableOpacityProps } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { Text } from '@atoms/Text';
+import { Show } from '@atoms/Show';
 
 import { Container } from './styles';
-import { TouchableOpacityProps } from 'react-native';
-import { useTheme } from 'styled-components';
-import { placeholder } from '@babel/types';
-import { format } from 'date-fns';
-import { useTranslation } from 'react-i18next';
-import { Show } from '@atoms/Show';
 
 interface DatePickerProps extends TouchableOpacityProps {
   value: string;
@@ -67,6 +66,7 @@ export function DatePicker({
 
       <DateTimePickerModal
         mode="date"
+        isDarkModeEnabled
         isVisible={isDatePickerVisible}
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}

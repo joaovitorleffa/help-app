@@ -1,8 +1,10 @@
+import { Platform, StatusBarStyle } from 'react-native';
+
 export default {
   title: 'light',
 
   bar: {
-    style: 'dark-content',
+    style: Platform.OS === 'android' ? 'light-content' : ('dark-content' as StatusBarStyle),
   },
 
   colors: {
@@ -15,7 +17,8 @@ export default {
     secondary: '#AE9DE5',
     secondary_50: '#F0ECFF',
     background: '#FFFFFF',
-    button: '#513DEB',
+    button: '#7E6EF5',
+    defaultButton: '#FFFFFF',
     gray: '#F2F2F2',
     gray_50: '#e7e7e7',
     gray_100: '#e0e0e0',

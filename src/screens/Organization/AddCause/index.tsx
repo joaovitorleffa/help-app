@@ -18,6 +18,7 @@ import { CreateCauseDto } from '@dto/create-cause-dto';
 import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
+import { useQueryClient } from 'react-query';
 
 const schema = Yup.object().shape({
   title: Yup.string()
@@ -35,6 +36,7 @@ export function AddCause(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
 
   const {
     control,
@@ -44,9 +46,8 @@ export function AddCause(): JSX.Element {
 
   const addCause = async (data: CreateCauseDto) => {
     try {
-      console.log(data);
-      const res = await api.post('causes', data);
-      console.log(res);
+      await api.post('causes', data);
+      await queryClient.invalidateQueries('causes');
       showMessage({
         message: t('common.success'),
         description: t('create_cause.created_cause_successfully'),

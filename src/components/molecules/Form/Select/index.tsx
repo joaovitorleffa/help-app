@@ -102,6 +102,9 @@ export function Select({
       <Portal>
         <Modalize
           ref={modalizeRef}
+          modalStyle={{
+            backgroundColor: theme.colors.background,
+          }}
           adjustToContentHeight
           flatListProps={{
             data: items,
