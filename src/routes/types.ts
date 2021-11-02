@@ -6,6 +6,7 @@ import { ImageProps } from '@utils/image';
 
 export type RootNavigatorParamsList = {
   Greeting: undefined;
+  Comments: { causeId: number };
   Success: {
     title: string;
     text: string;

@@ -27,7 +27,7 @@ const SpinnerProvider = ({ children }: SpinnerProviderProps): JSX.Element => {
       <SpinnerContext.Provider value={show}>{children}</SpinnerContext.Provider>
       <Spinner
         visible={isVisible}
-        textContent={t('common.loading')}
+        textContent="Carregando"
         textStyle={{
           color: theme.colors.title,
         }}

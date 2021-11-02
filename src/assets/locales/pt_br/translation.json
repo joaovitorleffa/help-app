@@ -29,7 +29,7 @@
     "edit": "Editar",
     "successfully_altered_image": "Imagem alterada! 🤩",
     "saved_information": "Informações salvas! 🤩",
-
+    "publish": "Publicar",
     "in_progress_cause": "Causa em andamento",
     "ended_cause": "Causa encerrada",
     "feedback": "Feedback",
@@ -98,6 +98,11 @@
     "add_feedback_success": "Feedback adicionado com sucesso 🤩"
   },
 
+  "comment": {
+    "placeholder": "Adicionar um comentário",
+    "view_more": "Ver mais comentários"
+  },
+
   "errors": {
     "unique_email": "Já existe uma conta cadastrada com esse e-mail",
     "fill_name": "O nome é obrigatório!",
@@ -133,6 +138,8 @@
     "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!",
 
     "update_profile_image": "Não foi possível atualizar a foto de perfil 😥. Tente novamente mais tarde!",
-    "whatsapp": "Não foi possível abrir o WhatsApp 😥"
+    "whatsapp": "Não foi possível abrir o WhatsApp 😥",
+    "create_commentary": "Não foi possível cadastrar o comentário",
+    "max_commentary": "Comentário deve ter no máximo 250 caracteres!"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from 'styled-components';
 import { Host } from 'react-native-portalize';
-import { ActivityIndicator, Platform, StatusBar } from 'react-native';
+import { ActivityIndicator, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -10,9 +10,10 @@ import { UserTypeEnum } from '@dto/user-dto';
 import { RootNavigatorParamsList } from './types';
 
 import { Success } from '@screens/Common/Success';
+import { Comments } from '@screens/Common/Comments';
+import { PersonRoutes } from './person/index.routes';
 import { Greetings } from '@screens/Common/Greetings';
 import { ImageViewer } from '@screens/Common/ImageViewer';
-import { PersonRoutes } from './person/index.routes';
 import { OrganizationRoutes } from './organization/index.routes';
 
 const Stack = createStackNavigator<RootNavigatorParamsList>();
@@ -27,7 +28,10 @@ export function Routes(): JSX.Element {
     <NavigationContainer>
       <StatusBar barStyle={theme.bar.style} backgroundColor={theme.colors.primary} />
       <Host>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
           {!!accessToken === false ? (
             <>
               <Stack.Screen name="Greeting" component={Greetings} />
@@ -40,6 +44,7 @@ export function Routes(): JSX.Element {
             <Stack.Screen name="PersonStack" component={PersonRoutes} />
           )}
           <Stack.Screen name="Success" component={Success} />
+          <Stack.Screen name="Comments" component={Comments} />
           <Stack.Screen name="ImageViewer" component={ImageViewer} />
         </Stack.Navigator>
       </Host>
