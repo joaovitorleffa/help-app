@@ -4,6 +4,7 @@ import { Octicons } from '@expo/vector-icons';
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.secondary};
   padding: 4px 16px;
+  padding-bottom: 8px;
   border-radius: 6px;
   flex: 1;
   margin-left: 8px;

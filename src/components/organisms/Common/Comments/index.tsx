@@ -64,7 +64,7 @@ export function Comments({ causeId }: CommentsProps): JSX.Element {
       {!!data?.total && (
         <BorderlessButton onPress={handleMore}>
           <Text color={theme.colors.primary} fontSize={rem(theme.fonts.size.sm)} textAlign="center">
-            {t('comments.view_more')}
+            {t('comment.view_more')}
           </Text>
         </BorderlessButton>
       )}

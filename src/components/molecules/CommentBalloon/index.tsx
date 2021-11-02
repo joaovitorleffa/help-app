@@ -28,7 +28,7 @@ export function CommentBalloon({
         fontSize={rem(theme.fonts.size.sm)}>
         {name}
       </Text>
-      <Text color={theme.colors.text} fontSize={rem(theme.fonts.size.sm)} lineHeight={18}>
+      <Text color={theme.colors.text} fontSize={rem(theme.fonts.size.xs)} lineHeight={18}>
         {comment}
       </Text>
     </Container>

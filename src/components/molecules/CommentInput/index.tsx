@@ -61,7 +61,7 @@ export function CommentInput({ photo, onComment }: CommentInputProps): JSX.Eleme
       <Container>
         <Content>
           <Left>
-            <RoundedAvatar uri={photo} size="sm" />
+            <RoundedAvatar uri={photo} size="sm" isDark={true} />
             <Controller
               name="comment"
               control={control}
