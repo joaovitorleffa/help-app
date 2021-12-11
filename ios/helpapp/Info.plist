@@ -37,14 +37,22 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Dê permissão ao $(PRODUCT_NAME) para acessar sua câmera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Dê permissão ao $(PRODUCT_NAME) para acessar seu microfone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Dê permissão ao $(PRODUCT_NAME) para salvar fotos</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleDefault</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -53,7 +61,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-  <key>UIStatusBarStyle</key>
-  <string>UIStatusBarStyleDefault</string>
 </dict>
 </plist>

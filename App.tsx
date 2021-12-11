@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
+import 'react-native-gesture-handler';
+import { ScreenProvider } from 'responsive-native';
+import FlashMessage from 'react-native-flash-message';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
   NotoSansJP_400Regular,
@@ -9,31 +11,51 @@ import {
 } from '@expo-google-fonts/noto-sans-jp';
 import AppLoading from 'expo-app-loading';
 
-function App() {
+import './src/assets/locales/i18n';
+import { AuthProvider } from '@hooks/useAuth';
+import { Routes } from './src/routes/index.routes';
+import { ThemeProvider } from './src/styles/ThemeProvider';
+import { SignUpStepsProvider } from '@hooks/useSignUpSteps';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { SpinnerProvider } from '@hooks/useSpinner';
+import { LogBox } from 'react-native';
+import { SwitchThemeProvider } from '@hooks/useSwitchTheme';
+
+LogBox.ignoreLogs(['Setting a timer']);
+
+function App(): JSX.Element {
   const [fontsLoaded] = useFonts({
     NotoSansJP_400Regular,
     NotoSansJP_500Medium,
     NotoSansJP_700Bold,
   });
 
+  const queryClient = new QueryClient();
+
   if (!fontsLoaded) {
     return <AppLoading />;
   }
 
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <SafeAreaProvider>
+      <ScreenProvider baseFontSize={16}>
+        <SwitchThemeProvider>
+          <ThemeProvider>
+            <QueryClientProvider client={queryClient}>
+              <SpinnerProvider>
+                <SignUpStepsProvider>
+                  <AuthProvider>
+                    <Routes />
+                    <FlashMessage position="top" />
+                  </AuthProvider>
+                </SignUpStepsProvider>
+              </SpinnerProvider>
+            </QueryClientProvider>
+          </ThemeProvider>
+        </SwitchThemeProvider>
+      </ScreenProvider>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default App;
