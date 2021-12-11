@@ -1,11 +1,11 @@
-import { Text } from '@atoms/Text';
-import { RouteProp, useRoute } from '@react-navigation/core';
-import { PersonNavigatorParamsList } from '@routes/types';
 import React from 'react';
-import { Dimensions, Image } from 'react-native';
-import { SharedElement } from 'react-navigation-shared-element';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
+import { RouteProp, useRoute } from '@react-navigation/core';
+import { SharedElement } from 'react-navigation-shared-element';
+
+import { Text } from '@atoms/Text';
+import { PersonNavigatorParamsList } from '@routes/types';
 
 import { Container, Content, Header, Photo, Wrapper, Icon } from './styles';
 
@@ -15,7 +15,7 @@ export function OngDetails(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   const route = useRoute<OngDetailsRouteProp>();
-  const { id, image, name, address, description } = route.params;
+  const { id, image, name, address, description, phone, cep } = route.params;
 
   return (
     <Container>
@@ -36,9 +36,21 @@ export function OngDetails(): JSX.Element {
           <Text fontSize={rem(theme.fonts.size.sm)} fontFamily="medium">
             {address}
           </Text>
+          <Text fontSize={rem(theme.fonts.size.sm)} fontFamily="medium">
+            CEP: {cep}
+          </Text>
+          {!!phone && (
+            <Text fontSize={rem(theme.fonts.size.sm)} fontFamily="medium">
+              Telefone: {phone}
+            </Text>
+          )}
         </Header>
 
-        <Text fontSize={rem(theme.fonts.size.sm)}>{description}</Text>
+        {!!description === true ? (
+          <Text fontSize={rem(theme.fonts.size.sm)}>{description}</Text>
+        ) : (
+          <Text fontSize={rem(theme.fonts.size.sm)}>A ONG não cadastrou nenhuma descrição.</Text>
+        )}
       </Content>
     </Container>
   );

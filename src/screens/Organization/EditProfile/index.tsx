@@ -67,7 +67,7 @@ export function EditProfile(): JSX.Element {
         type: 'success',
       });
     },
-    onError: () => {
+    onError: (e) => {
       showMessage({
         message: t('common.error'),
         description: t('errors.edit_profile_error'),
@@ -88,7 +88,7 @@ export function EditProfile(): JSX.Element {
         });
         reconcileOrganizationData(data);
       },
-      onError: () => {
+      onError: (e) => {
         showMessage({
           message: t('common.error'),
           description: t('errors.edit_profile_error'),

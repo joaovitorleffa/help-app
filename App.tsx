@@ -38,7 +38,7 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      <ScreenProvider baseFontSize={18}>
+      <ScreenProvider baseFontSize={16}>
         <SwitchThemeProvider>
           <ThemeProvider>
             <QueryClientProvider client={queryClient}>

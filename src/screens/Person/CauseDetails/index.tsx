@@ -77,6 +77,8 @@ export function CauseDetails(): JSX.Element {
         id,
         name: data?.organization.name,
         image: data.organization.profileImage,
+        phone: data.organization.phoneNumber,
+        cep: data.organization.cep,
         description: data.organization.description,
         address: `${data?.organization.city.toUpperCase()} - ${data?.organization.district}, ${
           data?.organization.number
