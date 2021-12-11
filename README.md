@@ -1,6 +1,5 @@
 <div id="top"></div>
 
-[![Stargazers][stars-shield]][stars-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -10,15 +9,15 @@
 <br />
 <div align="center">
   <a href="https://github.com/joaovitorleffa/help-app">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="assets/readme/app.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Help.</h3>
 
   <p align="center">
-    Um projeto desenvolvido para o Trabalho de Conclusão de Curso da ULBRA Torres
+    Um projeto desenvolvido para o Trabalho de Conclusão de Curso de Análise e Desenvolvimento de Sistemas na ULBRA Torres
     <br />
-     <a href="https://github.com/othneildrew/Best-README-Template">Google Play Store</a>
+     <a href="https://play.google.com/store/apps/details?id=com.lumertz.helpapp">Google Play Store</a>
     <br />
     <br />
   
@@ -29,7 +28,7 @@
 
 ## Sobre o projeto
 
-[![Help][product-screenshot]](https://TODO: link para play store)
+[![Help][product-screenshot]](https://play.google.com/store/apps/details?id=com.lumertz.helpapp)
 
 O Help é um aplicativo mobile, desenvolvido para facilitar a comunicação entre ONGs e sociedade.
 
@@ -63,6 +62,8 @@ Linguagens, bibliotecas e frameworks utilizados para desenvolver o aplicativo:
 - [x] Autenticação (cadastro, login)
 - [x] Construir telas
 - [x] Integrar com API
+- [x] Deploy Google Play Store
+- [ ] Deploy Apple Store
 - [ ] Melhorias
   - [ ] Validar número de celular por SMS com OneSignal
   - [ ] Adicionar Push Notification para novas causas e comentários com OneSignal
@@ -79,8 +80,7 @@ João Vitor Lumertz Leffa - joaovitorleffa02@gmail.com
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-[stars-shield]: https://img.shields.io/github/stars/joaovitorleffa/help-app.svg?style=for-the-badge
 [stars-url]: https://github.com/joaovitorleffa/help-app/stargazers
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/jo%C3%A3o-vitor-lumertz-a50126181/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: assets/readme/logo.png
