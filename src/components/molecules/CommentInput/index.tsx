@@ -72,7 +72,7 @@ export function CommentInput({ photo, onComment }: CommentInputProps): JSX.Eleme
                   value={value}
                   onChangeText={onChange}
                   placeholder={t('comment.placeholder')}
-                  placeholderTextColor={theme.colors.text}
+                  placeholderTextColor={theme.colors.title_secondary}
                   multiline
                 />
               )}

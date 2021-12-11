@@ -58,13 +58,12 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       setUser(userData);
       setOrganization(organizationData);
       setAccessToken(_accessToken);
-
       try {
+        api.defaults.headers['Authorization'] = `Bearer ${_accessToken}`;
         await AsyncStorage.setItem(
           STORAGE_KEY,
           JSON.stringify({ organizationData, userData, accessToken: _accessToken }),
         );
-        api.defaults.headers.common['Authorization'] = `Bearer ${_accessToken}`;
       } catch (error: any) {
         throw new Error(error);
       }
@@ -78,11 +77,11 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
       setPerson(personData);
       setAccessToken(_accessToken);
       try {
+        api.defaults.headers['Authorization'] = `Bearer ${_accessToken}`;
         await AsyncStorage.setItem(
           STORAGE_KEY,
           JSON.stringify({ personData, userData, accessToken: _accessToken }),
         );
-        api.defaults.headers.common['Authorization'] = `Bearer ${_accessToken}`;
       } catch (error: any) {
         throw new Error(error);
       }
@@ -129,7 +128,7 @@ function AuthProvider({ children }: AuthProviderProps): JSX.Element {
 
       setIsLoading(false);
     })();
-  }, [setOrganizationData]);
+  }, [setOrganizationData, setPersonData]);
 
   return (
     <AuthContext.Provider

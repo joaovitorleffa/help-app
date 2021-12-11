@@ -28,7 +28,7 @@ const schema = Yup.object().shape({
     .max(30, i18n.t('errors.max_title', { caracteres: 30 })),
   description: Yup.string()
     .required(i18n.t('errors.fill_description'))
-    .max(200, i18n.t('errors.max_description', { caracteres: 200 })),
+    .max(450, i18n.t('errors.max_description', { caracteres: 450 })),
   endAt: Yup.string().required(i18n.t('errors.fill_end_at')),
   type: Yup.string().required(i18n.t('errors.fill_type')),
 });
@@ -57,7 +57,7 @@ export function EditCause(): JSX.Element {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const { mutate } = useMutation(updateCause, {
+  const { mutate, isLoading } = useMutation(updateCause, {
     onSuccess: async () => {
       await queryClient.invalidateQueries('causes');
       showMessage({
@@ -67,10 +67,17 @@ export function EditCause(): JSX.Element {
       });
       navigation.navigate('AppStack', { screen: 'CauseList' });
     },
+    onError: () => {
+      showMessage({
+        message: t('common.error'),
+        description: t('errors.edit_cause_error'),
+        type: 'danger',
+      });
+    },
   });
 
   const onSubmit = (formData: UpdateCauseDto) => {
-    mutate({ ...formData, id });
+    !isLoading && mutate({ ...formData, id });
   };
 
   return (
@@ -82,6 +89,7 @@ export function EditCause(): JSX.Element {
             <BackHeader title={t('edit_cause.title')} />
             <AddCauseForm defaultValues={route.params} control={control} errors={errors} />
             <Button
+              isLoading={isLoading}
               style={{ marginTop: rem(1.2) }}
               title={t('common.edit')}
               onPress={handleSubmit(onSubmit)}

@@ -24,11 +24,14 @@ export function CommentBalloon({
       <Icon name="triangle-left" />
       <Text
         fontFamily="bold"
-        color={isOwner ? theme.colors.primary : theme.colors.title}
+        color={isOwner ? theme.colors.primary : theme.colors.title_secondary}
         fontSize={rem(theme.fonts.size.sm)}>
         {name}
       </Text>
-      <Text color={theme.colors.text} fontSize={rem(theme.fonts.size.xs)} lineHeight={18}>
+      <Text
+        color={theme.colors.title_secondary}
+        fontSize={rem(theme.fonts.size.xs)}
+        lineHeight={18}>
         {comment}
       </Text>
     </Container>

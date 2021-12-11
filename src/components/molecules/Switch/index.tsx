@@ -2,7 +2,6 @@ import React from 'react';
 import { Text } from '@atoms/Text';
 import Animated, {
   interpolate,
-  interpolateColors,
   useAnimatedStyle,
   useSharedValue,
   withTiming,

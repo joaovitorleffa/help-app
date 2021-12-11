@@ -45,6 +45,8 @@ export function FormSignIn({ onSignIn, isLoading = false }: FormSignInProps): JS
           secureTextEntry
           autoCorrect={false}
           autoCapitalize="none"
+          returnKeyType="send"
+          onSubmitEditing={handleSubmit(onSubmit)}
         />
       </Wrapper>
       <Button
@@ -52,7 +54,7 @@ export function FormSignIn({ onSignIn, isLoading = false }: FormSignInProps): JS
         isLoading={isLoading}
         color={theme.colors.button}
         textColor={theme.colors.title_secondary}
-        onPress={handleSubmit(onSubmit)}
+        onPress={isLoading ? () => {} : handleSubmit(onSubmit)}
       />
     </Container>
   );

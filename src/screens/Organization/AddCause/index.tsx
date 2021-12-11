@@ -18,7 +18,8 @@ import { CreateCauseDto } from '@dto/create-cause-dto';
 import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
-import { useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
+import { createCause } from '@services/organization';
 
 const schema = Yup.object().shape({
   title: Yup.string()
@@ -26,7 +27,7 @@ const schema = Yup.object().shape({
     .max(30, i18n.t('errors.max_title', { caracteres: 30 })),
   description: Yup.string()
     .required(i18n.t('errors.fill_description'))
-    .max(200, i18n.t('errors.max_description', { caracteres: 200 })),
+    .max(450, i18n.t('errors.max_description', { caracteres: 450 })),
   endAt: Yup.string().required(i18n.t('errors.fill_end_at')),
   type: Yup.string().required(i18n.t('errors.fill_type')),
 });
@@ -44,9 +45,8 @@ export function AddCause(): JSX.Element {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const addCause = async (data: CreateCauseDto) => {
-    try {
-      await api.post('causes', data);
+  const { mutate: addCause, isLoading } = useMutation(createCause, {
+    onSuccess: async () => {
       await queryClient.invalidateQueries('causes');
       showMessage({
         message: t('common.success'),
@@ -54,18 +54,19 @@ export function AddCause(): JSX.Element {
         type: 'success',
       });
       navigation.goBack();
-    } catch (error) {
+    },
+    onError: () => {
       console.log('[addCause] error:');
       showMessage({
         message: t('common.error'),
         description: t('errors.add_cause_error'),
         type: 'danger',
       });
-    }
-  };
+    },
+  });
 
   const onSubmit = (formData: CreateCauseDto) => {
-    addCause(formData);
+    !isLoading && addCause(formData);
   };
 
   return (
@@ -77,6 +78,7 @@ export function AddCause(): JSX.Element {
             <BackHeader title={t('create_cause.title')} />
             <AddCauseForm control={control} errors={errors} />
             <Button
+              isLoading={isLoading}
               style={{ marginTop: rem(1.2) }}
               title={t('common.register')}
               onPress={handleSubmit(onSubmit)}

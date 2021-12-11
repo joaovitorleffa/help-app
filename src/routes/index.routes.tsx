@@ -16,13 +16,27 @@ import { PersonRoutes } from './person/index.routes';
 import { Greetings } from '@screens/Common/Greetings';
 import { ImageViewer } from '@screens/Common/ImageViewer';
 import { OrganizationRoutes } from './organization/index.routes';
+import axios from 'axios';
+import { api } from '@services/api';
 
 const Stack = createStackNavigator<RootNavigatorParamsList>();
 
 export function Routes(): JSX.Element {
-  const { user, isLoading, accessToken } = useAuth();
+  const { user, isLoading, accessToken, clearAuthData } = useAuth();
   const theme = useTheme();
   const { checked: isDark } = useSwitchTheme();
+
+  api.interceptors.response.use(
+    function (response) {
+      return response;
+    },
+    function (error) {
+      if (error.response.status === 401) {
+        clearAuthData();
+      }
+      return Promise.reject(error);
+    },
+  );
 
   if (isLoading) return <ActivityIndicator color={theme.colors.primary} />;
 

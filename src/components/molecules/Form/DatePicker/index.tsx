@@ -10,6 +10,7 @@ import { Text } from '@atoms/Text';
 import { Show } from '@atoms/Show';
 
 import { Container } from './styles';
+import { useSwitchTheme } from '@hooks/useSwitchTheme';
 
 interface DatePickerProps extends TouchableOpacityProps {
   value: string;
@@ -28,6 +29,7 @@ export function DatePicker({
   const rem = useRem();
   const theme = useTheme();
   const { t } = useTranslation();
+  const { checked } = useSwitchTheme();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -66,6 +68,7 @@ export function DatePicker({
 
       <DateTimePickerModal
         mode="date"
+        themeVariant={checked ? 'dark' : 'light'}
         isDarkModeEnabled
         isVisible={isDatePickerVisible}
         onConfirm={handleConfirm}

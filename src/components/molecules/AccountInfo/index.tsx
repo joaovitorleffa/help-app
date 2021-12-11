@@ -3,17 +3,15 @@ import { useRem } from 'responsive-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
-  onChange,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
 
 import { Text } from '@atoms/Text';
+import { Switch } from '@molecules/Switch';
 
 import { Container, Icon, Row } from './styles';
-import { Switch } from '@molecules/Switch';
-import { useSwitchTheme } from '@hooks/useSwitchTheme';
 
 interface AccountInfoProps {
   name: string;

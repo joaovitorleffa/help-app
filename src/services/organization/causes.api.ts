@@ -1,4 +1,5 @@
 import { CauseDto } from '@dto/cause-dto';
+import { CreateCauseDto } from '@dto/create-cause-dto';
 import { Pagination } from '@dto/pagination-dto';
 import { UpdateCauseDto } from '@dto/update-cause-dto';
 
@@ -6,7 +7,6 @@ import { api } from '../api';
 
 const getCauses = async ({ queryKey }): Promise<Pagination<CauseDto>> => {
   const [_key, { page, limit, type, situation }] = queryKey;
-
   return api
     .get('/causes/self', { params: { page, limit: limit ?? 10, type, situation } })
     .then((res) => res.data);
@@ -39,4 +39,8 @@ const createFeedback = (createFeedback: {
   return api.put(`/causes/${id}/add/feedback`, form).then((res) => res.data);
 };
 
-export { getCauses, getCauseById, updateCause, createFeedback };
+const createCause = (data: CreateCauseDto): Promise<void> => {
+  return api.post('/causes', data).then((res) => res.data);
+};
+
+export { getCauses, getCauseById, updateCause, createFeedback, createCause };

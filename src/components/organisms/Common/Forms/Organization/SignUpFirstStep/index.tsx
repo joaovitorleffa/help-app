@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import i18n from '@assets/locales/i18n';
-import { phoneNumberMask, removeSpecialCharacters } from '@utils/mask';
 import { FirstStepData } from '@dto/sign-up-dto';
 import { useSignUpSteps } from '@hooks/useSignUpSteps';
+import { phoneNumberMask, removeSpecialCharacters } from '@utils/mask';
 
 import { ButtonIcon } from '@molecules/ButtonIcon';
 import { InputForm } from '@molecules/Form/InputForm';
@@ -38,11 +38,7 @@ export function SignUpFirstStep({ handleNextStep }: SignUpFirstStepProps): JSX.E
     control,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({ resolver: yupResolver(schema) });
-
-  const phoneNumber = watch('phoneNumber');
-  console.log(phoneNumber);
 
   const onSubmit = (data: FirstStepData) => {
     serializeFormData(data);

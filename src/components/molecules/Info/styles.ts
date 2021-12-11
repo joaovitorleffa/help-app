@@ -5,7 +5,7 @@ import { InfoStyle } from './info.style.type';
 export const Container = styled.View<InfoStyle>`
   background-color: ${({ theme, variant }) =>
     variant === 'info'
-      ? theme.colors.primary_50
+      ? theme.colors.primary
       : variant === 'success'
       ? theme.colors.success_50
       : theme.colors.error_50};
@@ -21,7 +21,7 @@ export const Icon = styled(Feather)<InfoStyle>`
   font-size: ${({ theme }) => theme.screen.rem(1)}px;
   color: ${({ theme, variant }) =>
     variant === 'info'
-      ? theme.colors.primary
+      ? theme.colors.title_secondary
       : variant === 'success'
       ? theme.colors.success
       : theme.colors.error};
