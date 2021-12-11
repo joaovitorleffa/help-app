@@ -84,6 +84,19 @@ project.ext.react = [
 
 apply from: new File(["node", "--print", "require.resolve('react-native/package.json')"].execute().text.trim(), "../react.gradle")
 
+def getPassword(String currentUser, String keyChain) {
+   def stdout = new ByteArrayOutputStream()
+   def stderr = new ByteArrayOutputStream()
+   exec {
+       commandLine 'security', '-q', 'find-generic-password', '-a', currentUser, '-s', keyChain, '-w'
+       standardOutput = stdout
+       errorOutput = stderr
+       ignoreExitValue true
+   }
+   //noinspection GroovyAssignabilityCheck
+      stdout.toString().trim()
+}
+
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -120,6 +133,7 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
 def enableHermes = project.ext.react.get("enableHermes", false);
+def pass = getPassword("joaovitor","android_keystore")
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -130,7 +144,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.helpapp"
+        applicationId "com.lumertz.helpapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         manifestPlaceholders = ['appAuthRedirectScheme': 'helpapp']
@@ -155,9 +169,9 @@ android {
         release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
-                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                storePassword pass
                 keyAlias MYAPP_UPLOAD_KEY_ALIAS
-                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+                keyPassword pass
             }
         }
     }
