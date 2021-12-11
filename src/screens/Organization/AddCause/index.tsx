@@ -18,6 +18,8 @@ import { CreateCauseDto } from '@dto/create-cause-dto';
 import { AddCauseForm } from '@organisms/Organization/AddCauseForm';
 
 import { Container, Content } from './styles';
+import { useMutation, useQueryClient } from 'react-query';
+import { createCause } from '@services/organization';
 
 const schema = Yup.object().shape({
   title: Yup.string()
@@ -25,7 +27,7 @@ const schema = Yup.object().shape({
     .max(30, i18n.t('errors.max_title', { caracteres: 30 })),
   description: Yup.string()
     .required(i18n.t('errors.fill_description'))
-    .max(200, i18n.t('errors.max_description', { caracteres: 200 })),
+    .max(450, i18n.t('errors.max_description', { caracteres: 450 })),
   endAt: Yup.string().required(i18n.t('errors.fill_end_at')),
   type: Yup.string().required(i18n.t('errors.fill_type')),
 });
@@ -35,6 +37,7 @@ export function AddCause(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   const navigation = useNavigation();
+  const queryClient = useQueryClient();
 
   const {
     control,
@@ -42,29 +45,28 @@ export function AddCause(): JSX.Element {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const addCause = async (data: CreateCauseDto) => {
-    try {
-      console.log(data);
-      const res = await api.post('causes', data);
-      console.log(res);
+  const { mutate: addCause, isLoading } = useMutation(createCause, {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries('causes');
       showMessage({
         message: t('common.success'),
         description: t('create_cause.created_cause_successfully'),
         type: 'success',
       });
       navigation.goBack();
-    } catch (error) {
+    },
+    onError: () => {
       console.log('[addCause] error:');
       showMessage({
         message: t('common.error'),
         description: t('errors.add_cause_error'),
         type: 'danger',
       });
-    }
-  };
+    },
+  });
 
   const onSubmit = (formData: CreateCauseDto) => {
-    addCause(formData);
+    !isLoading && addCause(formData);
   };
 
   return (
@@ -76,10 +78,11 @@ export function AddCause(): JSX.Element {
             <BackHeader title={t('create_cause.title')} />
             <AddCauseForm control={control} errors={errors} />
             <Button
+              isLoading={isLoading}
               style={{ marginTop: rem(1.2) }}
               title={t('common.register')}
               onPress={handleSubmit(onSubmit)}
-              color={theme.colors.primary}
+              color={theme.colors.button}
               textColor={theme.colors.title_secondary}
             />
           </Content>

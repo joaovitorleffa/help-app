@@ -3,7 +3,6 @@
     "entry": "Entrar",
     "register": "Cadastrar",
     "title": "Título",
-
     "password": "Senha",
     "description": "Descrição",
     "confirm_password": "Confirmar senha",
@@ -30,7 +29,7 @@
     "edit": "Editar",
     "successfully_altered_image": "Imagem alterada! 🤩",
     "saved_information": "Informações salvas! 🤩",
-
+    "publish": "Publicar",
     "in_progress_cause": "Causa em andamento",
     "ended_cause": "Causa encerrada",
     "feedback": "Feedback",
@@ -78,6 +77,10 @@
     "fetch_cause_list_error": "Ops, aconteceu um erro ao buscar as causas. Tente novamente mais tarde!"
   },
 
+  "causes": {
+    "title": "Causas"
+  },
+
   "create_cause": {
     "title": "Criar causa",
     "created_cause_successfully": "Causa criada com sucesso 🥳"
@@ -97,6 +100,11 @@
     "title": "Adicionar feedback",
     "feedback_placeholder": "Nos conte como foi utilizado a ajuda dos usuários...",
     "add_feedback_success": "Feedback adicionado com sucesso 🤩"
+  },
+
+  "comment": {
+    "placeholder": "Comentar...",
+    "view_more": "Ver mais comentários"
   },
 
   "errors": {
@@ -134,6 +142,8 @@
     "max_feedback": "A mensagem de feedback pode ter no máximo 450 caracteres!",
 
     "update_profile_image": "Não foi possível atualizar a foto de perfil 😥. Tente novamente mais tarde!",
-    "whatsapp": "Não foi possível abrir o WhatsApp 😥"
+    "whatsapp": "Não foi possível abrir o WhatsApp 😥",
+    "create_commentary": "Não foi possível cadastrar o comentário",
+    "max_commentary": "Comentário deve ter no máximo 250 caracteres!"
   }
 }

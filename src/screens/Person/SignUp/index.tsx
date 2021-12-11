@@ -135,6 +135,7 @@ export function SignUp(): JSX.Element {
                   style={{ marginTop: rem(0.4) }}
                   control={control}
                   name="password"
+                  secureTextEntry
                   error={errors?.password?.message}
                   placeholder={t('common.password')}
                 />
@@ -142,6 +143,7 @@ export function SignUp(): JSX.Element {
                   style={{ marginTop: rem(0.4) }}
                   control={control}
                   name="passwordConfirm"
+                  secureTextEntry
                   error={errors?.passwordConfirm?.message}
                   placeholder={t('common.confirm_password')}
                 />
@@ -149,7 +151,7 @@ export function SignUp(): JSX.Element {
                   isLoading={isLoading}
                   style={{ marginTop: rem(1.2) }}
                   title="Cadastrar"
-                  color={theme.colors.primary}
+                  color={theme.colors.button}
                   textColor={theme.colors.title_secondary}
                   onPress={handleSubmit(onSubmit)}
                 />

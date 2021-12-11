@@ -8,6 +8,8 @@ import { Pagination } from '@organisms/Common/Pagination';
 
 import { List } from './styles';
 import { useRem } from 'responsive-native';
+import { Text } from '@atoms/Text';
+import { useTheme } from 'styled-components';
 
 const MAX_PAGES = 5;
 const MAX_PAGES_LEFT = (MAX_PAGES - 1) / 2;
@@ -31,6 +33,7 @@ export function CausesPagination({
 }: CausesProps): JSX.Element {
   const flatListRef = useRef<FlatList | null>(null);
   const rem = useRem();
+  const theme = useTheme();
 
   const keyExtractor = useCallback((item: CauseDto, index: number) => String(item.id) + index, []);
 
@@ -45,16 +48,26 @@ export function CausesPagination({
   );
 
   const ListFooterComponent = useCallback(
+    () =>
+      totalResults > 10 ? (
+        <Pagination
+          currentPage={currentPage}
+          pages={pages}
+          maxPages={MAX_PAGES}
+          onChange={handleChangePage}
+          maxPagesLeft={MAX_PAGES_LEFT}
+        />
+      ) : null,
+    [pages, currentPage, handleChangePage, totalResults],
+  );
+
+  const ListEmptyComponent = useCallback(
     () => (
-      <Pagination
-        currentPage={currentPage}
-        pages={pages}
-        maxPages={MAX_PAGES}
-        onChange={handleChangePage}
-        maxPagesLeft={MAX_PAGES_LEFT}
-      />
+      <Text fontSize={rem(theme.fonts.size.sm)} style={{ marginTop: 32, textAlign: 'center' }}>
+        Nenhuma causa encontrada
+      </Text>
     ),
-    [pages, currentPage, handleChangePage],
+    [],
   );
 
   return (
@@ -64,6 +77,7 @@ export function CausesPagination({
       renderItem={renderItem}
       keyExtractor={keyExtractor}
       ListFooterComponent={ListFooterComponent}
+      ListEmptyComponent={ListEmptyComponent}
       contentContainerStyle={{ paddingTop: rem(0.4), paddingBottom: 40 }}
       showsVerticalScrollIndicator={false}
     />

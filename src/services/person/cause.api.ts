@@ -3,9 +3,11 @@ import { Pagination } from '@dto/pagination-dto';
 import { api } from '@services/api';
 
 export const getCauses = async ({ queryKey }): Promise<Pagination<AllCausesDto>> => {
-  const [_key, { page, limit }] = queryKey;
+  const [_key, { page, limit, type, situation }] = queryKey;
 
-  return api.get('/causes', { params: { page, limit: limit ?? 10 } }).then((res) => res.data);
+  return api
+    .get('/causes', { params: { page, limit: limit ?? 10, type, situation } })
+    .then((res) => res.data);
 };
 
 export const updateFavoriteCause = async (cause: AllCausesDto): Promise<AllCausesDto> => {

@@ -25,7 +25,10 @@ export function Button({ title, textColor, color, isLoading, ...rest }: ButtonPr
       {isLoading ? (
         <ActivityIndicator color={theme.colors.title_secondary} />
       ) : (
-        <Text color={textColor ?? theme.colors.title} fontSize={rem(1)} fontFamily="medium">
+        <Text
+          color={textColor ?? theme.colors.title}
+          fontSize={rem(theme.fonts.size.sm)}
+          fontFamily="medium">
           {title}
         </Text>
       )}

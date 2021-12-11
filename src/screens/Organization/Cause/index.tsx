@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { isBefore } from 'date-fns';
-import { useQuery } from 'react-query';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { useRem } from 'responsive-native';
 import { Skeleton } from '@motify/skeleton';
 import { useTheme } from 'styled-components';
@@ -28,6 +28,12 @@ import { CauseDetailsInfo } from '@organisms/Common/CauseDetailsInfo';
 import { Container, Content, Wrapper, FeedbackWrapper, AddFeedbackWrapper } from './styles';
 import { ImageProps } from '@utils/image';
 import ImageViewerFooter from '@molecules/ImageViewerFooter';
+import { CommentInput } from '@molecules/CommentInput';
+import { createComment } from '@services/comments.api';
+import { showMessage } from 'react-native-flash-message';
+import { useAuth } from '@hooks/useAuth';
+import { Comments } from '@organisms/Common/Comments';
+import KeyboardShift from '@atoms/KeyboardShift';
 
 type CauseRouteScreenProp = RouteProp<OrganizationNavigatorParamsList, 'Cause'>;
 
@@ -43,6 +49,8 @@ export function Cause(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   const { t } = useTranslation();
+  const { organization, user } = useAuth();
+  const queryClient = useQueryClient();
 
   const [isVisibleImageViewer, setIsVisibleImageViewer] = useState(false);
   const [imageViewerIndex, setImageViewerIndex] = useState(0);
@@ -50,6 +58,20 @@ export function Cause(): JSX.Element {
   const { id, title, description, endAt, type } = route.params;
 
   const { data, isLoading, isFetching } = useQuery(['cause', id], () => getCauseById(id));
+
+  const { mutate } = useMutation(createComment, {
+    onError: () => {
+      showMessage({
+        message: t('common.error'),
+        description: t('errors.create_commentary'),
+        type: 'danger',
+      });
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries('causeTwoComments');
+      await queryClient.invalidateQueries('causeComments');
+    },
+  });
 
   const isEnded = isBefore(new Date(endAt), new Date());
 
@@ -84,63 +106,74 @@ export function Cause(): JSX.Element {
     setImageViewerIndex(imageIndex);
   };
 
-  return (
-    <Container>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}>
-        <Content
-          style={{ justifyContent: isEnded && !data?.feedback ? 'space-between' : 'flex-start' }}>
-          <Wrapper>
-            <BackHeader title={title} />
+  const handleComment = (comment: string) => {
+    mutate({ comment, causeId: id, userId: user.id });
+  };
 
-            <CauseDetailsInfo endAt={endAt} description={description} type={type} />
-          </Wrapper>
-          {isEnded && (
-            <Skeleton show={isLoading}>
-              <FeedbackWrapper>
-                <Feedback
-                  feedback={data?.feedback ?? ''}
-                  images={data?.feedbackImages ?? []}
-                  onEditFeedback={handleEditFeedback}
-                  onPressImage={handlePressImage}
-                />
-              </FeedbackWrapper>
-            </Skeleton>
-          )}
-        </Content>
-      </ScrollView>
-      {isEnded && !data?.feedback && !isLoading && !isFetching && (
-        <AddFeedbackWrapper>
-          <Info text={t('cause.add_feedback_info')} variant="info" />
-          <Button
-            title={t('cause.add_feedback')}
-            color={theme.colors.primary}
-            textColor={theme.colors.title_secondary}
-            style={{ marginTop: rem(0.9) }}
-            onPress={handleAddFeedback}
-          />
-        </AddFeedbackWrapper>
-      )}
-      {!isEnded && (
-        <SafeAreaView>
-          <FloatButton icon="edit" onPress={handleEdit} style={{ bottom: 12 }} />
-        </SafeAreaView>
-      )}
-      {data?.feedbackImages && (
-        <ImageView
-          images={data?.feedbackImages?.map((element) => ({ uri: element.name }))}
-          imageIndex={imageViewerIndex}
-          visible={isVisibleImageViewer}
-          FooterComponent={(props) => (
-            <ImageViewerFooter
-              imageIndex={props.imageIndex}
-              total={data?.feedbackImages?.length ?? 0}
+  return (
+    <KeyboardShift>
+      <Container>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}>
+          <Content
+            style={{ justifyContent: isEnded && !data?.feedback ? 'space-between' : 'flex-start' }}>
+            <Wrapper>
+              <BackHeader title={title} />
+
+              <CauseDetailsInfo endAt={endAt} description={description} type={type} />
+
+              <View style={{ marginTop: 16 }}>
+                <Comments causeId={id} />
+              </View>
+            </Wrapper>
+            {isEnded && (
+              <Skeleton show={isLoading}>
+                <FeedbackWrapper>
+                  <Feedback
+                    feedback={data?.feedback ?? ''}
+                    images={data?.feedbackImages ?? []}
+                    onEditFeedback={handleEditFeedback}
+                    onPressImage={handlePressImage}
+                  />
+                </FeedbackWrapper>
+              </Skeleton>
+            )}
+          </Content>
+        </ScrollView>
+        {isEnded && !data?.feedback && !isLoading && !isFetching && (
+          <AddFeedbackWrapper>
+            <Info text={t('cause.add_feedback_info')} variant="info" />
+            <Button
+              title={t('cause.add_feedback')}
+              color={theme.colors.button}
+              textColor={theme.colors.title_secondary}
+              style={{ marginTop: rem(0.9) }}
+              onPress={handleAddFeedback}
             />
-          )}
-          onRequestClose={() => setIsVisibleImageViewer(false)}
-        />
-      )}
-    </Container>
+          </AddFeedbackWrapper>
+        )}
+        {!isEnded && (
+          <SafeAreaView>
+            <FloatButton icon="edit" onPress={handleEdit} style={{ bottom: 12 }} />
+          </SafeAreaView>
+        )}
+        {data?.feedbackImages && (
+          <ImageView
+            images={data?.feedbackImages?.map((element) => ({ uri: element.name }))}
+            imageIndex={imageViewerIndex}
+            visible={isVisibleImageViewer}
+            FooterComponent={(props) => (
+              <ImageViewerFooter
+                imageIndex={props.imageIndex}
+                total={data?.feedbackImages?.length ?? 0}
+              />
+            )}
+            onRequestClose={() => setIsVisibleImageViewer(false)}
+          />
+        )}
+      </Container>
+      <CommentInput photo={organization.profileImage} onComment={handleComment} />
+    </KeyboardShift>
   );
 }

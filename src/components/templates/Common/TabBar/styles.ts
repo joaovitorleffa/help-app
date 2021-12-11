@@ -32,6 +32,6 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
   ${({ theme, isFocused }) =>
     isFocused &&
     css`
-      background-color: ${theme.colors.primary};
+      background-color: ${theme.colors.tabBarFocused};
     `}
 `;

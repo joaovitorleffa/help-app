@@ -19,6 +19,7 @@ import { SignUpStepsProvider } from '@hooks/useSignUpSteps';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { SpinnerProvider } from '@hooks/useSpinner';
 import { LogBox } from 'react-native';
+import { SwitchThemeProvider } from '@hooks/useSwitchTheme';
 
 LogBox.ignoreLogs(['Setting a timer']);
 
@@ -37,19 +38,21 @@ function App(): JSX.Element {
 
   return (
     <SafeAreaProvider>
-      <ScreenProvider baseFontSize={18}>
-        <ThemeProvider>
-          <QueryClientProvider client={queryClient}>
-            <SpinnerProvider>
-              <SignUpStepsProvider>
-                <AuthProvider>
-                  <Routes />
-                  <FlashMessage position="top" />
-                </AuthProvider>
-              </SignUpStepsProvider>
-            </SpinnerProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
+      <ScreenProvider baseFontSize={16}>
+        <SwitchThemeProvider>
+          <ThemeProvider>
+            <QueryClientProvider client={queryClient}>
+              <SpinnerProvider>
+                <SignUpStepsProvider>
+                  <AuthProvider>
+                    <Routes />
+                    <FlashMessage position="top" />
+                  </AuthProvider>
+                </SignUpStepsProvider>
+              </SpinnerProvider>
+            </QueryClientProvider>
+          </ThemeProvider>
+        </SwitchThemeProvider>
       </ScreenProvider>
     </SafeAreaProvider>
   );

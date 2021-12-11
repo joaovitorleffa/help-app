@@ -56,3 +56,4 @@ web-build/
 .vscode
 
 .env
+.env.development

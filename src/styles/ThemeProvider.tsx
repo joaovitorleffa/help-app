@@ -1,3 +1,4 @@
+import { useSwitchTheme } from '@hooks/useSwitchTheme';
 import React, { useMemo } from 'react';
 import {
   useScreen,
@@ -10,6 +11,7 @@ import {
 } from 'responsive-native';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import light from './light';
+import dark from './dark';
 
 type Query = Omit<MediaQuery, 'currentBreakpoint'>;
 
@@ -27,12 +29,13 @@ interface Props {
   children?: React.ReactNode;
 }
 
-export function ThemeProvider({ children }: Props) {
+export function ThemeProvider({ children }: Props): JSX.Element {
   const { breakpoint, padding, baseFontSize, fontScaleFactor } = useScreen();
+  const { checked } = useSwitchTheme();
 
   const theme = useMemo(() => {
     return {
-      ...light,
+      ...(checked ? dark : light),
       screen: {
         breakpoint,
         padding,
@@ -60,7 +63,7 @@ export function ThemeProvider({ children }: Props) {
         },
       },
     };
-  }, [breakpoint, padding, baseFontSize, fontScaleFactor]);
+  }, [breakpoint, checked, padding, baseFontSize, fontScaleFactor]);
 
   return <StyledThemeProvider theme={theme}>{children}</StyledThemeProvider>;
 }

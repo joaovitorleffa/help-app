@@ -44,14 +44,14 @@ export function Greetings(): JSX.Element {
       <Footer>
         <Button
           title={t('greetings.register_a_ong')}
-          color={theme.colors.primary}
+          color={theme.colors.button}
           textColor={theme.colors.title_secondary}
           onPress={handleRegisterOng}
         />
         <Wrapper>
           <Button
             title={t('greetings.help_a_ong')}
-            color={theme.colors.primary}
+            color={theme.colors.button}
             textColor={theme.colors.title_secondary}
             onPress={handleHelpOng}
           />

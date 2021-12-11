@@ -1,27 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useRem } from 'responsive-native';
 import { useTheme } from 'styled-components';
-import { Alert, FlatList } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { useMutation, useQuery } from 'react-query';
+import { Alert, FlatList, View } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { ImageInfo } from 'expo-image-picker/build/ImagePicker.types';
-
-import { useAuth } from '@hooks/useAuth';
-import { getImageInfo } from '@utils/image';
-import { getFavorites } from '@services/person/cause.api';
-import { show, updateProfileImage } from '@services/person';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 
 import { Text } from '@atoms/Text';
+import { useAuth } from '@hooks/useAuth';
+import { Switch } from '@molecules/Switch';
+import { getImageInfo } from '@utils/image';
+import { AllCausesDto } from '@dto/cause-dto';
+import { getFavorites } from '@services/person/cause.api';
+import { show, updateProfileImage } from '@services/person';
 import { ProfileData } from '@organisms/Person/ProfileData';
+import { PersonAppTabNavigationParamsList, PersonNavigatorParamsList } from '@routes/types';
+
 import { CauseSecondary } from '@organisms/Common/CauseSecondary';
 
 import { Container, Content } from './styles';
-import { AllCausesDto } from '@dto/cause-dto';
-import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { PersonAppTabNavigationParamsList, PersonNavigatorParamsList } from '@routes/types';
 
 type PersonProfileNavigationScreenProp = CompositeNavigationProp<
   StackNavigationProp<PersonAppTabNavigationParamsList, 'PersonProfile'>,
@@ -121,6 +122,9 @@ export function Profile(): JSX.Element {
             newProfileImage?.uri ? newProfileImage.uri : data?.profileImage ?? undefined
           }
         />
+        <View style={{ marginTop: 20 }}>
+          <Switch />
+        </View>
         <Text
           fontFamily="bold"
           fontSize={rem(theme.fonts.size.lg)}

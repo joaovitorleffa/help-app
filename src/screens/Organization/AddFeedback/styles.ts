@@ -9,6 +9,7 @@ export const Content = styled.View`
   flex: 1;
   justify-content: space-between;
   margin: 0px ${({ theme }) => theme.spacing.grid}px;
+  padding-bottom: 38px;
 `;
 
 export const Photos = styled.View`

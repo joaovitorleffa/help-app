@@ -21,12 +21,12 @@ export function Info({ text, variant = 'error' }: InfoProps): JSX.Element {
       <Text
         color={
           variant === 'info'
-            ? theme.colors.primary
+            ? theme.colors.title_secondary
             : variant === 'success'
             ? theme.colors.success_50
             : theme.colors.error
         }
-        fontSize={rem(theme.fonts.size.sm)}
+        fontSize={rem(theme.fonts.size.xs)}
         style={{ flex: 1, marginLeft: 8 }}>
         {text}
       </Text>

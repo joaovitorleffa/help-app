@@ -37,7 +37,6 @@ export function PersonRoutes(): JSX.Element {
             }}
             sharedElements={(route, otherRoute, showing) => {
               const { id } = route.params;
-              console.log(`item.${id}.photo`);
               return [
                 {
                   id: `item.${id}.photo`,

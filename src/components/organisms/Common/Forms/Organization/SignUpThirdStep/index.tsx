@@ -83,7 +83,7 @@ export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps): JSX.E
       <ButtonWrapper>
         <Button
           title="Cadastrar"
-          color={theme.colors.primary}
+          color={theme.colors.button}
           textColor={theme.colors.title_secondary}
           onPress={handleSubmit(onSubmit)}
         />

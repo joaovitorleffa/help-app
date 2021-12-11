@@ -19,7 +19,7 @@ interface CauseSecondaryProps {
 export function CauseSecondary({ cause, removeOption, onPress }: CauseSecondaryProps): JSX.Element {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation(updateFavoriteCause, {
+  const { mutate, isLoading } = useMutation(updateFavoriteCause, {
     onSuccess: () => {
       queryClient.invalidateQueries('allCauses');
       queryClient.invalidateQueries('personFavoriteCauses');
@@ -45,6 +45,7 @@ export function CauseSecondary({ cause, removeOption, onPress }: CauseSecondaryP
         title={cause.title}
         isFavorite={cause.isFavorite}
         onFavorite={onFavorite}
+        isLoading={isLoading}
         removeOption={!!removeOption}
         description={cause.description}
       />

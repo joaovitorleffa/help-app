@@ -6,6 +6,7 @@ import { ImageProps } from '@utils/image';
 
 export type RootNavigatorParamsList = {
   Greeting: undefined;
+  Comments: { causeId: number };
   Success: {
     title: string;
     text: string;
@@ -56,6 +57,8 @@ export type PersonNavigatorParamsList = {
     id: number;
     image: string | null;
     name: string;
+    cep: string;
+    phone: string;
     description: string | null;
     address: string;
   };

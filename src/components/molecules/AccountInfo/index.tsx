@@ -9,6 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Text } from '@atoms/Text';
+import { Switch } from '@molecules/Switch';
 
 import { Container, Icon, Row } from './styles';
 
@@ -55,10 +56,11 @@ export function AccountInfo({ name, email, onLogout }: AccountInfoProps): JSX.El
           </BorderlessButton>
         </Row>
       </Animated.View>
-      <Animated.View style={textStyle}>
+      <Animated.View style={[textStyle, { flexDirection: 'row', justifyContent: 'space-between' }]}>
         <Text fontSize={rem(0.8)} fontFamily="bold">
           {email}
         </Text>
+        <Switch />
       </Animated.View>
     </Container>
   );

@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Modalize } from 'react-native-modalize';
 import { useQuery, useQueryClient } from 'react-query';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ActivityIndicator, Platform, StatusBar, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import { CompositeNavigationProp, useNavigation } from '@react-navigation/core';
 import { OrganizationAppNavigatorParamsList, OrganizationNavigatorParamsList } from '@routes/types';
 
@@ -91,11 +91,6 @@ export function CauseList(): JSX.Element {
 
   return (
     <Container>
-      <StatusBar
-        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'light-content'}
-        backgroundColor={theme.colors.primary}
-      />
-
       <Content>
         <Header>
           <CustomText>{t('cause_list.title')}</CustomText>
@@ -106,7 +101,7 @@ export function CauseList(): JSX.Element {
         {status === 'loading' ? (
           <Wrapper>
             <ActivityIndicator size="large" color={theme.colors.primary} />
-            <Text fontSize={rem(theme.fonts.size.sm)}>{t('loading')}</Text>
+            <Text fontSize={rem(theme.fonts.size.sm)}>{t('common.loading')}...</Text>
           </Wrapper>
         ) : status === 'error' ? (
           <Wrapper>
@@ -144,7 +139,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
 
-    backgroundColor: '#fff',
     elevation: 4,
   },
 });

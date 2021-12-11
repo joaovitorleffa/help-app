@@ -28,6 +28,9 @@ const Filters = forwardRef<Modalize, FiltersProps>(
         <Modalize
           adjustToContentHeight
           ref={ref}
+          modalStyle={{
+            backgroundColor: theme.colors.background,
+          }}
           childrenStyle={{
             paddingVertical: 20,
             paddingBottom: 40,

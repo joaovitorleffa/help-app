@@ -7,7 +7,7 @@ import { Initial, SignIn, FirstStep, SecondStep, ThirdStep } from '@screens/Orga
 
 const Stack = createStackNavigator<OrganizationAuthNavigatorParamsList>();
 
-export function OrganizationAuthStack() {
+export function OrganizationAuthStack(): JSX.Element {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Initial" component={Initial} />
