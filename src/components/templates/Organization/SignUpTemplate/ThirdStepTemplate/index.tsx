@@ -7,7 +7,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import { CompositeNavigationProp, useNavigation, useRoute } from '@react-navigation/core';
 
-import { api } from '@services/api';
 import { FirstStepData, SecondStepData, ThirdStepData } from '@dto/sign-up-dto';
 import { OrganizationAuthNavigatorParamsList, RootNavigatorParamsList } from '@routes/types';
 
