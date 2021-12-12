@@ -8,16 +8,16 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/joaovitorleffa/help-app">
+  <a target="_blank" href="https://github.com/joaovitorleffa/help-app">
     <img src="assets/readme/app.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Help.</h3>
 
   <p align="center">
-    Um projeto desenvolvido para o Trabalho de Conclusão de Curso de Análise e Desenvolvimento de Sistemas na ULBRA Torres
+    Um projeto desenvolvido para o Trabalho de Conclusão de Curso de Análise e Desenvolvimento de Sistemas da <a href="https://www.ulbra.br/torres">ULBRA Torres</a>
     <br />
-     <a href="https://play.google.com/store/apps/details?id=com.lumertz.helpapp">Google Play Store</a>
+     <a target="_blank" href="https://play.google.com/store/apps/details?id=com.lumertz.helpapp">Google Play Store</a>
     <br />
     <br />
   
