@@ -74,7 +74,7 @@ Linguagens, bibliotecas e frameworks utilizados para desenvolver o aplicativo:
 
 <!-- CONTACT -->
 
-## Contact
+## Contato
 
 João Vitor Lumertz Leffa - joaovitorleffa02@gmail.com
 
