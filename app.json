@@ -5,7 +5,9 @@
     "name": "help-app",
     "slug": "help-app",
     "version": "1.0.0",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "icon": "./assets/app-icon.png",
     "splash": {
       "image": "./assets/splash.png",
@@ -17,6 +19,9 @@
         "foregroundImage": "./assets/app-icon.png",
         "backgroundColor": "#5D4AED"
       }
+    },
+    "ios": {
+      "bundleIdentifier": "com.lumertz.helpapp"
     }
   }
 }
