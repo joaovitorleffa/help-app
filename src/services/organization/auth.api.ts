@@ -1,9 +1,10 @@
 import { LoginDto, OrganizationLoginResponseDto } from '@dto/login-dto';
+import { CreateOrganizationDto } from '@dto/organization-dto';
 import { api } from '@services/api';
 
-// export const createOrganization = async (createPersonDto: CreatePersonDto): Promise<any> => {
-//     return await api.post('/persons', createPersonDto).then((res) => res.data);
-//   };
+export const createOrganization = async (data: CreateOrganizationDto): Promise<void> => {
+  return await api.post('/organizations', data).then((res) => res.data);
+};
 
 export const loginOrganization = async (
   loginDto: LoginDto,
