@@ -78,8 +78,4 @@ static void InitializeFlipper(UIApplication *application) {
                     restorationHandler:restorationHandler];
 }
 
-
-NSString *currentLanguage = [[NSLocale preferredLanguages] firstObject];
-[[UIDatePicker appearance] setLocale:[[NSLocale alloc]initWithLocaleIdentifier:currentLanguage]];
-
 @end
