@@ -1,8 +1,11 @@
 import React from 'react';
 import { useRem } from 'responsive-native';
+import * as Clipboard from 'expo-clipboard';
 import { useTheme } from 'styled-components';
+import { showMessage } from 'react-native-flash-message';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { SharedElement } from 'react-navigation-shared-element';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Text } from '@atoms/Text';
 import { PersonNavigatorParamsList } from '@routes/types';
@@ -15,7 +18,12 @@ export function OngDetails(): JSX.Element {
   const theme = useTheme();
   const rem = useRem();
   const route = useRoute<OngDetailsRouteProp>();
-  const { id, image, name, address, description, phone, cep } = route.params;
+  const { id, image, name, email, address, description, phone } = route.params;
+
+  const copyToClipboard = () => {
+    Clipboard.setString(phone);
+    showMessage({ message: 'Copiado para a área de transferências! 📎', type: 'info' });
+  };
 
   return (
     <Container>
@@ -37,12 +45,20 @@ export function OngDetails(): JSX.Element {
             {address}
           </Text>
           <Text fontSize={rem(theme.fonts.size.sm)} fontFamily="medium">
-            CEP: {cep}
+            Email: {email}
           </Text>
           {!!phone && (
-            <Text fontSize={rem(theme.fonts.size.sm)} fontFamily="medium">
-              Telefone: {phone}
-            </Text>
+            <TouchableOpacity onPress={copyToClipboard}>
+              <Text fontSize={rem(theme.fonts.size.sm)} fontFamily="medium">
+                Telefone:{' '}
+                <Text
+                  fontSize={rem(theme.fonts.size.sm)}
+                  fontFamily="medium"
+                  color={theme.colors.primary}>
+                  {phone}
+                </Text>
+              </Text>
+            </TouchableOpacity>
           )}
         </Header>
 

@@ -19,7 +19,7 @@ export function ProfileBanner({ uri }: ProfileBannerProps): JSX.Element {
       {!uri ? (
         <Wrapper>
           <Icon name="image" />
-          <Text fontSize={rem(theme.fonts.size.xs)}>Sua imagem de capara irá aparecer aqui</Text>
+          <Text fontSize={rem(theme.fonts.size.xs)}>Sua imagem de capa irá aparecer aqui</Text>
         </Wrapper>
       ) : (
         <Photo source={{ uri }} />

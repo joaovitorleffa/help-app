@@ -1,4 +1,5 @@
 import { OrganizationDto } from './organization-dto';
+import { UserDto } from './user-dto';
 
 export enum CauseEnum {
   DONATION = 'donation',
@@ -31,6 +32,8 @@ export interface AllCausesDto extends CauseDto {
   };
 }
 
+type CauseOrganizationDto = OrganizationDto & { user: UserDto };
+
 export type CauseDetailsDto = CauseDto & {
-  organization: OrganizationDto;
+  organization: CauseOrganizationDto;
 };

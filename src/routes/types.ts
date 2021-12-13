@@ -57,6 +57,7 @@ export type PersonNavigatorParamsList = {
     id: number;
     image: string | null;
     name: string;
+    email: string;
     cep: string;
     phone: string;
     description: string | null;

@@ -76,6 +76,7 @@ export function CauseDetails(): JSX.Element {
       navigation.navigate('PersonOngDetails', {
         id,
         name: data?.organization.name,
+        email: data.organization.user.email,
         image: data.organization.profileImage,
         phone: data.organization.phoneNumber,
         cep: data.organization.cep,

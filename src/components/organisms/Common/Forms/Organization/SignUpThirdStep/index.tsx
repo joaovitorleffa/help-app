@@ -15,6 +15,7 @@ import { InputForm } from '@molecules/Form/InputForm';
 import { ButtonWrapper, Container, Wrapper } from './styles';
 
 interface SignUpThirdStepProps {
+  isLoading: boolean;
   handleNextStep: (data: ThirdStepData) => void;
 }
 
@@ -23,7 +24,7 @@ const schema = Yup.object().shape({
   passwordConfirm: Yup.string().required(i18n.t('errors.fill_confirm_password')),
 });
 
-export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps): JSX.Element {
+export function SignUpThirdStep({ handleNextStep, isLoading }: SignUpThirdStepProps): JSX.Element {
   const theme = useTheme();
   const { t } = useTranslation();
   const { formData, serializeFormData } = useSignUpSteps();
@@ -82,6 +83,7 @@ export function SignUpThirdStep({ handleNextStep }: SignUpThirdStepProps): JSX.E
       </Wrapper>
       <ButtonWrapper>
         <Button
+          isLoading={isLoading}
           title="Cadastrar"
           color={theme.colors.button}
           textColor={theme.colors.title_secondary}
