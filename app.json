@@ -5,7 +5,7 @@
     "name": "help-app",
     "slug": "help-app",
     "orientation": "portrait",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "assetBundlePatterns": ["**/*"],
     "icon": "./assets/images/icon.png",
     "splash": {
