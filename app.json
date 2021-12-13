@@ -1,26 +1,26 @@
 {
   "name": "help-app",
-  "displayName": "help-app",
+  "displayName": "Help.",
   "expo": {
     "name": "help-app",
     "slug": "help-app",
+    "orientation": "portrait",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "icon": "./assets/app-icon.png",
+    "assetBundlePatterns": ["**/*"],
+    "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#5D4AED"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/app-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#5D4AED"
       }
     },
     "ios": {
+      "supportsTablet": false,
       "bundleIdentifier": "com.lumertz.helpapp"
     }
   }
