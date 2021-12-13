@@ -20,6 +20,7 @@
       }
     },
     "ios": {
+      "icon": "./assets/images/icon.png",
       "supportsTablet": false,
       "bundleIdentifier": "com.lumertz.helpapp"
     }
