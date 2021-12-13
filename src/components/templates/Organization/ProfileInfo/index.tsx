@@ -24,9 +24,6 @@ export function ProfileInfo({
   onLogout,
   isLoading = false,
 }: ProfileInfoProps): JSX.Element {
-  const rem = useRem();
-  const theme = useTheme();
-
   return (
     <Container>
       <ProfileBanner uri={uri} />

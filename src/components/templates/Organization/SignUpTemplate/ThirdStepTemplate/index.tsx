@@ -7,7 +7,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import { CompositeNavigationProp, useNavigation, useRoute } from '@react-navigation/core';
 
-import { api } from '@services/api';
 import { FirstStepData, SecondStepData, ThirdStepData } from '@dto/sign-up-dto';
 import { OrganizationAuthNavigatorParamsList, RootNavigatorParamsList } from '@routes/types';
 
@@ -18,6 +17,8 @@ import { SectionHeader } from '@molecules/SectionHeader';
 import { SignUpThirdStep } from '@organisms/Common/Forms/Organization/SignUpThirdStep';
 
 import { Container, Header, Wrapper, ErrorsWrapper } from './styles';
+import { useMutation } from 'react-query';
+import { createOrganization } from '@services/organization/auth.api';
 
 type Data = FirstStepData & SecondStepData & ThirdStepData;
 
@@ -38,15 +39,15 @@ export function ThirdStepTemplate(): JSX.Element {
 
   const { params } = route;
 
-  const createOrganization = async (data: Data) => {
-    try {
-      await api.post('/organizations', data);
+  const { mutate, isLoading } = useMutation(createOrganization, {
+    onSuccess: () => {
       clearFormData();
       navigation.replace('Success', {
         title: t('sign_up.sign_up_successfully_title'),
         text: t('sign_up.sign_up_successfully_message'),
       });
-    } catch (error) {
+    },
+    onError: (error) => {
       console.log('[createOrganization] error:', error);
       if (axios.isAxiosError(error)) {
         if (error?.response?.status === 400) {
@@ -54,11 +55,11 @@ export function ThirdStepTemplate(): JSX.Element {
           setErrors(errorsMessage);
         }
       }
-    }
-  };
+    },
+  });
 
   const handleNextStep = (data: ThirdStepData) => {
-    createOrganization({ ...data, ...params } as Data);
+    !isLoading && mutate({ ...data, ...params } as Data);
   };
 
   return (
@@ -81,13 +82,13 @@ export function ThirdStepTemplate(): JSX.Element {
                 </Text>
                 {errors.map((error) => (
                   <Text key={error} fontSize={rem(0.65)} color={theme.colors.error}>
-                    - {t(error)}
+                    - {t(`errors.${error}`)}
                   </Text>
                 ))}
               </ErrorsWrapper>
             )}
           </Header>
-          <SignUpThirdStep handleNextStep={handleNextStep} />
+          <SignUpThirdStep handleNextStep={handleNextStep} isLoading={isLoading} />
         </Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

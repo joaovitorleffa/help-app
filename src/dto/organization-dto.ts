@@ -1,5 +1,16 @@
 import { UserDto } from './user-dto';
 
+interface CreateOrganizationDto {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  cep: string;
+  number: string;
+  city: string;
+  district: string;
+  password: string;
+}
+
 interface OrganizationDto {
   id: number;
   name: string;
@@ -21,4 +32,4 @@ interface AuthOrganizationDto {
   accessToken: string;
 }
 
-export { OrganizationDto, AuthOrganizationDto };
+export { OrganizationDto, AuthOrganizationDto, CreateOrganizationDto };
