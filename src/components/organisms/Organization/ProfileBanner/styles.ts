@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.View`
   height: ${({ theme }) => theme.screen.rem(14)}px; ;
@@ -19,7 +20,7 @@ export const Wrapper = styled.View`
   background-color: ${({ theme }) => theme.colors.gray};
 `;
 
-export const Photo = styled.Image`
+export const Photo = styled(FastImage)`
   width: 100%;
   height: 100%;
 `;

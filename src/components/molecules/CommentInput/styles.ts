@@ -1,3 +1,4 @@
+import FastImage from 'react-native-fast-image';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -12,7 +13,7 @@ export const Content = styled.SafeAreaView`
   justify-content: space-between;
 `;
 
-export const Photo = styled.FastImage`
+export const Photo = styled(FastImage)`
   width: ${({ theme }) => theme.screen.rem(1.6)}px;
   height: ${({ theme }) => theme.screen.rem(1.6)}px;
   border-radius: ${({ theme }) => theme.screen.rem(1.6)}px;

@@ -1,9 +1,10 @@
 import React from 'react';
 import { RootNavigatorParamsList } from '@routes/types';
 import { RouteProp, useRoute } from '@react-navigation/core';
+import FastImage from 'react-native-fast-image';
 
 import { Container } from './styles';
-import { Dimensions, Image, ScrollView } from 'react-native';
+import { Dimensions, ScrollView } from 'react-native';
 
 type ImageViewerRouteProps = RouteProp<RootNavigatorParamsList, 'ImageViewer'>;
 
@@ -15,7 +16,7 @@ export function ImageViewer(): JSX.Element {
     <Container>
       <ScrollView horizontal>
         {images.map((element) => (
-          <Image
+          <FastImage
             key={element}
             source={{ uri: element }}
             resizeMode="contain"

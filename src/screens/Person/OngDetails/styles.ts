@@ -1,12 +1,13 @@
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
 `;
 
-export const Photo = styled.Image`
+export const Photo = styled(FastImage)`
   height: ${({ theme }) => theme.screen.rem(14)}px;
   width: 100%;
 `;

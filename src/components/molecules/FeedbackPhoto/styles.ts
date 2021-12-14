@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Dimensions } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 const width = Dimensions.get('window').width / 3;
 
@@ -23,7 +24,7 @@ export const Icon = styled(MaterialCommunityIcons)`
   font-size: ${({ theme }) => theme.screen.rem(1.4)}px; ;
 `;
 
-export const Photo = styled.Image`
+export const Photo = styled(FastImage)`
   width: 100%;
   height: 100%;
 `;

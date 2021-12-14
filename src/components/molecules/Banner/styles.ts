@@ -1,6 +1,7 @@
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import FastImage from 'react-native-fast-image';
 
 export const Container = styled.TouchableOpacity`
   width: ${Dimensions.get('window').width}px;
@@ -11,7 +12,7 @@ export const Container = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-export const Photo = styled.Image`
+export const Photo = styled(FastImage)`
   width: 100%;
   height: 100%;
 `;

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
+import FastImage from 'react-native-fast-image';
 
 interface ContainerProps {
   size: 'sm' | 'md';
@@ -21,7 +22,7 @@ export const Icon = styled(Ionicons)`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const ProfileImage = styled.Image`
+export const ProfileImage = styled(FastImage)`
   width: 100%;
   height: 100%;
 `;
