@@ -12,7 +12,7 @@ export const Content = styled.SafeAreaView`
   justify-content: space-between;
 `;
 
-export const Photo = styled.Image`
+export const Photo = styled.FastImage`
   width: ${({ theme }) => theme.screen.rem(1.6)}px;
   height: ${({ theme }) => theme.screen.rem(1.6)}px;
   border-radius: ${({ theme }) => theme.screen.rem(1.6)}px;

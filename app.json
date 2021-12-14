@@ -7,22 +7,20 @@
     "orientation": "portrait",
     "version": "1.0.1",
     "assetBundlePatterns": ["**/*"],
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#5D4AED"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#5D4AED"
       }
     },
     "ios": {
-      "icon": "./assets/images/icon.png",
-      "supportsTablet": false,
-      "bundleIdentifier": "com.lumertz.helpapp"
+      "supportsTablet": false
     }
   }
 }

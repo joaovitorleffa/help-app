@@ -11,6 +11,7 @@ import { loginPerson } from '@services/person';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 import { useAuth } from '@hooks/useAuth';
+import { Alert } from 'react-native';
 
 type PersonSignInNavigationScreenProp = StackNavigationProp<
   PersonNavigatorParamsList,
